@@ -109,6 +109,7 @@ const GlobalStyles = createGlobalStyle`
     border: 0;
     background: none;
     font: inherit;
+    cursor: pointer;
     &:active,
     &:focus {
       outline: none;

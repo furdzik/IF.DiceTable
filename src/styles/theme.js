@@ -1,6 +1,12 @@
 import { colors, typography } from './basic';
 
-export default {
+export const theme = {
   ...colors,
-  ...typography
+  ...typography,
+  layout: {
+    width: '100rem',
+    sidePadding: '2rem'
+  }
 };
+
+export default theme;

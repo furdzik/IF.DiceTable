@@ -1,2 +1,12 @@
 {
+  "app.components.header.options": "Options",
+  "app.components.header.title": "Anett Dice Table",
+  "app.components.options.addPlayer": "Dodaj gracza",
+  "app.components.options.columnsNumber": "Ilość kolumn",
+  "app.components.options.deletePlayer": "Usuń Gracza",
+  "app.components.options.player": "Gracz {id}",
+  "app.components.options.playerId": "Id Gracza",
+  "app.components.options.playerName": "Nazwa Gracza",
+  "app.components.options.save": "Zapisz",
+  "app.containers.text": "Hello, {name}!"
 }

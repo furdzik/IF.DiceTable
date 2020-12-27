@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useIntl } from 'react-intl';
+
+import MainPage from '../../components/MainPage';
+import Modal from '../../components/ui/Modal';
+
+import Options from '../Options';
 
 import selector from './MainPage.selector';
+import messages from './MainPage.messages';
+import MainPageForm from './MainPageForm';
 
-const MainPage = () => {
+const MainPageContainer = () => {
+  const intl = useIntl();
+
+  const [optionsOpened, setOptionsOpened] = useState(false);
+
   return (
-    <div>aaa</div>
+    <React.Fragment>
+      <MainPageForm>
+        <MainPage
+          mainName={intl.formatMessage(messages.greeting)}
+          optionsClick={() => setOptionsOpened(!optionsOpened)}
+        />
+        {
+          optionsOpened ? (
+            <Modal
+              header="Options"
+              onClose={() => setOptionsOpened(!optionsOpened)}
+            >
+              <Options onModalClose={() => setOptionsOpened(!optionsOpened)} />
+            </Modal>
+          ) : null
+        }
+      </MainPageForm>
+    </React.Fragment>
   );
 };
 
-MainPage.propTypes = {
+MainPageContainer.propTypes = {
 
 };
 
-MainPage.defaultProps = {
+MainPageContainer.defaultProps = {
 };
 
 const mapDispatchToProps = {
   // getFilterDictionaries
 };
 
-export default connect(selector, mapDispatchToProps)(MainPage);
+export default connect(selector, mapDispatchToProps)(MainPageContainer);

@@ -3,18 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mdi/js": "5.8.55",
+    "@mdi/react": "1.4.0",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.1.0",
     "@testing-library/user-event": "12.1.10",
+    "formik": "2.2.6",
+    "prop-types": "15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-intl": "5.10.9",
+    "react-outside-click-handler": "1.3.0",
     "react-redux": "7.2.2",
+    "react-router-dom": "5.2.0",
     "react-scripts": "4.0.1",
     "redux": "4.0.5",
     "redux-devtools-extension": "2.13.8",
     "redux-thunk": "2.3.0",
-    "react-router-dom": "5.2.0",
     "reselect": "4.0.0",
     "styled-components": "5.2.1",
     "web-vitals": "0.2.4"
@@ -23,6 +28,7 @@
     "@babel/cli": "7.12.10",
     "@babel/core": "7.12.10",
     "babel-plugin-module-resolver": "4.1.0",
+    "babel-plugin-react-intl-auto": "3.3.0",
     "babel-plugin-require-context-hook": "1.0.0",
     "babel-plugin-styled-components": "1.12.0"
   },
@@ -30,7 +36,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lang:containers": "extract-messages -l=pl -d=pl -o src/lang/containers --flat \"src/containers/**/*.messages.js\"",
+    "lang:components": "extract-messages -l=pl -d=pl -o src/lang/components --flat \"src/components/**/*.messages.js\"",
+    "lang:defaults": "extract-messages -l=pl -d=pl -o src/lang/defaults --flat \"src/utils/default.messages.js\"",
+    "lang": "npm run lang:defaults && npm run lang:components && npm run lang:containers"
   },
   "config": {
     "commitizen": {

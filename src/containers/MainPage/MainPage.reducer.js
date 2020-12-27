@@ -1,11 +1,17 @@
 export const initialState = {
+  initialValues: {
+    options: {
+      columnsNumber: null,
+      players: null
+    }
+  }
 };
 
 const actionTypes = {
   SHOW_LOADER: 'MAIN_PAGE/SHOW_LOADER'
 };
 
-export default (state = initialState, action) => {
+export const mainPageReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SHOW_LOADER: {
       return {
@@ -19,6 +25,8 @@ export default (state = initialState, action) => {
   }
 };
 
-const showLoader = () => ({
-  type: actionTypes.SHOW_LOADER
-});
+// const showLoader = () => ({
+//   type: actionTypes.SHOW_LOADER
+// });
+
+export default mainPageReducer;
