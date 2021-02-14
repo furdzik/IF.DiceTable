@@ -5,12 +5,11 @@ import { useIntl } from 'react-intl';
 
 import MainPage from '../../components/MainPage';
 import Modal from '../../components/ui/Modal';
-
 import Options from '../Options';
-
-import selector from './MainPage.selector';
-import messages from './MainPage.messages';
 import MainPageForm from './MainPageForm';
+
+import messages from './MainPage.messages';
+import selector from './MainPage.selector';
 
 const MainPageContainer = () => {
   const intl = useIntl();
@@ -40,14 +39,10 @@ const MainPageContainer = () => {
 };
 
 MainPageContainer.propTypes = {
-
 };
 
 MainPageContainer.defaultProps = {
 };
 
-const mapDispatchToProps = {
-  // getFilterDictionaries
-};
 
-export default connect(selector, mapDispatchToProps)(MainPageContainer);
+export default connect(selector, null)(MainPageContainer);

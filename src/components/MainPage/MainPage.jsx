@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Container from '../Container';
 import Header from '../Header';
+import ScoresTable from '../../containers/ScoresTable';
 
 // import messages from './MainPage.messages';
 
@@ -14,7 +15,7 @@ const MainPage = (props) => {
     <React.Fragment>
       <Header optionsClick={props.optionsClick} />
       <Container>
-        aaa
+        <ScoresTable />
       </Container>
     </React.Fragment>
   );

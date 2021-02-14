@@ -1,16 +1,15 @@
-const optionsInitialValues = JSON.parse(localStorage.getItem('options')) || {
+export const optionsValues = {
   columnsNumber: 3,
-    players: []
+  players: []
 };
+
+const optionsInitialValues = JSON.parse(localStorage.getItem('options')) || optionsValues;
 
 export const initialState = {
   initialValues: {
     options: optionsInitialValues
   },
-  options: {
-    columnsNumber: null,
-    players: []
-  }
+  options: optionsValues
 };
 
 const actionTypes = {
@@ -41,6 +40,7 @@ const saveOptions = (values) => ({
 });
 
 export const onSubmitOptionsFn = (values) => (dispatch) => {
+  console.log('aaaa');
   dispatch(saveOptions(values));
 };
 

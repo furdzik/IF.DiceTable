@@ -44,20 +44,25 @@ export const scoreShape = PropTypes.shape({
     caw: PropTypes.number
   }),
   chance: PropTypes.number,
+  // TODO: zapytać anety
   bonuses: PropTypes.shape({
     nurseryPoints: PropTypes.number,
-    allColumnFilled: PropTypes.number,
+    columnFilled: PropTypes.number,
     firstGetsHighestSum: PropTypes.number // see constants
   })
 });
 
+export const optionsShape = PropTypes.shape({
+  columnsNumber: PropTypes.number,
+  players: PropTypes.arrayOf(playerShape)
+});
+
+export const scoresShape = PropTypes.shape({
+  playerId: PropTypes.number,
+  score: PropTypes.arrayOf(scoreShape)
+});
+
 export const valuesShape = PropTypes.shape({
-  options: PropTypes.shape({
-    columnsNumber: PropTypes.number,
-    players: PropTypes.arrayOf(playerShape)
-  }),
-  scores: PropTypes.arrayOf({
-    playerId: PropTypes.number,
-    score: PropTypes.arrayOf(scoreShape)
-  })
+  options: PropTypes.shape(optionsShape),
+  scores: PropTypes.arrayOf(PropTypes.shape(scoresShape))
 });

@@ -8,12 +8,10 @@ import { onSubmitOptionsFn } from './Options.reducer';
 import selector from './Options.selector';
 
 const OptionsContainer = (props) => (
-  <React.Fragment>
     <Options
-      onSubmitOptions={props.onSubmitOptions}
-      onModalClose={props.onModalClose}
-    />
-  </React.Fragment>
+    onSubmitOptions={props.onSubmitOptions}
+    onModalClose={props.onModalClose}
+  />
 );
 
 OptionsContainer.propTypes = {
