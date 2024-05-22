@@ -1,31 +1,35 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.bak
 
-#others
+# Coverage and reports directory used by tools like jest
+coverage
+reports/
+
+# Dependency directories
+node_modules/
+
+# env
+.env
+.env.local
+.env.production
+.env.development
+
+# Optional npm cache directory
+.npm
+
+# Builds
+dist/
+build/
+storybook-static/
+
+# Others
 .eslintcache
 
 # IDE / text editor data
 .idea/
 .vscode/
-.vs/

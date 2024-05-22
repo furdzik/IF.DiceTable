@@ -1,32 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import { useIntl } from 'react-intl';
 
-import Container from '../Container';
-import Header from '../Header';
-import ScoresTable from '../../containers/ScoresTable';
+import Container from 'components/Container';
+import Header from 'components/Header';
 
-// import messages from './MainPage.messages';
-
-const MainPage = (props) => {
-  // const intl = useIntl();
-
-  return (
-    <React.Fragment>
-      <Header optionsClick={props.optionsClick} />
-      <Container>
-        <ScoresTable />
-      </Container>
-    </React.Fragment>
-  );
-};
-
-MainPage.propTypes = {
-  optionsClick: PropTypes.func.isRequired
-};
-
-MainPage.defaultProps = {
-
-};
+const MainPage = (props) => (
+  <React.Fragment>
+    <Header optionsClick={props.optionsClick} />
+    <Container>
+      App
+    </Container>
+  </React.Fragment>
+);
 
 export default MainPage;

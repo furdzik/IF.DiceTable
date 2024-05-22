@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-// import { breakpointMixin } from '@styles/mixins';
+import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
 `;

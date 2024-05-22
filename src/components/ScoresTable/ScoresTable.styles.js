@@ -25,7 +25,7 @@ const PlayerNameWrapper = styled.div`
   background: ${(props) => props.theme.color.lightPink};
   font-size: 1.6rem;
   font-weight: bold;
-  color: ${(props) => props.theme.monoColors.white};
+  color: ${(props) => props.theme.colorMono.white};
   text-align: center;
 `;
 

@@ -12,7 +12,7 @@ const LoaderWrapper = styled.div`
   align-items: center;
   background: transparent;
   ${(props) => props.covered && css`
-    background: ${props.theme.monoColors.white};
+    background: ${props.theme.colorMono.white};
   `}
   ${(props) => props.fixed && css`
     position: fixed;
