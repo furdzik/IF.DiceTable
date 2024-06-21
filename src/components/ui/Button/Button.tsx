@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Children } from 'interfaces';
+import { ButtonsSizes, ButtonTypes } from 'constant';
 
 import {
   ButtonWrapper,
@@ -15,8 +16,8 @@ export interface Icon {
   color: string;
   iconPath: string;
 }
-export type Size = 'small' | 'normal' | 'large';
-export type Type = 'button' | 'submit' | 'reset' | 'link';
+export type Size = ButtonsSizes.Small | ButtonsSizes.Normal | ButtonsSizes.Large;
+export type Type = ButtonTypes.Button | ButtonTypes.Submit | ButtonTypes.Reset | ButtonTypes.Link;
 export interface ButtonProps {
   type?: Type | undefined;
   children?: Children | null;
@@ -29,10 +30,10 @@ export interface ButtonProps {
   className?: string;
 }
 const defaultProps = {
-  type: 'button',
+  type: ButtonTypes.Button,
   children: '',
   disabled: false,
-  size: 'normal',
+  size: ButtonsSizes.Normal,
   secondary: false,
   rounded: true
 };

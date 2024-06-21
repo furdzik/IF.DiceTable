@@ -6,7 +6,7 @@ import {
   useLocation
 } from 'react-router-dom';
 
-import MainPage from '../components/MainPage';
+import MainPage from 'components/MainPage';
 
 const RouterWrapper = (props: { children: ReactElement }) => {
   const location = useLocation();

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "@emotion/styled/macro";
 
-import Input from '../ui/Input';
+import Input from 'components/ui/Input';
 
 const Wrapper = styled.div`
   display: flex;

@@ -3,8 +3,9 @@ import { css } from '@emotion/react';
 
 import Icon from '@mdi/react';
 
-import { ButtonProps, Type } from './Button';
+import { ButtonsSizes, ButtonTypes } from 'constant';
 
+import { ButtonProps, Type } from './Button';
 
 const buttonRadius = '2.5rem';
 const buttonFontSizeRegular = '1.6rem';
@@ -12,13 +13,14 @@ const buttonHeightSmall = '3rem';
 const buttonHeightRegular = '4rem';
 const buttonHeightLarge = '5rem';
 
-export interface ButtonType extends Omit<ButtonProps, 'children'> {
+export interface ButtonType extends ButtonProps {
   buttonType?: Type | undefined;
   children?: any;
+  secondary?: boolean;
 }
 
 const ButtonWrapper = styled.button<ButtonType>`
-  ${(props) => props.buttonType !== 'link' && css`
+  ${(props) => props.buttonType !== ButtonTypes.Link && css`
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -71,11 +73,11 @@ const ButtonWrapper = styled.button<ButtonType>`
         cursor: not-allowed;
       }
     `}
-    ${props.size === 'small' && css`
+    ${props.size === ButtonsSizes.Small && css`
       height: ${buttonHeightSmall};
       min-height: ${buttonHeightSmall};
     `}
-    ${props.size === 'large' && css`
+    ${props.size === ButtonsSizes.Large && css`
       height: ${buttonHeightLarge};
       min-height: ${buttonHeightLarge};
     `}
@@ -88,7 +90,7 @@ const ButtonWrapper = styled.button<ButtonType>`
     `}
   `};
 
-  ${(props) => props.buttonType === 'link' && css`
+  ${(props) => props.buttonType === ButtonTypes.Link && css`
     display: inline-flex;
     align-items: center;
     height: auto;
@@ -139,7 +141,7 @@ const IconWrapper = styled.span<ButtonProps>`
       margin-right: 0;
       margin-left: -1rem;
     }
-    ${props.type === 'link' && css`
+    ${props.type === ButtonTypes.Link && css`
       margin-left: 0;
       ${IconStyled}  {
         margin-left: 0;
@@ -154,7 +156,7 @@ const IconWrapper = styled.span<ButtonProps>`
       margin-right: -1rem;
       margin-left: 0;
     }
-    ${props.type === 'link' && css`
+    ${props.type === ButtonTypes.Link && css`
        ${IconStyled} {
         margin-right: 0;
       }
@@ -165,7 +167,7 @@ const IconWrapper = styled.span<ButtonProps>`
       color: ${props.theme.mainColors.primary};
     `}
   }
-  ${(props) => props.type === 'link' && css`
+  ${(props) => props.type === ButtonTypes.Link && css`
     margin-top: 0;
   `};
 `;

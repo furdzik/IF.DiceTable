@@ -8,9 +8,12 @@ import {
 } from './Header.styles';
 
 export interface HeaderProps {
-  optionsClick?: () => void;
   className?: string;
+  optionsClick?: () => void;
 }
+const defaultProps = {
+  className: ''
+};
 
 const Header = (props: HeaderProps) => {
   return (
@@ -29,5 +32,7 @@ const Header = (props: HeaderProps) => {
     </Wrapper>
   );
 };
+
+Header.defaultProps = defaultProps;
 
 export default Header;

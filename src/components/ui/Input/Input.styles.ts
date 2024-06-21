@@ -1,10 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 /* Variables */
-const inputBorderColor = (props) => props.theme.mainColors.darkGray;
-const inputBackground = (props) => props.theme.mainColors.lightGray;
+const inputBorderColor = (props: any) => props.theme.mainColors.darkGray;
+const inputBackground = (props: any) => props.theme.mainColors.lightGray;
 
-const labelActiveColor = (props) => props.theme.mainColors.primary;
+const labelActiveColor = (props: any) => props.theme.mainColors.primary;
 const disabledColor = '#cecece';
 
 /* Component style */
@@ -12,6 +13,13 @@ const InputWrapper = styled.div`
   position: relative;
   width: 100%;
 `;
+
+/* {(props) => props.filledOrFocused && css`
+//   &:active,
+//   &:focus {
+//     border-color: ${labelActiveColor};
+//   }
+// `} */
 
 const StyledInput = styled.input`
   width: 100%;
@@ -26,14 +34,7 @@ const StyledInput = styled.input`
   &:focus {
     border-color: ${labelActiveColor};
   }
-
-  ${(props) => props.filledOrFocused && css`
-    &:active,
-    &:focus {
-      border-color: ${labelActiveColor};
-    }
-  `}
-
+  
   ${(props) => props.disabled && css`
     border-style: dashed;
     border-color: ${disabledColor};
