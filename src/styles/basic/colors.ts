@@ -1,10 +1,8 @@
 export const color = {
-  darkGreen: '#1b9779',
-  green: '#36bc9b',
-  lightGreen: '#91decb',
+  darkGreen: '#188369',
+  green: '#1b9779',
   darkPink: '#b05088',
   pink: '#d870ad',
-  lightPink: '#ec87bf',
   lightGray: '#e6e9ee',
   gray: '#ccd0d9',
   darkGray: '#aab2bd'
@@ -12,9 +10,9 @@ export const color = {
 
 export const mainColors = {
   primary: color.darkGreen,
-  secondary: color.pink,
-  tertiary: '',
-  quaternary: ''
+  primaryDark: color.green,
+  secondary: color.darkPink,
+  secondaryDark: color.pink,
 };
 
 export const colorMono = {

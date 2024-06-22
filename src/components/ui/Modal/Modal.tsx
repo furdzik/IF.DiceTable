@@ -6,18 +6,18 @@ import React, {
   useState
 } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { ThemeContext } from 'styled-components';
-import OutsideClickHandler from 'react-outside-click-handler';
+// import PropTypes from 'prop-types';
+
+// import OutsideClickHandler from 'react-outside-click-handler';
 
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
 
-import _throttle from 'lodash/throttle';
+// import _throttle from 'lodash/throttle';
 
 import Loader from '../Loader';
 
-import { SAFARI_BAR_VH, VIEWPORT_SIZE_CHECKING_DELAY } from '../../../config/constants';
+// import { SAFARI_BAR_VH, VIEWPORT_SIZE_CHECKING_DELAY } from 'constants';
 
 import {
   LayerWrapper,
@@ -33,22 +33,29 @@ const ESC_CODE = 27;
 
 // @WORKAROUND: https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 // function calculates css --vh variable (fix to mobile vh unit)
-const calculateViewportHeight = () => {
-  const vh = window.innerHeight * SAFARI_BAR_VH;
-  window.document.documentElement.style.setProperty('--vh', `${vh}px`);
-};
+// const calculateViewportHeight = () => {
+//   const vh = window.innerHeight * SAFARI_BAR_VH;
+//   window.document.documentElement.style.setProperty('--vh', `${vh}px`);
+// };
+//
+// const throttledCalculateViewportHeight = _throttle(
+//   calculateViewportHeight,
+//   VIEWPORT_SIZE_CHECKING_DELAY
+// );
 
-const throttledCalculateViewportHeight = _throttle(
-  calculateViewportHeight,
-  VIEWPORT_SIZE_CHECKING_DELAY
-);
+export interface ModalProps {
+  
+}
+const defaultProps = {
+  
+}
 
-const Modal = (props) => {
+const Modal = (props: ModalProps) => {
   const modalHeaderRef = useRef(null);
   const modalFooterRef = useRef(null);
   const [headerFooterHeight, setHeaderFooterHeight] = useState(0);
 
-  const iconColor = useContext(ThemeContext).mainColors.secondary;
+  // const iconColor = useContext(ThemeContext).mainColors.secondary;
 
   const checkHeaderFooterHeight = () => {
     if (modalHeaderRef.current || modalFooterRef.current) {
@@ -75,8 +82,8 @@ const Modal = (props) => {
   const handleModalClick = (e) => e.stopPropagation();
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.keyCode === ESC_CODE) {
+    const handleKeyDown = (event: Event) => {
+      if (event.keyCode === ESC_CODE) {
         props.onClose();
       }
     };
@@ -93,7 +100,7 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <LayerWrapper>
-      <OutsideClickHandler onOutsideClick={props.onClose}>
+      {/*<OutsideClickHandler onOutsideClick={props.onClose}>*/}
         <ModalWrapper
           className={props.className}
           isLoading={props.spin}
@@ -150,32 +157,33 @@ const Modal = (props) => {
             ) : null
           }
         </ModalWrapper>
-      </OutsideClickHandler>
+      {/*</OutsideClickHandler>*/}
     </LayerWrapper>,
     document.body
   );
 };
 
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  footer: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node
-  ]),
-  header: PropTypes.string,
-  isMobileFilter: PropTypes.bool,
-  isOnlyMobile: PropTypes.bool,
-  onClose: PropTypes.func
-};
-
-Modal.defaultProps = {
-  className: '',
-  header: null,
-  isMobileFilter: false,
-  isOnlyMobile: false,
-  footer: null,
-  onClose: () => {}
-};
+// Modal.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   className: PropTypes.string,
+//   footer: PropTypes.oneOfType([
+//     PropTypes.func,
+//     PropTypes.node
+//   ]),
+//   header: PropTypes.string,
+//   isMobileFilter: PropTypes.bool,
+//   isOnlyMobile: PropTypes.bool,
+//   onClose: PropTypes.func
+// };
+//
+// Modal.defaultProps = {
+//   className: '',
+//   header: null,
+//   isMobileFilter: false,
+//   isOnlyMobile: false,
+//   footer: null,
+//   onClose: () => {}
+// };
+Modal.defaultProps = defaultProps;
 
 export default Modal;

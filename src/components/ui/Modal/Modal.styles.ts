@@ -1,6 +1,5 @@
-import styled, { css } from 'styled-components';
-
-import { breakpointMixin } from '../../../styles/mixins';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 const layerBg = 'rgba(0, 0, 0, .4)';
 const boxShadow = '0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12)';
@@ -27,12 +26,12 @@ const LayerWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-  ${breakpointMixin.landscapePhone`
-    & > div {
-      width: auto;
-      height: auto;
-    }
-  `}
+
+  // landscapePhone
+  //   & > div {
+  //     width: auto;
+  //     height: auto;
+  //   }
 `;
 
 const ModalWrapper = styled.div`
@@ -40,15 +39,14 @@ const ModalWrapper = styled.div`
   border-top: .3rem solid ${modalBorderColor};
   background: ${modalBg};
   box-shadow: ${boxShadow};
-
-  ${breakpointMixin.landscapePhone`
-    min-width: 43.2rem;
-    max-width: 43.2rem;
-  `}
-
+  
   ${(props) => props.isLoading && css`
     min-height: 10rem;
   `}
+
+  // landscapePhone
+  // min-width: 43.2rem;
+  // max-width: 43.2rem;
 `;
 
 const ModalHeader = styled.div`
@@ -66,9 +64,8 @@ const Title = styled.div`
   font-weight: ${modalTitleFontWeight};
   line-height: 1.3;
   letter-spacing: -.024rem;
-  ${breakpointMixin.landscapePhone`
-    font-size: 2.4rem;
-  `}
+  
+  // font-size: 2.4rem;
 `;
 
 const CloseButton = styled.button`

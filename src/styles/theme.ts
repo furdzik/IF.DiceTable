@@ -6,7 +6,7 @@ export const theme: ITheme = {
   ...colors,
   ...typography,
   layout: {
-    background: '',
+    background: colors.colorMono.white,
     width: '100rem',
     padding: '1rem',
     borderColor: '',

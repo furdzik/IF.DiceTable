@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Children } from 'interfaces';
-import { ButtonsSizes, ButtonTypes } from 'constant';
+import { ButtonsSizes, ButtonTypes, ButtonVariants, ButtonColors } from 'constant';
 
 import {
   ButtonWrapper,
@@ -16,35 +16,41 @@ export interface Icon {
   color: string;
   iconPath: string;
 }
-export type Size = ButtonsSizes.Small | ButtonsSizes.Normal | ButtonsSizes.Large;
-export type Type = ButtonTypes.Button | ButtonTypes.Submit | ButtonTypes.Reset | ButtonTypes.Link;
+export type Sizes = ButtonsSizes.Small | ButtonsSizes.Normal | ButtonsSizes.Large;
+export type Types = ButtonTypes.Button | ButtonTypes.Submit | ButtonTypes.Reset;
+export type Variants = ButtonVariants.Button | ButtonVariants.Icon | ButtonVariants.Link;
+export type Colors = ButtonColors.Primary | ButtonColors.Secondary | ButtonColors.PrimaryDark | ButtonColors.SecondaryDark;
 export interface ButtonProps {
-  type?: Type | undefined;
   children?: Children | null;
-  disabled?: boolean;
-  onClick?: () => void;
-  size?: Size;
-  icon?: Icon;
-  secondary?: boolean;
-  rounded?: boolean;
   className?: string;
+  color?: Colors;
+  disabled?: boolean;
+  icon?: Icon | null;
+  size?: Sizes;
+  type?: Types | undefined;
+  variant?: Variants | undefined;
+  onClick?: () => void;
 }
 const defaultProps = {
-  type: ButtonTypes.Button,
-  children: '',
+  children: null,
+  className: '',
+  color: ButtonColors.Primary,
   disabled: false,
+  icon: null,
+  rounded: true,
   size: ButtonsSizes.Normal,
-  secondary: false,
-  rounded: true
+  type: ButtonTypes.Button,
+  variant: ButtonVariants.Button
 };
 
 const Button = (props: ButtonProps) => {
   const iconElement = () => (
     <IconWrapper
-      type={props.type}
-      icon={props.icon}
-      secondary={!props.secondary}
+      color={props.color}
       disabled={props.disabled}
+      icon={props.icon}
+      type={props.type}
+      variant={props.variant}
     >
       <IconStyled path={props.icon?.iconPath || ''} />
     </IconWrapper>
@@ -52,13 +58,14 @@ const Button = (props: ButtonProps) => {
 
   return (
     <ButtonWrapper
+      color={props.color}
       className={props.className}
-      buttonType={props.type}
-      onClick={props.onClick}
+      // @ts-ignore
+      type={props.type}
       disabled={props.disabled}
-      secondary={props.secondary}
       size={props.size}
-      rounded={props.rounded}
+      variant={props.variant}
+      onClick={props.onClick}
     >
       {
         props.icon ? (

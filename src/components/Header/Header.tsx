@@ -1,11 +1,10 @@
 import React from 'react';
 
-import {
-  Wrapper,
-  StyledContainer,
-  Title,
-  ButtonStyled,
-} from './Header.styles';
+import { ButtonColors } from 'constant';
+
+import Button from 'components/ui/Button';
+
+import { ButtonWrapper, StyledContainer, Title, Wrapper } from './Header.styles';
 
 export interface HeaderProps {
   className?: string;
@@ -22,12 +21,20 @@ const Header = (props: HeaderProps) => {
         <Title>
           Kości
         </Title>
-        <ButtonStyled
-          secondary
-          onClick={props.optionsClick}
-        >
-         Opcje
-        </ButtonStyled>
+        <ButtonWrapper>
+          <Button
+            color={ButtonColors.SecondaryDark}
+            onClick={props.optionsClick}
+          >
+            Opcje
+          </Button>
+          <Button
+            color={ButtonColors.PrimaryDark}
+            onClick={() => {}}
+          >
+            Zasady
+          </Button>
+        </ButtonWrapper>
       </StyledContainer>
     </Wrapper>
   );

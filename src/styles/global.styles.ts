@@ -7,7 +7,6 @@ const baseFontFamily = _map(theme.fontFamily, (el: string): string => `${el}`).j
 
 const GlobalStyles = css`
   html {
-    background: ${theme.color.lightGray};
     font-size: ${theme.fontSize.base};
 
     @media print {
@@ -96,6 +95,9 @@ const GlobalStyles = css`
   tr, th, td {
     margin: 0;
     padding: 0;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 2rem 0;
   }
 `;
 

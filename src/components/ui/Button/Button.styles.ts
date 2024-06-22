@@ -3,112 +3,166 @@ import { css } from '@emotion/react';
 
 import Icon from '@mdi/react';
 
-import { ButtonsSizes, ButtonTypes } from 'constant';
+import { ButtonsSizes, ButtonVariants, ButtonColors } from 'constant';
 
-import { ButtonProps, Type } from './Button';
+import { hexToRgbMixin } from 'styles/mixins';
 
-const buttonRadius = '2.5rem';
-const buttonFontSizeRegular = '1.6rem';
-const buttonHeightSmall = '3rem';
-const buttonHeightRegular = '4rem';
-const buttonHeightLarge = '5rem';
+import { ButtonProps } from './Button';
 
-export interface ButtonType extends ButtonProps {
-  buttonType?: Type | undefined;
+const buttonRadius: string = '2.5rem';
+const buttonFontSizeNormal: string = '1.6rem';
+const buttonFontSizeSmall: string = '1.4rem';
+const buttonFontSizeLarge: string = '1.8rem';
+const buttonHeightSmall: string = '3rem';
+const buttonHeightNormal: string = '4rem';
+const buttonHeightLarge: string = '5rem';
+
+export interface Button extends ButtonProps {
   children?: any;
-  secondary?: boolean;
 }
 
-const ButtonWrapper = styled.button<ButtonType>`
-  ${(props) => props.buttonType !== ButtonTypes.Link && css`
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-    height: ${buttonHeightRegular};
-    padding: 0 2rem;
-    border-radius: ${buttonRadius};
-    font-family: inherit;
-    font-size: ${buttonFontSizeRegular};
-    font-weight: normal;
-    transition: all 0.3s;
-    cursor: pointer;
+const ButtonWrapper = styled.button<Button>`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: ${buttonRadius};
+  font-family: inherit;
+  font-weight: normal;
+  transition: all 0.3s;
+  cursor: pointer;
 
-    ${!props.secondary && css`
-      border-color: transparent;
-      background-color: ${props.theme.mainColors.primary};
-      color: ${props.theme.colorMono.white};
-      &:focus,
-      &:hover {
-        background-color: ${props.theme.color.green};
-      }
-      &:active {
-        background-color: ${props.theme.color.green};
-      }
-      &[disabled] {
-        background-color: ${props.theme.color.lightGray};
-        color: ${props.theme.color.lightGray};
-        cursor: not-allowed;
-      }
-    `}
-    ${props.secondary && css`
-      border: 2px solid ${props.theme.mainColors.secondary};
-      background-color: ${props.theme.mainColors.secondary};
-      color: ${props.theme.colorMono.white};
-      &:focus,
-      &:hover {
-        border-color: ${props.theme.color.lightPink};
-        background-color: ${props.theme.color.lightPink};
-        color: ${props.theme.colorMono.white};
-      }
-      &:active {
-        border-color: ${props.theme.color.lightPink};
-        background-color: ${props.theme.color.lightPink};
-        color: ${props.theme.colorMono.white};
-      }
-      &[disabled] {
-        border-color: ${props.theme.mainColors.gray};
-        background-color: transparent;
-        color: ${props.theme.mainColors.gray};
-        cursor: not-allowed;
-      }
-    `}
-    ${props.size === ButtonsSizes.Small && css`
-      height: ${buttonHeightSmall};
-      min-height: ${buttonHeightSmall};
-    `}
-    ${props.size === ButtonsSizes.Large && css`
-      height: ${buttonHeightLarge};
-      min-height: ${buttonHeightLarge};
-    `}
-    ${props.rounded && css`
-      height: ${buttonHeightLarge};
-      min-height: ${buttonHeightLarge};
-      min-width: 5rem;
-      max-width: 5rem;
-      padding: 0;
-    `}
-  `};
+  ${(props) => props.size === ButtonsSizes.Small && css`
+    height: ${buttonHeightSmall};
+    min-height: ${buttonHeightSmall};
+    font-size: ${buttonFontSizeSmall};
 
-  ${(props) => props.buttonType === ButtonTypes.Link && css`
-    display: inline-flex;
-    align-items: center;
-    height: auto;
-    font-size: 1.4rem;
-    text-align: left;
-    color: ${props.theme.mainColors.primary};
-    text-decoration: none;
-    cursor: pointer;
+    ${props.variant === ButtonVariants.Icon && css`
+      min-width: ${buttonHeightSmall};
+      max-width: ${buttonHeightSmall};
+    `}
+  `}
+  ${(props) => props.size === ButtonsSizes.Normal && css`
+    height: ${buttonHeightNormal};
+    min-height: ${buttonHeightNormal};
+    font-size: ${buttonFontSizeNormal};
+
+    ${props.variant === ButtonVariants.Icon && css`
+      min-width: ${buttonHeightNormal};
+      max-width: ${buttonHeightNormal};
+    `}
+  `}
+  ${(props) => props.size === ButtonsSizes.Large && css`
+    height: ${buttonHeightLarge};
+    min-height: ${buttonHeightLarge};
+    font-size: ${buttonFontSizeLarge};
+
+    ${props.variant === ButtonVariants.Icon && css`
+      min-width: ${buttonHeightLarge};
+      max-width: ${buttonHeightLarge};
+    `}
+  `}
+
+  ${(props) => props.variant === ButtonVariants.Icon && css`
+    padding: 0;
+  `}
+  
+  ${(props) => props.color === ButtonColors.Primary && css`
+    border-color: ${props.theme.mainColors.primary};
+    background-color: ${props.theme.mainColors.primary};
+    color: ${props.theme.colorMono.white};
+
+    &:focus,
+    &:hover {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.primary, 0.9)};
+    }
+    &:active {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.primary, 0.9)};
+    }
+    &[disabled] {
+      background-color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.lightGray};
+      cursor: not-allowed;
+    }
+  `}
+  
+  ${(props) => props.color === ButtonColors.Secondary && css`
+    border-color: ${props.theme.mainColors.secondary};
+    background-color: ${props.theme.mainColors.secondary};
+    color: ${props.theme.colorMono.white};
+    
+    &:focus,
+    &:hover {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.secondary, 0.9)};
+    }
+    &:active {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.secondary, 0.9)};
+    }
+    &[disabled] {
+      background-color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.lightGray};
+      cursor: not-allowed;
+    }
+  `}
+
+  ${(props) => props.color === ButtonColors.PrimaryDark && css`
+    border-color: ${props.theme.mainColors.primaryDark};
+    background-color: ${props.theme.mainColors.primaryDark};
+    color: ${props.theme.colorMono.white};
+    
+    &:focus,
+    &:hover {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.primaryDark, 0.9)};
+    }
+    &:active {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.primaryDark, 0.9)};
+    }
+    &[disabled] {
+      background-color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.lightGray};
+      cursor: not-allowed;
+    }
+  `}
+
+  ${(props) => props.color === ButtonColors.SecondaryDark && css`
+    border-color: ${props.theme.mainColors.secondaryDark};
+    background-color: ${props.theme.mainColors.secondaryDark};
+    color: ${props.theme.colorMono.white};
+    
+    &:focus,
+    &:hover {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.secondaryDark, 0.9)};
+    }
+    &:active {
+      background-color: ${hexToRgbMixin(props.theme.mainColors.secondaryDark, 0.9)};
+    }
+    &[disabled] {
+      background-color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.lightGray};
+      cursor: not-allowed;
+    }
+  `}
+
+  ${(props) => props.variant === ButtonVariants.Link && css`
+    &,
+    &:focus,
+    &:hover,
+    &:active {
+      color: ${props.theme.mainColors.secondary};
+      background: none;
+      border: 0;
+    }
+    &:focus,
     &:hover {
       text-decoration: underline;
     }
     &[disabled] {
-      pointer-events: none;
-      &, & > a {
-        color: ${props.theme.color.gray};
-      }
+      color: ${props.theme.mainColors.secondary};
+      background: none;
+      color: ${props.theme.color.lightGray};
+      cursor: not-allowed;
     }
-  `};
+  `}
 `;
 
 const ButtonText = styled.span`
@@ -141,7 +195,7 @@ const IconWrapper = styled.span<ButtonProps>`
       margin-right: 0;
       margin-left: -1rem;
     }
-    ${props.type === ButtonTypes.Link && css`
+    ${props.variant === ButtonVariants.Link && css`
       margin-left: 0;
       ${IconStyled}  {
         margin-left: 0;
@@ -156,18 +210,18 @@ const IconWrapper = styled.span<ButtonProps>`
       margin-right: -1rem;
       margin-left: 0;
     }
-    ${props.type === ButtonTypes.Link && css`
+    ${props.variant === ButtonVariants.Link && css`
        ${IconStyled} {
         margin-right: 0;
       }
     `};
   `}
   ${ButtonWrapper}:hover {
-    ${(props) => !props.icon?.color && props.secondary && css`
+    ${(props) => !props.icon?.color && props.color === ButtonColors.Secondary && css`
       color: ${props.theme.mainColors.primary};
     `}
   }
-  ${(props) => props.type === ButtonTypes.Link && css`
+  ${(props) => props.variant === ButtonVariants.Link && css`
     margin-top: 0;
   `};
 `;

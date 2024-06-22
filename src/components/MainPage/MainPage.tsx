@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 
 import Container from 'components/Container';
 import Header from 'components/Header';
-
 import Options from 'features/options/Options';
+
+import {
+  Wrapper
+} from './MainPage.styles';
 
 const MainPage = () => {
   const [optionsVisible, setOptionsVisible] = useState(false);
@@ -17,7 +20,9 @@ const MainPage = () => {
         ) : null
       }
       <Container>
-        App
+        <Wrapper>
+          App
+        </Wrapper>
       </Container>
     </React.Fragment>
   );

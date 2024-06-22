@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 
 import Container from 'components/Container';
-import Button from 'components/ui/Button';
 
 const Wrapper = styled.div`
-  padding: 1rem 0;
+  padding: 1.3rem 0;
   margin-bottom: 3rem;
   background: ${(props) => props.theme.mainColors.primary};
 `;
@@ -15,17 +14,20 @@ const StyledContainer = styled(Container)`
 `;
 
 const Title = styled.h1`
-  font-size: 2rem;
+  margin: 0;
+  font-size: 2.6rem;
   color: ${(props) => props.theme.colorMono.white};
 `;
 
-const ButtonStyled = styled(Button)`
+const ButtonWrapper = styled.div`
   margin-left: auto;
+  display: flex;
+  gap: 0 1rem;
 `;
 
 export {
   Wrapper,
   StyledContainer,
   Title,
-  ButtonStyled
+  ButtonWrapper
 };

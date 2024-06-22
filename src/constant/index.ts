@@ -1,14 +1,25 @@
 export enum ButtonsSizes {
-  Small,
-  Normal,
-  Large
+  Small = 'small',
+  Normal = 'normal',
+  Large = 'large'
 }
 
 export enum ButtonTypes {
-  Button,
-  Submit,
-  Reset,
-  Link
+  Button = 'button',
+  Submit = 'submit',
+  Reset = 'reset'
+}
+
+export enum ButtonVariants {
+  Button = 'button',
+  Icon = 'icon',
+  Link = 'link'
+}
+export enum ButtonColors {
+  Primary = 'primary',
+  Secondary = 'secondary',
+  PrimaryDark = 'primaryDark',
+  SecondaryDark = 'secondaryDark'
 }
 
 export enum InputTypes {
