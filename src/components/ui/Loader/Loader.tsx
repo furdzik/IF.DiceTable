@@ -8,16 +8,22 @@ import {
   Svg
 } from './Loader.styles';
 
+// @TODO: Refactor
 export interface LoaderProps {
-  center: boolean;
+  center?: boolean;
   className?: string | undefined;
-  covered: boolean;
-  fixed: boolean;
-  static: boolean;
-  transparent: boolean;
+  covered?: boolean;
+  fixed?: boolean;
+  static?: boolean;
+  transparent?: boolean;
 }
 const defaultProps = {
-  className: ''
+  center: true,
+  className: '',
+  covered: false,
+  fixed: false,
+  static: false,
+  transparent: false
 }
 
 const Loader = (props: LoaderProps) => {

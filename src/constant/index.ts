@@ -28,3 +28,6 @@ export enum InputTypes {
   Email = 'email',
   Number = 'number'
 }
+
+export const SAFARI_BAR_VH = 0.01;
+export const VIEWPORT_SIZE_CHECKING_DELAY = 500;

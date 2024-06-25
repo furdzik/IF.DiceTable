@@ -16,7 +16,7 @@ export interface InputProps {
   maxLength?: number;
   placeholder?: string;
   type?: InputType;
-  onChange?: (event: Event) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   onFocus?: () => void;
 }
@@ -32,11 +32,11 @@ const Input = React.forwardRef((props: InputProps, ref) => (
   <InputWrapper className={props.className}>
     <StyledInput
       type={props.type}
-      // ref={ref}
+      ref={ref as React.RefObject<HTMLInputElement>}
       name={props.name}
       id={`input_${props.name}`}
       value={props.value}
-      // onChange={props.onChange}
+      onChange={props.onChange}
       disabled={props.disabled}
       placeholder={props.placeholder}
       onFocus={props.onFocus}

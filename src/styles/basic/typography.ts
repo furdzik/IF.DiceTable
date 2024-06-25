@@ -12,7 +12,7 @@ const fontSize = {
   base: '62.5%',
   small: '1.2rem',
   normal: '1.4rem',
-  medium: '2.6rem',
+  medium: '1.6rem',
   big: '1.8rem'
 };
 

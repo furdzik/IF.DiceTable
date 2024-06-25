@@ -12,6 +12,7 @@ export interface ThemeLayout {
   borderColor?: string;
   boxShadow?: string;
   padding?: string;
+  modalDefaultPadding?: string;
   transition?: string;
 }
 

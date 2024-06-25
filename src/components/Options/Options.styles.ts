@@ -2,27 +2,25 @@ import styled from "@emotion/styled/macro";
 
 import Input from 'components/ui/Input';
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid ${(props) => props.theme.color.gray};
+const Wrapper = styled.section`
+  & + & {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid ${(props) => props.theme.color.gray};
+  }
 `;
 
-const Label = styled.label`
-  width: 10rem;
-  margin-right: 4rem;
+const InnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  & + & {
+    margin-top: 2rem;
+  }
 `;
 
 const InputStyled = styled(Input)`
-  width: 17rem;
-`;
-
-const InputWrapper = styled.div`
-  ${InputStyled} + ${InputStyled} {
-    margin-top: 1rem;
-  }
+  max-width: 17rem;
 `;
 
 const AddPlayerWrapper = styled.div`
@@ -30,6 +28,7 @@ const AddPlayerWrapper = styled.div`
 `;
 
 const AddPlayer = styled.button`
+  margin-top: 2rem;
   color: ${(props) => props.theme.mainColors.primary};
   text-decoration: underline;
   &:hover {
@@ -37,17 +36,19 @@ const AddPlayer = styled.button`
   }
 `;
 
-const DeleteButton = styled.button`
-  color: ${(props) => props.theme.color.lightPink};
-  margin-left: 4rem;
+const ClearDataWrapper = styled.section`
+  margin: 3rem -${(props) => props.theme.layout.modalDefaultPadding} -${(props) => props.theme.layout.modalDefaultPadding};
+  padding: 2rem;
+  border: .1rem solid ${(props) => props.theme.colorMono.white};
+  background: ${(props) => props.theme.mainColors.secondary};
+  color: ${(props) => props.theme.colorMono.white};
 `;
 
 export {
   Wrapper,
-  Label,
+  InnerWrapper,
   InputStyled,
-  InputWrapper,
   AddPlayerWrapper,
   AddPlayer,
-  DeleteButton
+  ClearDataWrapper
 };

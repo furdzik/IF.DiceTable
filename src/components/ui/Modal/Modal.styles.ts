@@ -1,15 +1,19 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { ModalProps } from './Modal';
+import { breakpoints } from '../../../styles/basic';
 
-const layerBg = 'rgba(0, 0, 0, .4)';
-const boxShadow = '0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12)';
-const modalBg = (props) => props.theme.colorMono.white;
 const shadowColor = 'rgba(0, 0, 0, 0.1)';
-const modalBorderColor = (props) => props.theme.mainColors.primary;
-const modalCloseBtnColor = (props) => props.theme.mainColors.primary;
-const modalTitleFontWeight = (props) => props.theme.fontWeight.light;
 
-const LayerWrapper = styled.div`
+interface ModalContentProps {
+  headerFooterHeight: number;
+}
+
+interface FooterProps {
+  isOnlyMobile?: boolean | undefined ;
+}
+
+const LayerWrapper = styled.div<ModalProps>`
   display: flex;
   position: fixed;
   top: 0;
@@ -21,37 +25,38 @@ const LayerWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background: ${layerBg};
-  & > div {
-    width: 100%;
-    height: 100%;
-  }
-
-  // landscapePhone
-  //   & > div {
-  //     width: auto;
-  //     height: auto;
-  //   }
 `;
 
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<ModalProps>`
   position: relative;
-  border-top: .3rem solid ${modalBorderColor};
-  background: ${modalBg};
-  box-shadow: ${boxShadow};
+  min-width: calc(100% - 1rem);
+  max-width: calc(100% - 1rem);
+  height: calc(100% - .5rem);
+  border: .2rem solid ${(props) => props.theme.mainColors.primary};
+  background: ${(props) => props.theme.colorMono.white};
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
   
   ${(props) => props.isLoading && css`
     min-height: 10rem;
-  `}
+  `};
 
-  // landscapePhone
-  // min-width: 43.2rem;
-  // max-width: 43.2rem;
+  @media (min-width: ${breakpoints.smallTablet}) {
+    min-width: 80%;
+    max-width: 80%;
+    height: auto;
+  }
+
+  @media (min-width: ${breakpoints.laptop}) {
+    min-width: calc(${(props) => props.theme.layout.width} - (2 * ${(props) => props.theme.layout.padding}));
+    max-width: calc(${(props) => props.theme.layout.width} - (2 * ${(props) => props.theme.layout.padding}));
+  }
 `;
 
-const ModalHeader = styled.div`
+const ModalHeader = styled.div<ModalProps>`
   position: relative;
-  padding: 2rem 5.2rem 2.5rem 2.5rem;
+  margin: 0 2.5rem 2rem;
+  padding: 2rem 0;
+  border-bottom: .2rem solid ${(props) => props.theme.mainColors.primary};
 
   ${(props) => props.isOnlyMobile && css`
     padding: 1.5rem 1.55rem;
@@ -59,13 +64,11 @@ const ModalHeader = styled.div`
   `}
 `;
 
-const Title = styled.div`
-  font-size: 2.2rem;
-  font-weight: ${modalTitleFontWeight};
+const Title = styled.h1`
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: ${(props) => props.theme.fontWeight.bold};
   line-height: 1.3;
-  letter-spacing: -.024rem;
-  
-  // font-size: 2.4rem;
 `;
 
 const CloseButton = styled.button`
@@ -78,15 +81,15 @@ const CloseButton = styled.button`
   border: none;
   background: none;
   font-size: 3rem;
-  color: ${modalCloseBtnColor};
+  color: ${(props) => props.theme.mainColors.primary};
   cursor: pointer;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.div<ModalProps & ModalContentProps>`
   overflow-y: auto;
   max-height: 76.6vh;
   max-height: calc(var(--vh, 1vh) * 76.6);
-  padding: 0 2.4rem 3rem;
+  padding: 0 ${(props) => props.theme.layout.modalDefaultPadding} ${(props) => props.theme.layout.modalDefaultPadding};
 
   @media only screen and (max-height: 500px) {
     max-height: 40vh;
@@ -107,7 +110,7 @@ const ModalContent = styled.div`
   `}
 `;
 
-const ModalFooter = styled.div`
+const ModalFooter = styled.div<FooterProps>`
   padding: 3.2rem 0;
   text-align: center;
 

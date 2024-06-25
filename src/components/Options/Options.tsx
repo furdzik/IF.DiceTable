@@ -1,38 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { FormikValues } from 'formik';
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
+import _cloneDeep from 'lodash/cloneDeep';
+import _orderBy from 'lodash/orderBy';
 
 import Button from 'components/ui/Button';
 
+import { ButtonColors, ButtonTypes, ButtonVariants, InputTypes } from 'constant';
+import { OptionsState, Player } from 'interfaces';
+
 import {
-  Wrapper,
-  Label,
-  InputStyled,
-  InputWrapper,
-  AddPlayerWrapper,
   AddPlayer,
-  DeleteButton
+  AddPlayerWrapper,
+  ClearDataWrapper,
+  InnerWrapper,
+  InputStyled,
+  Wrapper
 } from './Options.styles';
-import { ButtonTypes, InputTypes } from '../../constant';
 
-export interface Players {
-  id: number;
-  name: string;
-}
-export interface OptionsFormValues {
-
-}
 export interface OptionsProps {
-  values: FormikValues;
-  players: Players[];
-  // setFieldValue: (field: string, value: any, shouldValidate?: boolean) => Promise<void | FormikErrors<OptionsFormValues>>;
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
-  submitForm: () => void;
-  handleSubmit: () => void;
-  addPlayer: () => void;
-  deletePlayer: (id: number) => void;
+  options: OptionsState;
+  saveData: (data: OptionsState) => void;
+  clearData: () => void;
   onModalClose: () => void;
   className?: string;
 }
@@ -41,78 +31,113 @@ const defaultProps = {
 };
 
 const Options = (props: OptionsProps) => {
+  const [columns, setColumns] = useState<number>(0);
+  const [players, setPlayers] = useState<Player[]>([]);
+  
+  const delatePlayer = (id: number) => {
+    const restPlayers = _cloneDeep(players).filter((element: Player) => element.id !== id);
+
+    setPlayers(restPlayers);
+  };
+  
+  const changePlayer = (id: number, value: string) => {
+    // @TODO: refactor
+    const player = _cloneDeep(players).filter((element: Player) => element.id === id)[0];
+    const restPlayers = _cloneDeep(players).filter((element: Player) => element.id !== id);
+
+    const newPlayer = { ...player, name: value };
+    const newPlayers = [
+      ...restPlayers,
+      newPlayer
+    ];
+    const sortedPlayers = _orderBy(newPlayers, ['id']);
+
+    setPlayers(sortedPlayers);
+  };
+  
+  const addPlayer = () => {
+    const newPlayers = _cloneDeep(players);
+    newPlayers.push({ id: newPlayers.length + 1, name: '' });
+    
+    setPlayers(newPlayers);
+  };
+
+  useEffect (() => {
+    setColumns(props.options?.columns);
+    setPlayers(props.options?.players);
+  }, [props.options]);
+  
   return (
-    <form onSubmit={props.handleSubmit}>
+    <React.Fragment>
       <Wrapper className={props.className}>
-        <Label>Ilość kolumn</Label>
-        <InputWrapper>
+        <InnerWrapper>
+          <label htmlFor="oprionsComuns">Ilość kolumn</label>
           <InputStyled
             type={InputTypes.Number}
             name="columnsNumber"
-            onChange={(event: Event) => props.setFieldValue('columnsNumber', (event.target as HTMLInputElement).value)}
-            value={props.values.columnsNumber}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              console.log('aaaa', event, Number(event.target.value));
+              setColumns(Number(event.target.value))
+            }}
+            value={columns}
           />
-        </InputWrapper>
+        </InnerWrapper>
       </Wrapper>
-      {props.players.map((item: any, index: number) => (
-        <Wrapper
-          key={index}
-          className={props.className}
-        >
-          <Label>Gracz {index + 1}</Label>
-          <InputWrapper>
-            <InputStyled
-              disabled
-              type={InputTypes.Number}
-              name={`options.players[${index}]`}
-              placeholder="Id Gracza"
-              onChange={(event: Event) => props.setFieldValue(`players[${index}]`, {
-                ...item,
-                id: Number((event.target as HTMLInputElement).value)
-              })}
-              value={
-                props.players[index]
-                && props.players[index].id
-              }
-            />
+      <Wrapper>
+        <h1>Gracze</h1>
+        {players.map((item: Player, index: number) => (
+          <InnerWrapper key={index}>
+            <label>Gracz {index + 1}</label>
             <InputStyled
               type={InputTypes.Text}
               name={`options.players[${index}]`}
               placeholder="Nazwa Gracza"
-              onChange={(event: Event) => props.setFieldValue(`players[${index}]`, {
-                ...item,
-                name: (event.target as HTMLInputElement).value
-              })}
-              value={props.players[index]?.name}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => changePlayer(item.id, event.target.value)}
+              value={item.name}
             />
-          </InputWrapper>
-          <DeleteButton
-            title="Usuń Gracza"
-            type="button"
-            onClick={() => props.deletePlayer(index)}
+            <Button
+              variant={ButtonVariants.Icon}
+              color={ButtonColors.Secondary}
+              onClick={() => delatePlayer(item.id)}
+            >
+              <Icon
+                path={mdiClose}
+                size="2rem"
+              />
+            </Button>
+          </InnerWrapper>
+        ))}
+        <AddPlayerWrapper>
+          <AddPlayer onClick={() => addPlayer()}>
+            Dodaj nowego gracza
+          </AddPlayer>
+        </AddPlayerWrapper>
+        <Button
+          type={ButtonTypes.Submit}
+          onClick={() => {
+            props.saveData({ columns, players });
+            props.onModalClose();
+          }}
+        >
+          Zapisz
+        </Button>
+      </Wrapper>
+      <ClearDataWrapper>
+        <h1>Wyczyść wszystko</h1>
+        <p>Uwaga: To czynność nieodwracalna!</p>
+        <InnerWrapper>
+          <Button
+            type={ButtonTypes.Button}
+            color={ButtonColors.SecondaryDark}
+            onClick={() => {
+              props.clearData();
+            }}
           >
-            <Icon
-              path={mdiClose}
-              size="2rem"
-            />
-          </DeleteButton>
-        </Wrapper>
-      ))}
-      <AddPlayerWrapper>
-        <AddPlayer onClick={() => props.addPlayer()}>
-          Dodaj gracza
-        </AddPlayer>
-      </AddPlayerWrapper>
-      <Button
-        type={ButtonTypes.Submit}
-        onClick={() => {
-          props.submitForm();
-          props.onModalClose();
-        }}
-      >
-        Zapisz
-      </Button>
-    </form>
+            Wyczyść
+          </Button>
+        </InnerWrapper>
+      </ClearDataWrapper>
+    </React.Fragment>
   );
 }
 

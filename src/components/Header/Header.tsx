@@ -8,7 +8,8 @@ import { ButtonWrapper, StyledContainer, Title, Wrapper } from './Header.styles'
 
 export interface HeaderProps {
   className?: string;
-  optionsClick?: () => void;
+  optionsClickHandler?: () => void;
+  rulesClickHandler?: () => void;
 }
 const defaultProps = {
   className: ''
@@ -24,13 +25,13 @@ const Header = (props: HeaderProps) => {
         <ButtonWrapper>
           <Button
             color={ButtonColors.SecondaryDark}
-            onClick={props.optionsClick}
+            onClick={props.optionsClickHandler}
           >
             Opcje
           </Button>
           <Button
             color={ButtonColors.PrimaryDark}
-            onClick={() => {}}
+            onClick={props.rulesClickHandler}
           >
             Zasady
           </Button>

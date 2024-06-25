@@ -1,3 +1,8 @@
-import { ReactElement } from 'react';
+import React from 'react';
 
-export type Children = ReactElement | ReactElement[] | string | null;
+import store from 'features/store';
+
+export type Children = React.ReactElement | React.ReactElement[] | string | null;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

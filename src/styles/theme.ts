@@ -7,8 +7,9 @@ export const theme: ITheme = {
   ...typography,
   layout: {
     background: colors.colorMono.white,
-    width: '100rem',
+    width: '120rem',
     padding: '1rem',
+    modalDefaultPadding: '3rem',
     borderColor: '',
     boxShadow: '',
     transition: ''

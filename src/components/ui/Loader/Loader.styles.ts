@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-const LoaderWrapper = styled.div`
+import { LoaderProps } from './Loader';
+
+const LoaderWrapper = styled.div<LoaderProps>`
   display: flex;
   position: absolute;
   top: 0;

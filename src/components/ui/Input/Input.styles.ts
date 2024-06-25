@@ -1,38 +1,29 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-/* Variables */
-const inputBorderColor = (props: any) => props.theme.mainColors.darkGray;
-const inputBackground = (props: any) => props.theme.mainColors.lightGray;
-
-const labelActiveColor = (props: any) => props.theme.mainColors.primary;
 const disabledColor = '#cecece';
 
-/* Component style */
 const InputWrapper = styled.div`
   position: relative;
   width: 100%;
 `;
 
-/* {(props) => props.filledOrFocused && css`
-//   &:active,
-//   &:focus {
-//     border-color: ${labelActiveColor};
-//   }
-// `} */
-
 const StyledInput = styled.input`
   width: 100%;
-  padding: .5rem;
-  border: 1px solid ${inputBorderColor};
+  height: 4rem; // size like input
+  padding: .6rem 2.5rem;
+  border: .1rem solid ${(props) => props.theme.color.lightGray};
+  border-radius: 2.5rem;
   outline: 0;
-  background: ${inputBackground};
+  background: ${(props) => props.theme.color.lightGray};
   font-family: inherit;
-  font-size: ${(props) => props.theme.fontSize.big};
+  font-size: ${(props) => props.theme.fontSize.medium};
 
   &:active,
   &:focus {
-    border-color: ${labelActiveColor};
+    border-width: .2rem;
+    padding: .5rem 2.4rem;
+    border-color: ${(props) => props.theme.mainColors.primary};
   }
   
   ${(props) => props.disabled && css`
