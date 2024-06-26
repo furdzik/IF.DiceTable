@@ -14,26 +14,25 @@ export interface LoaderProps {
   className?: string | undefined;
   covered?: boolean;
   fixed?: boolean;
-  static?: boolean;
+  sstatic?: boolean;
   transparent?: boolean;
 }
-const defaultProps = {
-  center: true,
-  className: '',
-  covered: false,
-  fixed: false,
-  static: false,
-  transparent: false
-}
 
-const Loader = (props: LoaderProps) => {
+const Loader = ({
+  center = true,
+  className = '',
+  covered = false,
+  fixed = false,
+  sstatic = false,
+  transparent = false
+}: LoaderProps) => {
   const loader = (
     <LoaderWrapper
-      className={props.className}
-      covered={props.covered}
-      fixed={props.fixed}
-      static={props.static}
-      transparent={props.transparent}
+      className={className}
+      covered={covered}
+      fixed={fixed}
+      sstatic={sstatic}
+      transparent={transparent}
     >
       <Spinner>
         <Svg
@@ -58,7 +57,7 @@ const Loader = (props: LoaderProps) => {
   return (
     <React.Fragment>
       {
-        props.center ? (
+        center ? (
           <CenterWrapper>
             {loader}
           </CenterWrapper>
@@ -67,7 +66,5 @@ const Loader = (props: LoaderProps) => {
     </React.Fragment>
   );
 };
-
-Loader.defaultProps = defaultProps;
 
 export default Loader;

@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setAutoFreeze } from 'immer';
 
-// @ts-ignore
 import optionsReducer from 'features/options/optionsSlice';
 import scoresTableReducer from 'features/scoresTable/scoresTableSlice';
 

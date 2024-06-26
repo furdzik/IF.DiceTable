@@ -20,7 +20,7 @@ const LoaderWrapper = styled.div<LoaderProps>`
   ${(props) => props.fixed && css`
     position: fixed;
   `}
-  ${(props) => props.static && css`
+  ${(props) => props.sstatic && css`
     position: static;
   `}
   ${(props) => props.transparent && css`

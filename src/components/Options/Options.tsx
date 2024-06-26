@@ -26,11 +26,8 @@ export interface OptionsProps {
   onModalClose: () => void;
   className?: string;
 }
-const defaultProps = {
-  className: ''
-};
 
-const Options = (props: OptionsProps) => {
+const Options = ({ options, saveData, clearData, onModalClose, className = '' }: OptionsProps) => {
   const [columns, setColumns] = useState<number>(0);
   const [players, setPlayers] = useState<Player[]>([]);
   
@@ -63,13 +60,13 @@ const Options = (props: OptionsProps) => {
   };
 
   useEffect (() => {
-    setColumns(props.options?.columns);
-    setPlayers(props.options?.players);
-  }, [props.options]);
+    setColumns(options?.columns);
+    setPlayers(options?.players);
+  }, [options]);
   
   return (
     <React.Fragment>
-      <Wrapper className={props.className}>
+      <Wrapper className={className}>
         <InnerWrapper>
           <label htmlFor="oprionsComuns">Ilość kolumn</label>
           <InputStyled
@@ -115,8 +112,8 @@ const Options = (props: OptionsProps) => {
         <Button
           type={ButtonTypes.Submit}
           onClick={() => {
-            props.saveData({ columns, players });
-            props.onModalClose();
+            saveData({ columns, players });
+            onModalClose();
           }}
         >
           Zapisz
@@ -130,7 +127,7 @@ const Options = (props: OptionsProps) => {
             type={ButtonTypes.Button}
             color={ButtonColors.SecondaryDark}
             onClick={() => {
-              props.clearData();
+              clearData();
             }}
           >
             Wyczyść
@@ -140,7 +137,5 @@ const Options = (props: OptionsProps) => {
     </React.Fragment>
   );
 }
-
-Options.defaultProps = defaultProps;
 
 export default Options;

@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { scoresTableState } from 'interfaces';
+import { config } from 'constant';
 
 const initialState: scoresTableState = {
-  columns: 3,
-  players: [
-    { id: 1, name: 'Gracz 1' },
-    { id: 2, name: 'Gracz 2' }
-  ]
+  config,
+  results: {}
 };
 
 const scoresTable = createSlice({

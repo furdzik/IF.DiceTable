@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { AppDispatch } from 'interfaces';
+import { AppDispatch, RootState } from 'interfaces';
+
+import { NUMBER_OF_ROWS } from 'constant';
 
 import Container from 'components/Container';
 import Header from 'components/Header';
@@ -22,6 +24,9 @@ const MainPage = () => {
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [rulesVisible, setRulesVisible] = useState(false);
 
+  const columns = useSelector((state: RootState) => state.options.columns);
+  const config = useSelector((state: RootState) => state.scoresTable.config);
+  
   useEffect (() => {
     dispatch(initOptions());
   }, [dispatch]);
@@ -42,7 +47,11 @@ const MainPage = () => {
       {
         rulesVisible ? (
           <Modal header="Zasady gry" onClose={() => setRulesVisible(!rulesVisible)}>
-            <Rules />
+            <Rules
+              numberOfRounds={NUMBER_OF_ROWS * columns}
+              numberOfColumns={columns}
+              config={config}
+            />
           </Modal>
         ) : null
       }

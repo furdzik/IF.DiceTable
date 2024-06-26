@@ -16,74 +16,67 @@ export interface Icon {
   color: string;
   iconPath: string;
 }
-export type Sizes = ButtonsSizes.Small | ButtonsSizes.Normal | ButtonsSizes.Large;
-export type Types = ButtonTypes.Button | ButtonTypes.Submit | ButtonTypes.Reset;
-export type Variants = ButtonVariants.Button | ButtonVariants.Icon | ButtonVariants.Link;
-export type Colors = ButtonColors.Primary | ButtonColors.Secondary | ButtonColors.PrimaryDark | ButtonColors.SecondaryDark;
 export interface ButtonProps {
   children?: Children | null;
   className?: string;
-  color?: Colors;
+  color?: ButtonColors;
   disabled?: boolean;
   icon?: Icon | null;
-  size?: Sizes;
-  type?: Types | undefined;
-  variant?: Variants | undefined;
+  size?: ButtonsSizes;
+  type?: ButtonTypes | undefined;
+  variant?: ButtonVariants | undefined;
   onClick?: () => void;
 }
-const defaultProps = {
-  children: null,
-  className: '',
-  color: ButtonColors.Primary,
-  disabled: false,
-  icon: null,
-  rounded: true,
-  size: ButtonsSizes.Normal,
-  type: ButtonTypes.Button,
-  variant: ButtonVariants.Button
-};
 
-const Button = (props: ButtonProps) => {
+const Button = ({
+  children = null,
+  className = '',
+  color = ButtonColors.Primary,
+  disabled = false,
+  icon = null,
+  size = ButtonsSizes.Normal,
+  type = ButtonTypes.Button,
+  variant =  ButtonVariants.Button,
+  onClick = () => {}
+}: ButtonProps) => {
   const iconElement = () => (
     <IconWrapper
-      color={props.color}
-      disabled={props.disabled}
-      icon={props.icon}
-      type={props.type}
-      variant={props.variant}
+      color={color}
+      disabled={disabled}
+      icon={icon}
+      type={type}
+      variant={variant}
     >
-      <IconStyled path={props.icon?.iconPath || ''} />
+      <IconStyled path={icon?.iconPath || ''} />
     </IconWrapper>
   );
 
   return (
     <ButtonWrapper
-      color={props.color}
-      className={props.className}
+      color={color}
+      className={className}
       // @ts-ignore
-      type={props.type}
-      disabled={props.disabled}
-      size={props.size}
-      variant={props.variant}
-      onClick={props.onClick}
+      type={type}
+      disabled={disabled}
+      size={size}
+      variant={variant}
+      onClick={onClick}
     >
       {
-        props.icon ? (
+        icon ? (
           iconElement()
         ) : null
       }
       {
-        props.children ? (
+        children ? (
           <ButtonText>
-            {props.children}
+            {children}
           </ButtonText>
         ) : null
       }
     </ButtonWrapper>
   );
 };
-
-Button.defaultProps = defaultProps;
 
 export default Button;
 

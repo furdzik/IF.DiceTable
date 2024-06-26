@@ -11,13 +11,10 @@ export interface HeaderProps {
   optionsClickHandler?: () => void;
   rulesClickHandler?: () => void;
 }
-const defaultProps = {
-  className: ''
-};
 
-const Header = (props: HeaderProps) => {
+const Header = ({ optionsClickHandler, rulesClickHandler, className = '' }: HeaderProps) => {
   return (
-    <Wrapper className={props.className}>
+    <Wrapper className={className}>
       <StyledContainer>
         <Title>
           Kości
@@ -25,13 +22,13 @@ const Header = (props: HeaderProps) => {
         <ButtonWrapper>
           <Button
             color={ButtonColors.SecondaryDark}
-            onClick={props.optionsClickHandler}
+            onClick={optionsClickHandler}
           >
             Opcje
           </Button>
           <Button
             color={ButtonColors.PrimaryDark}
-            onClick={props.rulesClickHandler}
+            onClick={rulesClickHandler}
           >
             Zasady
           </Button>
@@ -40,7 +37,5 @@ const Header = (props: HeaderProps) => {
     </Wrapper>
   );
 };
-
-Header.defaultProps = defaultProps;
 
 export default Header;

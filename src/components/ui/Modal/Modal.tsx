@@ -51,17 +51,18 @@ export interface ModalProps {
   isOnlyMobile?: boolean;
   onClose?: (event?: unknown) => void;
 }
-const defaultProps = {
-  className: '',
-  header: null,
-  isLoading: false,
-  isMobileFilter: false,
-  isOnlyMobile: false,
-  footer: null
-}
 
-const Modal = (props: ModalProps): React.ReactElement | null  => {
-  const { clickAwayRef } = useClickAway<HTMLDivElement>(props.onClose || (() => {}));
+const Modal = ({
+  children,
+  className = '',
+  footer = null,
+  header = null,
+  isLoading = false,
+  isMobileFilter = false,
+  isOnlyMobile = false,
+  onClose = () => {}
+}: ModalProps): React.ReactElement | null  => {
+  const { clickAwayRef } = useClickAway<HTMLDivElement>(onClose);
   const theme = useTheme()
 
   const modalHeaderRef = useRef<ClientHeight>(null);
@@ -91,7 +92,7 @@ const Modal = (props: ModalProps): React.ReactElement | null  => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        props.onClose?.();
+        onClose?.();
       }
     };
 
@@ -103,29 +104,29 @@ const Modal = (props: ModalProps): React.ReactElement | null  => {
       document.removeEventListener('keydown', handleKeyDown, false);
       window.removeEventListener('resize', throttledCalculateViewportHeight);
     };
-  }, [props]);
+  }, [ children, className, footer, header, isLoading, isMobileFilter, isOnlyMobile, onClose ]);
 
   return ReactDOM.createPortal(
     <LayerWrapper>
       <ModalWrapper
-        className={props.className}
-        isLoading={props.isLoading}
+        className={className}
+        isLoading={isLoading}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modalHeaderText"
         aria-describedby="modalContainer"
         onClick={handleModalClick}
-        isMobileFilter={props.isMobileFilter}
+        isMobileFilter={isMobileFilter}
         ref={clickAwayRef}
       >
         <React.Fragment>
           {
-            props.header ? (
+            header ? (
               <ModalHeader ref={modalHeaderRef as React.RefObject<HTMLDivElement>}>
-                <Title>{props.header}</Title>
+                <Title>{header}</Title>
                 <CloseButton
                   type="button"
-                  onClick={props.onClose}
+                  onClick={onClose}
                 >
                   <Icon
                     path={mdiClose}
@@ -138,24 +139,24 @@ const Modal = (props: ModalProps): React.ReactElement | null  => {
           }
         </React.Fragment>
         <ModalContent
-          isMobileFilter={props.isMobileFilter}
-          isOnlyMobile={props.isOnlyMobile}
+          isMobileFilter={isMobileFilter}
+          isOnlyMobile={isOnlyMobile}
           headerFooterHeight={headerFooterHeight}
         >
           {
-            props.isLoading ? (
+            isLoading ? (
               <Loader />
-            ) : props.children
+            ) : children
           }
         </ModalContent>
         <React.Fragment>
           {
-            props.footer ? (
+            footer ? (
               <ModalFooter
-                isOnlyMobile={props.isOnlyMobile}
+                isOnlyMobile={isOnlyMobile}
                 ref={modalFooterRef as React.RefObject<HTMLDivElement>}
               >
-                {props.footer}
+                {footer}
               </ModalFooter>
             ) : null
           }
@@ -165,7 +166,5 @@ const Modal = (props: ModalProps): React.ReactElement | null  => {
     document.body
   );
 };
-
-Modal.defaultProps = defaultProps;
 
 export default Modal;

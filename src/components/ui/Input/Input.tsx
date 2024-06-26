@@ -7,7 +7,6 @@ import {
   StyledInput
 } from './Input.styles';
 
-export type InputType = InputTypes.Text | InputTypes.File | InputTypes.Email | InputTypes.Number;
 export interface InputProps {
   name: string;
   value: string | number;
@@ -15,38 +14,40 @@ export interface InputProps {
   disabled?: boolean;
   maxLength?: number;
   placeholder?: string;
-  type?: InputType;
+  type?: InputTypes;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   onFocus?: () => void;
 }
-const defaultProps = {
-  className: '',
-  disabled: false,
-  maxLength: undefined,
-  placeholder: undefined,
-  type: InputTypes.Text
-};
 
-const Input = React.forwardRef((props: InputProps, ref) => (
-  <InputWrapper className={props.className}>
+const Input = React.forwardRef(({
+  name,
+  value,
+  className = '',
+  disabled = false,
+  maxLength,
+  placeholder,
+  type = InputTypes.Text,
+  onChange = () => {},
+  onBlur = () => {},
+  onFocus = () => {}
+}: InputProps, ref) => (
+  <InputWrapper className={className}>
     <StyledInput
-      type={props.type}
+      type={type}
       ref={ref as React.RefObject<HTMLInputElement>}
-      name={props.name}
-      id={`input_${props.name}`}
-      value={props.value}
-      onChange={props.onChange}
-      disabled={props.disabled}
-      placeholder={props.placeholder}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
+      name={name}
+      id={`input_${name}`}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      placeholder={placeholder}
+      onFocus={onFocus}
+      onBlur={onBlur}
       autoComplete="off"
-      maxLength={props.maxLength}
+      maxLength={maxLength}
     />
   </InputWrapper>
 ));
-
-Input.defaultProps = defaultProps;
 
 export default Input;

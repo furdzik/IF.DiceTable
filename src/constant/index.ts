@@ -1,3 +1,5 @@
+export * from './config';
+
 export enum ButtonsSizes {
   Small = 'small',
   Normal = 'normal',
@@ -31,3 +33,5 @@ export enum InputTypes {
 
 export const SAFARI_BAR_VH = 0.01;
 export const VIEWPORT_SIZE_CHECKING_DELAY = 500;
+
+export const NUMBER_OF_ROWS = 27;

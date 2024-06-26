@@ -7,9 +7,9 @@ export interface ContainerProps {
   className?: string;
 }
 
-const Container = (props: ContainerProps) => (
-  <Wrapper className={props.className}>
-    {props.children}
+const Container = ({ children, className = '' }: ContainerProps) => (
+  <Wrapper className={className}>
+    {children}
   </Wrapper>
 );
 

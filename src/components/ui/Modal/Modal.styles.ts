@@ -34,7 +34,7 @@ const ModalWrapper = styled.div<ModalProps>`
   height: calc(100% - .5rem);
   border: .2rem solid ${(props) => props.theme.mainColors.primary};
   background: ${(props) => props.theme.colorMono.white};
-  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  box-shadow: 0 1.1rem 1.5rem -.7rem rgba(0, 0, 0, .2), 0 2.4rem 3.8rem 3rem rgba(0, 0, 0, .14), 0 .9rem 4.6rem .8rem rgba(0, 0, 0, .12);
   
   ${(props) => props.isLoading && css`
     min-height: 10rem;
@@ -60,7 +60,7 @@ const ModalHeader = styled.div<ModalProps>`
 
   ${(props) => props.isOnlyMobile && css`
     padding: 1.5rem 1.55rem;
-    box-shadow:  0 2px 7px ${shadowColor}, 0 1px 3px ${shadowColor};
+    box-shadow:  0 .2rem .7rem ${shadowColor}, 0 .1rem .3rem ${shadowColor};
   `}
 `;
 
@@ -116,7 +116,7 @@ const ModalFooter = styled.div<FooterProps>`
 
   ${(props) => props.isOnlyMobile && css`
     padding: 1rem 1.55rem;
-    box-shadow: 0 -2px 7px ${shadowColor}, 0 -1px 3px ${shadowColor};
+    box-shadow: 0 -2px 7px ${shadowColor}, 0 -.1rem .3rem ${shadowColor};
   `}
 `;
 

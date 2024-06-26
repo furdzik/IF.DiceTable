@@ -8,19 +8,13 @@ export interface ScoresTableProps {
   className?: string | undefined;
 }
 
-const defaultProps = {
-  className: ''
-}
-
-const ScoresTable = (props: ScoresTableProps) => {
-  console.log(props);
+const ScoresTable = ({ className = '' }: ScoresTableProps) => {
+  console.log('nic');
   return (
-    <Wrapper className={props.className}>
+    <Wrapper className={className}>
       Jeszcze nic
     </Wrapper>
   );
 }
-
-ScoresTable.defaultProps = defaultProps;
 
 export default ScoresTable;

@@ -13,8 +13,7 @@ export interface ScoresTableProps {
 const ScoresTable = (props: ScoresTableProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const columns = useSelector((state: RootState) => state.options.columns);
-  const players = useSelector((state: RootState) => state.options.players);
+  const config = useSelector((state: RootState) => state.scoresTable.config);
 
   useEffect (() => {
     dispatch(loadScoresTable());

@@ -6,7 +6,7 @@ const Wrapper = styled.section`
   & + & {
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid ${(props) => props.theme.color.gray};
+    border-top: .1rem solid ${(props) => props.theme.color.gray};
   }
 `;
 
