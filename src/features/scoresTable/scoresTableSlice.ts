@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { scoresTableState } from 'interfaces';
-import { config } from 'constant';
+import { config, scoresDefault } from 'constant';
 
 const initialState: scoresTableState = {
   config,
-  results: {}
+  scores: scoresDefault
 };
 
 const scoresTable = createSlice({

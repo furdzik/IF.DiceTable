@@ -36,5 +36,5 @@ export interface Config {
 
 export interface scoresTableState {
   config: Config;
-  results: any;
+  scores: unknown; // @TODO
 }

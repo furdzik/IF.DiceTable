@@ -1,9 +1,14 @@
 import styled from '@emotion/styled';
 
-const Wrapper = styled.table`
+const Wrapper = styled.div`
+
+`;
+
+const Table = styled.table`
 
 `;
 
 export {
-  Wrapper
+  Wrapper,
+  Table
 };

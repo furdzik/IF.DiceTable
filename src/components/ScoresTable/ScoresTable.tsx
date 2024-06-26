@@ -1,18 +1,26 @@
 import React from 'react';
 
+import { Config } from 'interfaces';
+
 import {
-  Wrapper
+  Wrapper,
+  Table
 } from './ScoresTable.styles';
 
 export interface ScoresTableProps {
+  config: Config;
+  scores: unknown;
   className?: string | undefined;
 }
 
-const ScoresTable = ({ className = '' }: ScoresTableProps) => {
-  console.log('nic');
+const ScoresTable = ({ config, scores, className = '' }: ScoresTableProps) => {
+  console.log(config);
+  console.log(scores);
   return (
     <Wrapper className={className}>
-      Jeszcze nic
+      <Table>
+        
+      </Table>
     </Wrapper>
   );
 }

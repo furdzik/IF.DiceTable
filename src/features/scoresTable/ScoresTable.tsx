@@ -14,13 +14,14 @@ const ScoresTable = (props: ScoresTableProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const config = useSelector((state: RootState) => state.scoresTable.config);
+  const scores = useSelector((state: RootState) => state.scoresTable.scores);
 
   useEffect (() => {
     dispatch(loadScoresTable());
   }, [dispatch]);
 
   return (
-    <ScoresTableComponent />
+    <ScoresTableComponent config={config} scores={scores} />
   );
 }
 

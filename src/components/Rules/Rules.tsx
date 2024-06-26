@@ -14,7 +14,6 @@ export type OptionsProps = {
 }
 
 const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0 }: OptionsProps) => {
-  console.log('config', config);
   return (
     <div className={className}>
       <Section>

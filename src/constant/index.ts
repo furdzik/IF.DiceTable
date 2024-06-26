@@ -1,4 +1,5 @@
 export * from './config';
+export * from './scores';
 
 export enum ButtonsSizes {
   Small = 'small',
