@@ -40,37 +40,37 @@ export const config: Config = {
   school: {
     1: {
       id: FigureId.School1,
-      name: 'Jedynki',
+      name: '1',
       value: 3 * -1,
       resultsId: ResultsId.School
     },
     2: {
       id: FigureId.School2,
-      name: 'Dwójki',
+      name: '2',
       value: 3 * -2,
       resultsId: ResultsId.School
     },
     3: {
       id: FigureId.School3,
-      name: 'Trójki',
+      name: '3',
       value: 3 * -3,
       resultsId: ResultsId.School
     },
     4: {
       id: FigureId.School4,
-      name: 'Czwórki',
+      name: '4',
       value: 3 * -4,
       resultsId: ResultsId.School
     },
     5: {
       id: FigureId.School5,
-      name: 'Piątki',
+      name: '5',
       value: 3 * -5,
       resultsId: ResultsId.School
     },
     6: {
       id: FigureId.School6,
-      name: 'Szóstki',
+      name: '6',
       value: 3 * -6,
       resultsId: ResultsId.School
     }
@@ -248,10 +248,10 @@ export const config: Config = {
       value: 100
     },
     firstAboveThousand: {
-      name: 'Przekroczenie 1000 ptk',
+      name: '> 1000',
       value: 100
     },
-    SameValueVice: {
+    sameValueVice: {
       name: 'Takie same wyniki Vicek',
       value: 50
     },

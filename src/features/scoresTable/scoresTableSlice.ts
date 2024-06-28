@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { scoresTableState } from 'interfaces';
-import { config, scoresDefault } from 'constant';
+import _cloneDeep from 'lodash/cloneDeep';
 
-const initialState: scoresTableState = {
+import { Player, ScorePlayers, ScoresTableState } from 'interfaces';
+import { config, scoresDefault } from 'constant';
+import { iterateAndSetNewValue } from 'utils';
+
+const initialState: ScoresTableState = {
   config,
-  scores: scoresDefault
+  scores: null
 };
 
 const scoresTable = createSlice({
@@ -18,14 +21,27 @@ const scoresTable = createSlice({
         ...state
       };
     },
-    loadScoresTable (state) {
-      const stateFromStorage = JSON.parse(localStorage.getItem('scoresTable') || '{}');
+    loadScoresTable (state, action) {
+      const { columns, players } = action.payload;
+
+      let score: any = _cloneDeep(scoresDefault);
+      iterateAndSetNewValue(score, columns);
+      
+      const newScores: ScorePlayers = {};
+      players.forEach((element: Player) => {
+        newScores[`player${element.id}`] = _cloneDeep(score);
+      });
+      
+      localStorage.setItem('scoresTable', JSON.stringify({
+        ...state,
+        scores: newScores 
+      }));
+
       return {
         ...state,
-        ...stateFromStorage
+        scores: newScores
       };
-    },
-    
+    }
   }
 });
 

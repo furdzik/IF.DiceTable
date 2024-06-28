@@ -73,7 +73,6 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
             type={InputTypes.Number}
             name="columnsNumber"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              console.log('aaaa', event, Number(event.target.value));
               setColumns(Number(event.target.value))
             }}
             value={columns}

@@ -7,12 +7,14 @@ import { NUMBER_OF_ROWS } from 'constant';
 
 import Container from 'components/Container';
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import Rules from 'components/Rules';
 import Modal from 'components/ui/Modal';
 import Options from 'features/options/Options';
 import ScoresTable from 'features/scoresTable/ScoresTable';
 
 import { initOptions } from 'features/options/optionsSlice';
+import { initScoresTable } from 'features/scoresTable/scoresTableSlice';
 
 import {
   Wrapper
@@ -29,6 +31,7 @@ const MainPage = () => {
   
   useEffect (() => {
     dispatch(initOptions());
+    dispatch(initScoresTable());
   }, [dispatch]);
 
   return (
@@ -60,6 +63,7 @@ const MainPage = () => {
           <ScoresTable />
         </Wrapper>
       </Container>
+      <Footer />
     </React.Fragment>
   );
 }

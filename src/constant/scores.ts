@@ -1,4 +1,14 @@
-export const scoresDefault = {
+import { Config, ScoreElement } from 'interfaces';
+
+export const figureScore: ScoreElement = {
+  columnId: null,
+  throw: null,
+  dice: null,
+  value: null,
+  quantity: null
+}
+
+export const scoresDefault: Config = {
   school: {
     1: [],
     2: [],
@@ -45,15 +55,16 @@ export const scoresDefault = {
     }
   },
   bonuses: {
-    schoolGeneral: 0,
-    firstAboveThousand: 0,
-    SameValueVice: 0,
-    sameValueGeneral: 0,
-    section1AllResults: 0,
-    section3AllResults: 0,
-    section4AllResults: 0,
-    section5AllResults: 0,
-    section6AllResults: 0,
+    schoolGeneral: null,
+    firstAboveThousand: null,
+    sameValueVice: null,
+    sameValueGeneral: null,
+    section1AllResults: null,
+    section3AllResults: null,
+    section4AllResults: null,
+    section5AllResults: null,
+    section6AllResults: null,
     columnAllResults: []
-  }
+  },
+  sum: []
 }

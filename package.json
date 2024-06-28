@@ -13,7 +13,6 @@
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.5.2",
     "@types/node": "16.18.96",
-    "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
     "formik": "2.4.6",
     "lodash": "4.17.21",
@@ -52,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
-    "@types/lodash": "^4.17.0"
+    "@types/lodash": "4.17.0",
+    "@types/react": "18.3.3"
   }
 }
