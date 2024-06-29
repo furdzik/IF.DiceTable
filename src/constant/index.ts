@@ -1,3 +1,5 @@
+import { Colors } from 'interfaces';
+
 export * from './config';
 export * from './scores';
 
@@ -36,3 +38,14 @@ export const SAFARI_BAR_VH = 0.01;
 export const VIEWPORT_SIZE_CHECKING_DELAY = 500;
 
 export const NUMBER_OF_ROWS = 27;
+
+export const colorsByOrder = [
+  Colors.Pink,
+  Colors.Blue,
+  Colors.Orange,
+  Colors.Green,
+  Colors.Red,
+  Colors.Velvet
+];
+
+export const MAX_PLAYERS_ALLOWED = 6;

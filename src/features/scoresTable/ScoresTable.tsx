@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from 'interfaces';
 
 import ScoresTableComponent from 'components/ScoresTable';
 
-import { loadScoresTable } from './scoresTableSlice';
+import { initScoresTable } from './scoresTableSlice';
 
 const ScoresTable = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +15,7 @@ const ScoresTable = () => {
   const players = useSelector((state: RootState) => state.options.players);
   
   useEffect (() => {
-    dispatch(loadScoresTable({ columns, players }));
+    dispatch(initScoresTable({ columns, players }));
   }, [dispatch, columns, players]);
   
   const scores = useSelector((state: RootState) => state.scoresTable.scores);

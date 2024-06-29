@@ -6,8 +6,16 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _orderBy from 'lodash/orderBy';
 
 import Button from 'components/ui/Button';
+import ColorInput from 'components/ui/ColorInput';
 
-import { ButtonColors, ButtonTypes, ButtonVariants, InputTypes } from 'constant';
+import {
+  ButtonColors,
+  ButtonTypes,
+  ButtonVariants,
+  InputTypes,
+  colorsByOrder,
+  MAX_PLAYERS_ALLOWED
+} from 'constant';
 import { OptionsState, Player } from 'interfaces';
 
 import {
@@ -30,31 +38,39 @@ export interface OptionsProps {
 const Options = ({ options, saveData, clearData, onModalClose, className = '' }: OptionsProps) => {
   const [columns, setColumns] = useState<number>(0);
   const [players, setPlayers] = useState<Player[]>([]);
-  
+
   const delatePlayer = (id: number) => {
     const restPlayers = _cloneDeep(players).filter((element: Player) => element.id !== id);
 
     setPlayers(restPlayers);
   };
   
-  const changePlayer = (id: number, value: string) => {
+  const changePlayer = (id: number, name: string, color: string | undefined) => {
     // @TODO: refactor
     const player = _cloneDeep(players).filter((element: Player) => element.id === id)[0];
     const restPlayers = _cloneDeep(players).filter((element: Player) => element.id !== id);
 
-    const newPlayer = { ...player, name: value };
-    const newPlayers = [
+    const changedPlayer = { ...player, name, color };
+    const changedPlayers = [
       ...restPlayers,
-      newPlayer
+      changedPlayer
     ];
-    const sortedPlayers = _orderBy(newPlayers, ['id']);
+    const sortedPlayers = _orderBy(changedPlayers, ['id']);
 
     setPlayers(sortedPlayers);
   };
   
   const addPlayer = () => {
+    if (players.length >= MAX_PLAYERS_ALLOWED) {
+      return;
+    }
+
     const newPlayers = _cloneDeep(players);
-    newPlayers.push({ id: newPlayers.length + 1, name: '' });
+    newPlayers.push({ 
+      id: newPlayers.length + 1,
+      name: `Gracz ${newPlayers.length + 1}`,
+      color: colorsByOrder[newPlayers.length]
+    });
     
     setPlayers(newPlayers);
   };
@@ -86,10 +102,15 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
             <label>Gracz {index + 1}</label>
             <InputStyled
               type={InputTypes.Text}
-              name={`options.players[${index}]`}
+              name={`options.players[${index}].name`}
               placeholder="Nazwa Gracza"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => changePlayer(item.id, event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => changePlayer(item.id, event.target.value, colorsByOrder[index])}
               value={item.name}
+            />
+            <ColorInput
+              onChange={(color: string | undefined) => changePlayer(item.id, item.name, color)}
+              value={item.color}
+              defaultValue={colorsByOrder[index]}
             />
             <Button
               variant={ButtonVariants.Icon}

@@ -1,7 +1,9 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { css } from '@emotion/react';
 
-import { EmotionTheme } from 'interfaces';
+import { hexToRgbMixin } from 'styles/mixins';
+
+import { Colors, EmotionTheme } from 'interfaces';
 
 import { RowVariants } from './ScoresTable';
 
@@ -12,8 +14,9 @@ export interface RowProps {
   children?: any;
 }
 
-export interface ColumnProps {
-  children?: any;
+export interface PlayersProps {
+  players?: number | undefined;
+  playerColor?: Colors | string | undefined;
 }
 
 const Wrapper = styled.div`
@@ -25,26 +28,36 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const TablesWrapper = styled.section`
+const TablesWrapper = styled.section<PlayersProps>`
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0;
   width: calc(50% - .5rem);
+  
+  ${(props) => props.players && props.players > 2 && props.players < 4 && css`
+    width: calc((100% / ${props.players}) - (1rem * (${props.players } - 1) / ${props.players }));
+  `};
+  ${(props) => props.players && props.players > 4 && css`
+    width: calc((100% / 3) - (1rem * (3 - 1) / 3 ));
+  `};
 `;
 
-const Table = styled.table`
+const Table = styled.table<PlayersProps>`
   border-collapse: collapse;
   margin-bottom: .2rem;
   width: 50%;
-  border: .2rem solid ${(props) => props.theme.mainColors.primary};
-
+  border: .2rem solid ${(props) => props.playerColor || props.theme.mainColors.primary};
+  
+  ${(props) => props.players === 2 && css`
+    width: 50%;
+  `};
+  
   &:first-of-type {
     width: 100%;
     margin-bottom: 1rem;
-    border: .2rem solid ${(props) => props.theme.mainColors.secondary};
-    font-size: ${(props) => props.theme.fontSize.big};
+    border: .2rem solid ${(props) => props.playerColor || props.theme.mainColors.secondary};
+    font-size: ${(props) => props.theme.fontSize.normal};
   }
   &:last-of-type {
     margin-left: -.2rem;
@@ -52,17 +65,17 @@ const Table = styled.table`
   }
 `;
 
-const Row = (props: EmotionTheme & RowProps) => css`
+const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   min-width: 2.5rem;
   height: 2.5rem;
-  padding: .2rem .3rem;
+  padding: .2rem .1rem;
   border: .1rem solid ${props.theme.color.darkGray};
   border-top: 0;
   text-align: center;
   
   &:first-of-type {
-    background: #e2e2e2;
-    font-size: ${props.theme.fontSize.medium};
+    background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)}; // #e2e2e2;
+    font-size: ${props.theme.fontSize.small};
     font-weight: ${props.theme.fontWeight.bold};
     text-transform: uppercase;
   }
@@ -71,33 +84,26 @@ const Row = (props: EmotionTheme & RowProps) => css`
     &, &:first-of-type {
       color: ${props.theme.colorMono.white};
       border: none;
-      background: ${props.theme.mainColors.secondary};
+      background: ${props.playerColor || props.theme.mainColors.secondary};
       text-transform: uppercase;
       font-size: ${props.theme.fontSize.big};
     }
   `};
   ${props.variant === RowVariants.Sum && css`
     &, &:first-of-type {
-      background: #f5c4e0;
+      background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)}; // #f5c4e0
       text-transform: uppercase;
       width: 50%;
-      border: .1rem solid #f5c4e0;
+      border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
     }
   `};
   ${props.variant === RowVariants.FigureGrup && css`
     &, &:first-of-type {
-      background: ${props.theme.color.lightGreen};
+      background: ${hexToRgbMixin(props.playerColor as string, .7) || props.theme.color.lightGreen};
       color: ${props.theme.colorMono.white};
       text-transform: uppercase;
       font-size: ${props.theme.fontSize.normal};
     }
-  `};
-  ${props.normalBorder && css`
-    &, &:first-of-type {
-      border-right: .1rem solid ${props.theme.color.darkGray};
-      font-size: ${props.theme.fontSize.normal};
-    }
-    border-right: .1rem solid ${props.theme.color.darkGray};
   `};
   ${props.separator && css`
     padding: 0;
@@ -106,11 +112,11 @@ const Row = (props: EmotionTheme & RowProps) => css`
   `};
 `;
 
-const Th = styled.th<RowProps>`
+const Th = styled.th<RowProps & PlayersProps>`
   ${Row};
 `;
 
-const Td = styled.td<RowProps>`
+const Td = styled.td<RowProps & PlayersProps>`
   ${Row};
 `;
 

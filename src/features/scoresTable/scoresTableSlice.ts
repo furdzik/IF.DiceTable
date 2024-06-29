@@ -15,13 +15,14 @@ const scoresTable = createSlice({
   name: 'scoresTable',
   initialState,
   reducers: {
-    initScoresTable (state) {
-      localStorage.setItem('scoresTable', JSON.stringify({ ...state }));
+    loadScoresTable (state) {
+      const stateFromStorage = JSON.parse(localStorage.getItem('scoresTable') || '{}');
       return {
-        ...state
+        ...state,
+        ...stateFromStorage
       };
     },
-    loadScoresTable (state, action) {
+    initScoresTable (state, action) {
       const { columns, players } = action.payload;
 
       let score: any = _cloneDeep(scoresDefault);

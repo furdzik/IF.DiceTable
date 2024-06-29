@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
+import { breakpoints } from 'styles/basic';
+
 import { ModalProps } from './Modal';
-import { breakpoints } from '../../../styles/basic';
 
 const shadowColor = 'rgba(0, 0, 0, 0.1)';
 
@@ -54,7 +56,7 @@ const ModalWrapper = styled.div<ModalProps>`
 
 const ModalHeader = styled.div<ModalProps>`
   position: relative;
-  margin: 0 2.5rem 2rem;
+  margin: 0 2.5rem;
   padding: 2rem 0;
   border-bottom: .2rem solid ${(props) => props.theme.mainColors.primary};
 
@@ -89,7 +91,7 @@ const ModalContent = styled.div<ModalProps & ModalContentProps>`
   overflow-y: auto;
   max-height: 76.6vh;
   max-height: calc(var(--vh, 1vh) * 76.6);
-  padding: 0 ${(props) => props.theme.layout.modalDefaultPadding} ${(props) => props.theme.layout.modalDefaultPadding};
+  padding: ${(props) => props.theme.layout.modalDefaultPadding} ${(props) => props.theme.layout.modalDefaultPadding};
 
   @media only screen and (max-height: 500px) {
     max-height: 40vh;

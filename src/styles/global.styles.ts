@@ -8,7 +8,7 @@ const baseFontFamily = _map(theme.fontFamily, (el: string): string => `${el}`).j
 const GlobalStyles = css`
   html {
     font-size: ${theme.fontSize.base};
-
+    background: #e2e2e2;
     @media print {
       background: none;
     }
@@ -16,7 +16,7 @@ const GlobalStyles = css`
   body {
     box-sizing: border-box;
     overflow: hidden scroll;
-    background: ${theme.color.white};
+    background: ${theme.colorMono.white};
     font-family: ${baseFontFamily};
     font-size: ${theme.fontSize.normal};
     font-weight: ${theme.fontWeight.regular};

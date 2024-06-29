@@ -13,8 +13,8 @@ import Modal from 'components/ui/Modal';
 import Options from 'features/options/Options';
 import ScoresTable from 'features/scoresTable/ScoresTable';
 
-import { initOptions } from 'features/options/optionsSlice';
-import { initScoresTable } from 'features/scoresTable/scoresTableSlice';
+import { loadOptions } from 'features/options/optionsSlice';
+import { loadScoresTable } from 'features/scoresTable/scoresTableSlice';
 
 import {
   Wrapper
@@ -30,8 +30,8 @@ const MainPage = () => {
   const config = useSelector((state: RootState) => state.scoresTable.config);
   
   useEffect (() => {
-    dispatch(initOptions());
-    dispatch(initScoresTable());
+    dispatch(loadOptions());
+    dispatch(loadScoresTable());
   }, [dispatch]);
 
   return (

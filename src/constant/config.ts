@@ -25,8 +25,8 @@ export enum FigureId {
   SmallStraight,
   BigStraight,
   Runner,
-  Even,
-  Odd,
+  Evens,
+  Odds,
   ThreeToThree,
   TwoToFour,
   FullHouse,
@@ -172,14 +172,14 @@ export const config: Config = {
     },
     section5: {
       even: {
-        id: FigureId.Even,
-        name: 'Parzyste',
+        id: FigureId.Evens,
+        name: 'Evens',
         value: 0,
         resultsId: ResultsId.Result
       },
       odd: {
-        id: FigureId.Odd,
-        name: 'Nieparzyste',
+        id: FigureId.Odds,
+        name: 'Odds',
         value: 0,
         resultsId: ResultsId.Result
       },

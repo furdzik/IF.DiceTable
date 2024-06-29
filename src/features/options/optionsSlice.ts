@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { OptionsState } from 'interfaces';
+import { colorsByOrder } from 'constant';
 
 const initialState: OptionsState = {
   columns: 3,
   players: [
-    { id: 1, name: 'Gracz 1' },
-    { id: 2, name: 'Gracz 2' }
+    { id: 1, name: 'Gracz 1', color: colorsByOrder[0] },
+    { id: 2, name: 'Gracz 2', color: colorsByOrder[1] }
   ]
 };
 
@@ -14,12 +15,6 @@ const options = createSlice({
   name: 'options',
   initialState,
   reducers: {
-    initOptions (state) {
-      localStorage.setItem('options', JSON.stringify({ ...state }));
-      return {
-        ...state
-      };
-    },
     loadOptions (state) {
       const stateFromStorage = JSON.parse(localStorage.getItem('options') || '{}');
       return {
@@ -52,6 +47,6 @@ const options = createSlice({
   }
 });
 
-export const { initOptions, loadOptions, saveData, clearData } = options.actions;
+export const { loadOptions, saveData, clearData } = options.actions;
 
 export default options.reducer;
