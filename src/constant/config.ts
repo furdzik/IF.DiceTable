@@ -231,7 +231,7 @@ export const config: Config = {
           36: 76
         },
         resultsId: ResultsId.Result
-      },
+      }
     },
     section7: {
       chance: {
@@ -239,7 +239,7 @@ export const config: Config = {
         name: 'Szansa',
         value: 0,
         resultsId: ResultsId.Result
-      },
+      }
     }
   },
   bonuses: {
@@ -285,4 +285,4 @@ export const config: Config = {
       value: 50 // 1: 100, 2: 150, 3: 200, 4: 250 etc.
     }
   }
-}
+};

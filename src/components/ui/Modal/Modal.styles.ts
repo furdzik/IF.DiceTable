@@ -16,13 +16,10 @@ interface FooterProps {
 }
 
 const LayerWrapper = styled.div<ModalProps>`
-  display: flex;
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 10000;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -36,8 +33,8 @@ const ModalWrapper = styled.div<ModalProps>`
   height: calc(100% - .5rem);
   border: .2rem solid ${(props) => props.theme.mainColors.primary};
   background: ${(props) => props.theme.colorMono.white};
-  box-shadow: 0 1.1rem 1.5rem -.7rem rgba(0, 0, 0, .2), 0 2.4rem 3.8rem 3rem rgba(0, 0, 0, .14), 0 .9rem 4.6rem .8rem rgba(0, 0, 0, .12);
-  
+  box-shadow: 0 1.1rem 1.5rem -.7rem rgba(0 0 0 / .2), 0 2.4rem 3.8rem 3rem rgba(0 0 0 / .14), 0 .9rem 4.6rem .8rem rgba(0 0 0 / .12);
+
   ${(props) => props.isLoading && css`
     min-height: 10rem;
   `};
@@ -74,10 +71,10 @@ const Title = styled.h1`
 `;
 
 const CloseButton = styled.button`
-  display: block;
   position: absolute;
   top: 2rem;
   right: 1.3rem;
+  display: block;
   margin: 0;
   padding: 0;
   border: none;
@@ -93,22 +90,22 @@ const ModalContent = styled.div<ModalProps & ModalContentProps>`
   max-height: calc(var(--vh, 1vh) * 76.6);
   padding: ${(props) => props.theme.layout.modalDefaultPadding} ${(props) => props.theme.layout.modalDefaultPadding};
 
-  @media only screen and (max-height: 500px) {
+  @media (height <= 500px) {
     max-height: 40vh;
     max-height: calc(var(--vh, 1vh) * 40);
   }
 
   ${(props) => props.isOnlyMobile && css`
     padding-right: 1.6rem;
-    padding-left: 1.6rem;
     padding-bottom: 0;
+    padding-left: 1.6rem;
   `}
 
   ${(props) => props.isMobileFilter && css`
-    max-height: calc(100vh - 135px);
-    max-height: calc(calc(var(--vh, 1vh) * 100) - 135px);
     height: calc(100vh - 135px) ;
     height: calc(calc(var(--vh, 1vh) * 100) - 135px);
+    max-height: calc(100vh - 135px);
+    max-height: calc(calc(var(--vh, 1vh) * 100) - 135px);
   `}
 `;
 

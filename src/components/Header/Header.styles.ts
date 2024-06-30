@@ -3,9 +3,10 @@ import styled from '@emotion/styled';
 import Container from 'components/Container';
 
 const Wrapper = styled.div`
-  padding: 1.3rem 0;
   margin-bottom: 1rem;
+  padding: 1.3rem 0;
   background: ${(props) => props.theme.mainColors.primary};
+  box-shadow: 0 0 .5rem #999999;
 `;
 
 const StyledContainer = styled(Container)`
@@ -20,9 +21,9 @@ const Title = styled.h1`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-left: auto;
   display: flex;
   gap: 0 1rem;
+  margin-left: auto;
 `;
 
 export {

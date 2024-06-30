@@ -44,7 +44,7 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
 
     setPlayers(restPlayers);
   };
-  
+
   const changePlayer = (id: number, name: string, color: string | undefined) => {
     // @TODO: refactor
     const player = _cloneDeep(players).filter((element: Player) => element.id === id)[0];
@@ -59,27 +59,27 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
 
     setPlayers(sortedPlayers);
   };
-  
+
   const addPlayer = () => {
     if (players.length >= MAX_PLAYERS_ALLOWED) {
       return;
     }
 
     const newPlayers = _cloneDeep(players);
-    newPlayers.push({ 
+    newPlayers.push({
       id: newPlayers.length + 1,
       name: `Gracz ${newPlayers.length + 1}`,
       color: colorsByOrder[newPlayers.length]
     });
-    
+
     setPlayers(newPlayers);
   };
 
-  useEffect (() => {
+  useEffect(() => {
     setColumns(options?.columns);
     setPlayers(options?.players);
   }, [options]);
-  
+
   return (
     <React.Fragment>
       <Wrapper className={className}>
@@ -89,7 +89,7 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
             type={InputTypes.Number}
             name="columnsNumber"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setColumns(Number(event.target.value))
+              setColumns(Number(event.target.value));
             }}
             value={columns}
           />
@@ -156,6 +156,6 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
       </ClearDataWrapper>
     </React.Fragment>
   );
-}
+};
 
 export default Options;

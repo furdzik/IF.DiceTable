@@ -6,9 +6,6 @@ import scoresTableReducer from 'features/scoresTable/scoresTableSlice';
 
 setAutoFreeze(false);
 
-export interface Store {
-}
-
 const store = configureStore({
   reducer: {
     options: optionsReducer,

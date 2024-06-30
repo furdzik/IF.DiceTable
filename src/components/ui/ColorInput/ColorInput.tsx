@@ -20,17 +20,17 @@ export interface ColorInputProps {
   onChange?: (data: string | undefined) => void;
 }
 
-const ColorInput = React.forwardRef(({
+const ColorInput = ({
   value,
   defaultValue,
   className = '',
   onChange = () => {}
-}: ColorInputProps, ref) => {
+}: ColorInputProps) => {
   const [color, setColor] = useState(value);
   const [showPicker, setShowPicker] = useState(false);
 
   const { clickAwayRef } = useClickAway<HTMLDivElement>(() => setShowPicker(false));
-  
+
   return (
     <ColorInputWrapper className={className}>
       <Color color={value} onClick={() => setShowPicker(!showPicker)} />
@@ -69,6 +69,6 @@ const ColorInput = React.forwardRef(({
       }
     </ColorInputWrapper>
   );
-});
+};
 
 export default ColorInput;

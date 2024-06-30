@@ -9,15 +9,17 @@ import { hexToRgbMixin } from 'styles/mixins';
 
 import { ButtonProps } from './Button';
 
-const buttonRadius: string = '2.5rem';
-const buttonFontSizeNormal: string = '1.6rem';
-const buttonFontSizeSmall: string = '1.4rem';
-const buttonFontSizeLarge: string = '1.8rem';
-const buttonHeightSmall: string = '3rem';
-const buttonHeightNormal: string = '4rem';
-const buttonHeightLarge: string = '5rem';
+const buttonRadius = '2.5rem';
+const buttonFontSizeNormal = '1.6rem';
+const buttonFontSizeSmall = '1.4rem';
+const buttonFontSizeLarge = '1.8rem';
+const buttonHeightSmall = '3rem';
+const buttonHeightNormal = '4rem';
+const buttonHeightLarge = '5rem';
 
 export interface Button extends ButtonProps {
+  // @TODO: remove any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any;
 }
 
@@ -66,7 +68,7 @@ const ButtonWrapper = styled.button<Button>`
   ${(props) => props.variant === ButtonVariants.Icon && css`
     padding: 0;
   `}
-  
+
   ${(props) => props.color === ButtonColors.Primary && css`
     border-color: ${props.theme.mainColors.primary};
     background-color: ${props.theme.mainColors.primary};
@@ -85,12 +87,12 @@ const ButtonWrapper = styled.button<Button>`
       cursor: not-allowed;
     }
   `}
-  
+
   ${(props) => props.color === ButtonColors.Secondary && css`
     border-color: ${props.theme.mainColors.secondary};
     background-color: ${props.theme.mainColors.secondary};
     color: ${props.theme.colorMono.white};
-    
+
     &:focus,
     &:hover {
       background-color: ${hexToRgbMixin(props.theme.mainColors.secondary, 0.9)};
@@ -109,7 +111,7 @@ const ButtonWrapper = styled.button<Button>`
     border-color: ${props.theme.mainColors.primaryDark};
     background-color: ${props.theme.mainColors.primaryDark};
     color: ${props.theme.colorMono.white};
-    
+
     &:focus,
     &:hover {
       background-color: ${hexToRgbMixin(props.theme.mainColors.primaryDark, 0.9)};
@@ -128,7 +130,7 @@ const ButtonWrapper = styled.button<Button>`
     border-color: ${props.theme.mainColors.secondaryDark};
     background-color: ${props.theme.mainColors.secondaryDark};
     color: ${props.theme.colorMono.white};
-    
+
     &:focus,
     &:hover {
       background-color: ${hexToRgbMixin(props.theme.mainColors.secondaryDark, 0.9)};
@@ -148,16 +150,15 @@ const ButtonWrapper = styled.button<Button>`
     &:focus,
     &:hover,
     &:active {
-      color: ${props.theme.mainColors.secondary};
-      background: none;
       border: 0;
+      background: none;
+      color: ${props.theme.mainColors.secondary};
     }
     &:focus,
     &:hover {
       text-decoration: underline;
     }
     &[disabled] {
-      color: ${props.theme.mainColors.secondary};
       background: none;
       color: ${props.theme.color.lightGray};
       cursor: not-allowed;

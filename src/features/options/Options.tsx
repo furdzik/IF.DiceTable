@@ -17,7 +17,7 @@ const Options = (props: OptionsProps) => {
   const columns = useSelector((state: RootState) => state.options.columns);
   const players = useSelector((state: RootState) => state.options.players);
 
-  useEffect (() => {
+  useEffect(() => {
     dispatch(loadOptions());
   }, [dispatch]);
 
@@ -29,6 +29,6 @@ const Options = (props: OptionsProps) => {
       onModalClose={props.onModalClose}
     />
   );
-}
+};
 
 export default Options;

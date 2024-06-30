@@ -4,13 +4,10 @@ import { css } from '@emotion/react';
 import { LoaderProps } from './Loader';
 
 const LoaderWrapper = styled.div<LoaderProps>`
-  display: flex;
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  inset: 0;
   z-index: 1000;
+  display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
@@ -33,8 +30,8 @@ const Spinner = styled.div`
 `;
 
 const CenterWrapper = styled.div`
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 9rem;
@@ -59,9 +56,9 @@ const Svg = styled.svg`
 const Circle = styled.circle`
   transform-origin: center;
   animation: dash 1.5s ease-in-out infinite;
+  stroke: ${(props) => props.theme.mainColors.secondary};
   stroke-dasharray: 140;
   stroke-dashoffset: 0;
-  stroke: ${(props) => props.theme.mainColors.secondary};
 
   @keyframes dash {
     0% {

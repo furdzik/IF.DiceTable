@@ -12,8 +12,9 @@ const getCorrectValue = (key: string, value: unknown, columns: number) => {
   return newValues;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const iterateAndSetNewValue = (obj: any, columns: number) => {
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     const value = obj[key];
     if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
       iterateAndSetNewValue(value, columns);

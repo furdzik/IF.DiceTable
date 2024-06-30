@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { HexColorPicker } from 'react-colorful';
 
 export interface ColorProps {
-  color?: string | null; 
+  color?: string | null;
 }
 
 const ColorInputWrapper = styled.div`
@@ -17,7 +17,7 @@ const ColorPickerWrapper = styled.div`
   padding: 16px;
   border-radius: 12px;
   background: #e6e9ee;
-  box-shadow: 0 .6rem 1.2rem #999;
+  box-shadow: 0 .6rem 1.2rem #999999;
 `;
 
 const Color = styled.div<ColorProps>`
@@ -33,8 +33,8 @@ const Color = styled.div<ColorProps>`
 const StyledColorPicker = styled(HexColorPicker)`
   .react-colorful__saturation {
     margin: 1.5rem 0;
-    border-radius: .5rem;
     border-bottom: none;
+    border-radius: .5rem;
   }
   .react-colorful__hue {
     order: -1;

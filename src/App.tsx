@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 
 import store from 'features/store';
 
-import RoutesConfig from './routes';
+import RoutesConfig from 'routes';
 
 import { GlobalStyles } from 'styles/global.styles';
 import theme from 'styles/theme';
 
-function App() {
+function App () {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyles} />

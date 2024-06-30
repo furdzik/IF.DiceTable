@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
-  padding: 1.3rem 0;
   margin-top: 1rem;
+  padding: 1.3rem 0;
   background: #e2e2e2;
-  text-align: center;
   color: #bcbdbd;
+  text-align: center;
   p {
     margin-bottom: 0;
   }

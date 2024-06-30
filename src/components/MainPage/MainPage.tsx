@@ -28,8 +28,8 @@ const MainPage = () => {
 
   const columns = useSelector((state: RootState) => state.options.columns);
   const config = useSelector((state: RootState) => state.scoresTable.config);
-  
-  useEffect (() => {
+
+  useEffect(() => {
     dispatch(loadOptions());
     dispatch(loadScoresTable());
   }, [dispatch]);
@@ -66,6 +66,6 @@ const MainPage = () => {
       <Footer />
     </React.Fragment>
   );
-}
+};
 
 export default MainPage;

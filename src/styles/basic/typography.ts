@@ -26,7 +26,7 @@ const fontWeight = {
 
 const lineHeight = {
   base: 1.5
-}
+};
 
 export const typography = {
   fontFamily,

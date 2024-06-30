@@ -13,7 +13,7 @@ export const mainColors = {
   primary: color.darkGreen,
   primaryDark: color.green,
   secondary: color.darkPink,
-  secondaryDark: color.pink,
+  secondaryDark: color.pink
 };
 
 export const colorMono = {

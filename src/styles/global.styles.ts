@@ -7,8 +7,9 @@ const baseFontFamily = _map(theme.fontFamily, (el: string): string => `${el}`).j
 
 const GlobalStyles = css`
   html {
-    font-size: ${theme.fontSize.base};
     background: #e2e2e2;
+    font-size: ${theme.fontSize.base};
+
     @media print {
       background: none;
     }

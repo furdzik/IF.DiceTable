@@ -25,17 +25,17 @@ const scoresTable = createSlice({
     initScoresTable (state, action) {
       const { columns, players } = action.payload;
 
-      let score: any = _cloneDeep(scoresDefault);
+      const score = _cloneDeep(scoresDefault);
       iterateAndSetNewValue(score, columns);
-      
+
       const newScores: ScorePlayers = {};
       players.forEach((element: Player) => {
         newScores[`player${element.id}`] = _cloneDeep(score);
       });
-      
+
       localStorage.setItem('scoresTable', JSON.stringify({
         ...state,
-        scores: newScores 
+        scores: newScores
       }));
 
       return {

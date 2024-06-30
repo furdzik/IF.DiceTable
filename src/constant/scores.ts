@@ -6,7 +6,7 @@ export const figureScore: ScoreElement = {
   dice: null,
   value: null,
   quantity: null
-}
+};
 
 export const scoresDefault: Config = {
   school: {
@@ -48,10 +48,10 @@ export const scoresDefault: Config = {
       fullHouse: [],
       threeOfTwoOfKind: [],
       superSmall: [],
-      superBig: [],
+      superBig: []
     },
     section7: {
-      chance: [],
+      chance: []
     }
   },
   bonuses: {
@@ -67,4 +67,4 @@ export const scoresDefault: Config = {
     columnAllResults: []
   },
   sum: []
-}
+};

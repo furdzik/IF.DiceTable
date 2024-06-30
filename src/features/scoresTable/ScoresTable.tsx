@@ -9,15 +9,15 @@ import { initScoresTable } from './scoresTableSlice';
 
 const ScoresTable = () => {
   const dispatch = useDispatch<AppDispatch>();
-  
+
   const config = useSelector((state: RootState) => state.scoresTable.config);
   const columns = useSelector((state: RootState) => state.options.columns);
   const players = useSelector((state: RootState) => state.options.players);
-  
-  useEffect (() => {
+
+  useEffect(() => {
     dispatch(initScoresTable({ columns, players }));
   }, [dispatch, columns, players]);
-  
+
   const scores = useSelector((state: RootState) => state.scoresTable.scores);
 
   return scores && (
@@ -27,6 +27,6 @@ const ScoresTable = () => {
       options={{ columns, players }}
     />
   );
-}
+};
 
 export default ScoresTable;

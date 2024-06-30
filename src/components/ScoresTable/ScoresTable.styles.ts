@@ -11,7 +11,7 @@ export interface RowProps {
   variant?: RowVariants | undefined;
   normalBorder?: boolean | undefined;
   separator?: boolean | undefined;
-  children?: any;
+  children?: unknown;
 }
 
 export interface PlayersProps {
@@ -21,20 +21,20 @@ export interface PlayersProps {
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 1rem;
   width: 100%;
 `;
 
 const TablesWrapper = styled.section<PlayersProps>`
   display: flex;
-  align-items: stretch;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
   width: calc(50% - .5rem);
-  
+
   ${(props) => props.players && props.players > 2 && props.players < 4 && css`
     width: calc((100% / ${props.players}) - (1rem * (${props.players } - 1) / ${props.players }));
   `};
@@ -44,15 +44,15 @@ const TablesWrapper = styled.section<PlayersProps>`
 `;
 
 const Table = styled.table<PlayersProps>`
-  border-collapse: collapse;
-  margin-bottom: .2rem;
   width: 50%;
+  margin-bottom: .2rem;
   border: .2rem solid ${(props) => props.playerColor || props.theme.mainColors.primary};
-  
+  border-collapse: collapse;
+
   ${(props) => props.players === 2 && css`
     width: 50%;
   `};
-  
+
   &:first-of-type {
     width: 100%;
     margin-bottom: 1rem;
@@ -60,8 +60,8 @@ const Table = styled.table<PlayersProps>`
     font-size: ${(props) => props.theme.fontSize.normal};
   }
   &:last-of-type {
-    margin-left: -.2rem;
     margin-right: -.2rem;
+    margin-left: -.2rem;
   }
 `;
 
@@ -72,9 +72,9 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   border: .1rem solid ${props.theme.color.darkGray};
   border-top: 0;
   text-align: center;
-  
+
   &:first-of-type {
-    background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)}; // #e2e2e2;
+    background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
     font-size: ${props.theme.fontSize.small};
     font-weight: ${props.theme.fontWeight.bold};
     text-transform: uppercase;
@@ -82,32 +82,32 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
 
   ${props.variant === RowVariants.MainTitle && css`
     &, &:first-of-type {
-      color: ${props.theme.colorMono.white};
       border: none;
       background: ${props.playerColor || props.theme.mainColors.secondary};
-      text-transform: uppercase;
       font-size: ${props.theme.fontSize.big};
+      color: ${props.theme.colorMono.white};
+      text-transform: uppercase;
     }
   `};
   ${props.variant === RowVariants.Sum && css`
     &, &:first-of-type {
-      background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)}; // #f5c4e0
-      text-transform: uppercase;
       width: 50%;
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
+      background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
+      text-transform: uppercase;
     }
   `};
   ${props.variant === RowVariants.FigureGrup && css`
     &, &:first-of-type {
       background: ${hexToRgbMixin(props.playerColor as string, .7) || props.theme.color.lightGreen};
+      font-size: ${props.theme.fontSize.normal};
       color: ${props.theme.colorMono.white};
       text-transform: uppercase;
-      font-size: ${props.theme.fontSize.normal};
     }
   `};
   ${props.separator && css`
-    padding: 0;
     height: 0;
+    padding: 0;
     border-bottom: 2px solid #5e5e5e;
   `};
 `;

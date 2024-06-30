@@ -10,7 +10,7 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 4rem; // size like input
+  height: 4rem;
   padding: .6rem 2.5rem;
   border: .1rem solid ${(props) => props.theme.color.lightGray};
   border-radius: 2.5rem;
@@ -21,11 +21,11 @@ const StyledInput = styled.input`
 
   &:active,
   &:focus {
-    border-width: .2rem;
     padding: .5rem 2.4rem;
+    border-width: .2rem;
     border-color: ${(props) => props.theme.mainColors.primary};
   }
-  
+
   ${(props) => props.disabled && css`
     border-style: dashed;
     border-color: ${disabledColor};

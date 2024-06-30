@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import ReactDOM from 'react-dom';
 import { useClickAway } from 'use-click-away-react';
-import { useTheme } from '@emotion/react'
+import { useTheme } from '@emotion/react';
 
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
@@ -63,7 +63,7 @@ const Modal = ({
   onClose = () => {}
 }: ModalProps): React.ReactElement | null  => {
   const { clickAwayRef } = useClickAway<HTMLDivElement>(onClose);
-  const theme = useTheme()
+  const theme = useTheme();
 
   const modalHeaderRef = useRef<ClientHeight>(null);
   const modalFooterRef = useRef<ClientHeight>(null);

@@ -1,8 +1,8 @@
-import styled from "@emotion/styled/macro";
+import styled from '@emotion/styled/macro';
 
 const Section = styled.section`
-  line-height: 1.5;
   font-size: ${(props) => props.theme.fontSize.medium};
+  line-height: 1.5;
   p {
     margin-bottom: 0;
   }
