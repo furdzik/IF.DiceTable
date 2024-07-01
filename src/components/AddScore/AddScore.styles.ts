@@ -61,8 +61,9 @@ const AddBox = styled.div<ColorPlayerProps & AddBoxProps>`
   font-size: ${(props) => props.theme.fontSize.small};
 
   ${(props) => props.onLeft && css`
-
-  `}
+    left: auto;
+    right: 0;
+  `};
 `;
 
 const Header = styled.h3`

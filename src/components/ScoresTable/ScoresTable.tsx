@@ -154,6 +154,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                                 scoreType={scoreType}
                                 player={player}
                                 columnId={index + 1}
+                                onLeft
                               />
                             </Td>
                           );

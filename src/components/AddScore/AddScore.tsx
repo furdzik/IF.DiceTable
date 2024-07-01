@@ -30,11 +30,12 @@ export interface AddScoreProps {
   scoreType: ConfigElement;
   player: Player;
   columnId: number;
+  onLeft?: boolean;
   className?: string;
   onClick?: (value: number | null | X) => void;
 }
 
-const AddScore = ({ singleScore, scoreType, player, columnId, className = '', onClick = () => {} }: AddScoreProps) => {
+const AddScore = ({ singleScore, scoreType, player, columnId, onLeft = false, className = '', onClick = () => {} }: AddScoreProps) => {
   const [isOpen, setIsOpen] = useState(false);
   console.log(scoreType);
 
@@ -58,7 +59,7 @@ const AddScore = ({ singleScore, scoreType, player, columnId, className = '', on
       </Score>
       {
         isOpen && (
-          <AddBox ref={clickAwayRef} playerColor={player.color} onLeft>
+          <AddBox ref={clickAwayRef} playerColor={player.color} onLeft={onLeft}>
             <Header>Dodaj wynik: {scoreType.name} <span>(kolumna: {columnId})</span></Header>
             <Section>
               <Label>Wynik:</Label>
