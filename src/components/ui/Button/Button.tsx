@@ -55,8 +55,7 @@ const Button = ({
     <ButtonWrapper
       color={color}
       className={className}
-      // @ts-ignore
-      type={type}
+      buttonType={type}
       disabled={disabled}
       size={size}
       variant={variant}

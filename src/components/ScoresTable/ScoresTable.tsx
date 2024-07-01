@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Config, ConfigElement, Options, Player, ScorePlayers } from 'interfaces';
+import { Config, ConfigElement, Options, Player, Score, ScorePlayers } from 'interfaces';
+
+import AddScore from 'components/AddScore';
 
 import {
   Wrapper,
@@ -31,7 +33,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
   return (
     <Wrapper className={className}>
       {options.players.map((player: Player) => {
-        const playerScore: Config | null = scores?.[`player${player.id}`];
+        const playerScore: Score | null = scores?.[`player${player.id}`];
         const columns: number[] = [...Array(options.columns).keys()];
 
         return (
@@ -62,15 +64,19 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                     Szkoła
                   </Th>
                 </tr>
-                {Object.entries(config.school).map(([key, value]: [string, ConfigElement]) => (
+                {Object.entries(config.school).map(([key, scoreType]) => (
                   <tr key={`${player.id}-${key}`}>
-                    <Td playerColor={player.color}>{value.name}</Td>
+                    <Td playerColor={player.color}>{scoreType.name}</Td>
                     {columns.map((index) => {
-                      // @ts-ignore
                       const columnValue = playerScore?.school?.[Number(key)][index]?.value;
                       return (
                         <Td key={`${player.id}-${key}-${index}`} playerColor={player.color}>
-                          {columnValue}
+                          <AddScore
+                            singleScore={columnValue || null}
+                            scoreType={scoreType}
+                            player={player}
+                            columnId={index + 1}
+                          />
                         </Td>
                       );
                     })}
@@ -90,15 +96,19 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                     <tr>
                       <Td separator colSpan={options.columns + TITLE_LENGTH} />
                     </tr>
-                    {Object.entries(figuresValue).map(([key, value]) => (
+                    {Object.entries(figuresValue).map(([key, scoreType]) => (
                       <tr key={`${player.id}-${figuresKey}-${key}`}>
-                        <Td playerColor={player.color}>{(value as ConfigElement).name}</Td>
+                        <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
                         {columns.map((index) => {
-                          // @ts-ignore
                           const columnValue = (playerScore?.figures?.[figuresKey][key][index])?.value;
                           return (
                             <Td key={`${player.id}-${figuresKey}-${key}-${index}`} playerColor={player.color}>
-                              {columnValue}
+                              <AddScore
+                                singleScore={columnValue || null}
+                                scoreType={scoreType}
+                                player={player}
+                                columnId={index + 1}
+                              />
                             </Td>
                           );
                         })}
@@ -132,15 +142,19 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                         </tr>
                       )
                     }
-                    {Object.entries(figuresValue).map(([key, value]) => (
+                    {Object.entries(figuresValue).map(([key, scoreType]) => (
                       <tr key={`${player.id}-${figuresKey}-${key}`}>
-                        <Td playerColor={player.color}>{(value as ConfigElement).name}</Td>
+                        <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
                         {columns.map((colIndex) => {
-                          // @ts-ignore
                           const columnValue = (playerScore?.figures?.[figuresKey][key][colIndex])?.value;
                           return (
                             <Td key={`${player.id}-${figuresKey}-${key}-${colIndex}`} playerColor={player.color}>
-                              {columnValue}
+                              <AddScore
+                                singleScore={columnValue || null}
+                                scoreType={scoreType}
+                                player={player}
+                                columnId={index + 1}
+                              />
                             </Td>
                           );
                         })}
@@ -154,8 +168,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                 <tr>
                   <Td playerColor={player.color}>Kolumny</Td>
                   {columns.map((index) => {
-                    // @ts-ignore
-                    const columnValue = (playerScore?.bonuses?.columnAllResults[index])?.value;
+                    const columnValue = (playerScore?.bonuses?.columnAllResults as number[])?.[index];
                     return (
                       <Td key={`${player.id}-bonuses-columnAllResults-${index}`} playerColor={player.color}>
                         {columnValue}

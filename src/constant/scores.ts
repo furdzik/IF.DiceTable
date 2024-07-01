@@ -1,4 +1,4 @@
-import { Config, ScoreElement } from 'interfaces';
+import { Score, ScoreElement } from 'interfaces';
 
 export const figureScore: ScoreElement = {
   columnId: null,
@@ -8,7 +8,7 @@ export const figureScore: ScoreElement = {
   quantity: null
 };
 
-export const scoresDefault: Config = {
+export const scoresDefault: Score = {
   school: {
     1: [],
     2: [],

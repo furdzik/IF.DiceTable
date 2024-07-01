@@ -4,11 +4,11 @@ import Container from 'components/Container';
 
 import { Wrapper } from './Footer.styles';
 
-export interface HeaderProps {
+export interface FooterProps {
   className?: string;
 }
 
-const Footer = ({ className = '' }: HeaderProps) => {
+const Footer = ({ className = '' }: FooterProps) => {
   const year = new Date().getFullYear();
   return (
     <Wrapper className={className}>

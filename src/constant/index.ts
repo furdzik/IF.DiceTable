@@ -34,6 +34,17 @@ export enum InputTypes {
   Number = 'number'
 }
 
+export enum ButtonFontSizes {
+  Small = '1.4rem',
+  Normal = '1.6rem',
+  Large = '1.8rem'
+}
+export enum ButtonHeightSizes {
+  Small = '3rem',
+  Normal = '4rem',
+  Large = '5rem'
+}
+
 export const SAFARI_BAR_VH = 0.01;
 export const VIEWPORT_SIZE_CHECKING_DELAY = 500;
 

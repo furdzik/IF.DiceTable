@@ -68,7 +68,7 @@ const Table = styled.table<PlayersProps>`
 const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   min-width: 2.5rem;
   height: 2.5rem;
-  padding: .2rem .1rem;
+  padding: 0;
   border: .1rem solid ${props.theme.color.darkGray};
   border-top: 0;
   text-align: center;
@@ -108,7 +108,7 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   ${props.separator && css`
     height: 0;
     padding: 0;
-    border-bottom: 2px solid #5e5e5e;
+    border-bottom: .2rem solid #5e5e5e;
   `};
 `;
 

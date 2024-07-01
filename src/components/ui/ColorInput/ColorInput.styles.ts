@@ -14,9 +14,9 @@ const ColorPickerWrapper = styled.div`
   top: 100%;
   left: 0;
   z-index: 100;
-  padding: 16px;
-  border-radius: 12px;
-  background: #e6e9ee;
+  padding: 1.6rem;
+  border-radius: 1.2rem;
+  background: ${(props) => props.theme.color.lightGray};
   box-shadow: 0 .6rem 1.2rem #999999;
 `;
 

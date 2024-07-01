@@ -102,10 +102,10 @@ const ModalContent = styled.div<ModalProps & ModalContentProps>`
   `}
 
   ${(props) => props.isMobileFilter && css`
-    height: calc(100vh - 135px) ;
-    height: calc(calc(var(--vh, 1vh) * 100) - 135px);
-    max-height: calc(100vh - 135px);
-    max-height: calc(calc(var(--vh, 1vh) * 100) - 135px);
+    height: calc(100vh - 13.5rem) ;
+    height: calc(calc(var(--vh, 1vh) * 100) - 13.5rem);
+    max-height: calc(100vh - 1.35rem);
+    max-height: calc(calc(var(--vh, 1vh) * 100) - 13.5rem);
   `}
 `;
 
@@ -115,7 +115,7 @@ const ModalFooter = styled.div<FooterProps>`
 
   ${(props) => props.isOnlyMobile && css`
     padding: 1rem 1.55rem;
-    box-shadow: 0 -2px 7px ${shadowColor}, 0 -.1rem .3rem ${shadowColor};
+    box-shadow: 0 -.2rem .7rem ${shadowColor}, 0 -.1rem .3rem ${shadowColor};
   `}
 `;
 

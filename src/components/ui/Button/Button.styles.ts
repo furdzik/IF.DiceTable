@@ -3,24 +3,24 @@ import { css } from '@emotion/react';
 
 import Icon from '@mdi/react';
 
-import { ButtonsSizes, ButtonVariants, ButtonColors } from 'constant';
+import {
+  ButtonsSizes,
+  ButtonVariants,
+  ButtonColors,
+  ButtonTypes,
+  ButtonFontSizes,
+  ButtonHeightSizes
+} from 'constant';
 
 import { hexToRgbMixin } from 'styles/mixins';
 
 import { ButtonProps } from './Button';
 
-const buttonRadius = '2.5rem';
-const buttonFontSizeNormal = '1.6rem';
-const buttonFontSizeSmall = '1.4rem';
-const buttonFontSizeLarge = '1.8rem';
-const buttonHeightSmall = '3rem';
-const buttonHeightNormal = '4rem';
-const buttonHeightLarge = '5rem';
-
 export interface Button extends ButtonProps {
   // @TODO: remove any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children?: any;
+  buttonType: ButtonTypes | undefined;
 }
 
 const ButtonWrapper = styled.button<Button>`
@@ -28,42 +28,44 @@ const ButtonWrapper = styled.button<Button>`
   justify-content: center;
   align-items: center;
   padding: 0 2rem;
-  border-radius: ${buttonRadius};
+  border-radius: 2.5rem;
   font-family: inherit;
   font-weight: normal;
   transition: all 0.3s;
   cursor: pointer;
 
   ${(props) => props.size === ButtonsSizes.Small && css`
-    height: ${buttonHeightSmall};
-    min-height: ${buttonHeightSmall};
-    font-size: ${buttonFontSizeSmall};
+    height: ${ButtonHeightSizes.Small};
+    min-height: ${ButtonHeightSizes.Small};
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: ${ButtonFontSizes.Small};
 
     ${props.variant === ButtonVariants.Icon && css`
-      min-width: ${buttonHeightSmall};
-      max-width: ${buttonHeightSmall};
-    `}
-  `}
+      min-width: ${ButtonHeightSizes.Small};
+      max-width: ${ButtonHeightSizes.Small};
+    `};
+  `};
   ${(props) => props.size === ButtonsSizes.Normal && css`
-    height: ${buttonHeightNormal};
-    min-height: ${buttonHeightNormal};
-    font-size: ${buttonFontSizeNormal};
+    height: ${ButtonHeightSizes.Normal};
+    min-height: ${ButtonHeightSizes.Normal};
+    font-size: ${ButtonFontSizes.Normal};
 
     ${props.variant === ButtonVariants.Icon && css`
-      min-width: ${buttonHeightNormal};
-      max-width: ${buttonHeightNormal};
-    `}
-  `}
+      min-width: ${ButtonHeightSizes.Normal};
+      max-width: ${ButtonHeightSizes.Normal};
+    `};
+  `};
   ${(props) => props.size === ButtonsSizes.Large && css`
-    height: ${buttonHeightLarge};
-    min-height: ${buttonHeightLarge};
-    font-size: ${buttonFontSizeLarge};
+    height: ${ButtonHeightSizes.Large};
+    min-height: ${ButtonHeightSizes.Large};
+    font-size: ${ButtonFontSizes.Large};
 
     ${props.variant === ButtonVariants.Icon && css`
-      min-width: ${buttonHeightLarge};
-      max-width: ${buttonHeightLarge};
-    `}
-  `}
+      min-width: ${ButtonHeightSizes.Large};
+      max-width: ${ButtonHeightSizes.Large};
+    `};
+  `};
 
   ${(props) => props.variant === ButtonVariants.Icon && css`
     padding: 0;
@@ -150,6 +152,8 @@ const ButtonWrapper = styled.button<Button>`
     &:focus,
     &:hover,
     &:active {
+      padding-left: 0;
+      padding-right: 0;
       border: 0;
       background: none;
       color: ${props.theme.mainColors.secondary};
