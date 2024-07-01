@@ -23,7 +23,7 @@ interface IconWrapperProps {
   noBorder?: boolean | undefined;
 }
 interface AddBoxProps {
-  onLeft: boolean | undefined;
+  onLeft?: boolean | undefined;
 }
 
 const Wrapper = styled.div`

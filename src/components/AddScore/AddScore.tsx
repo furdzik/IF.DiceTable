@@ -58,7 +58,7 @@ const AddScore = ({ singleScore, scoreType, player, columnId, className = '', on
       </Score>
       {
         isOpen && (
-          <AddBox ref={clickAwayRef} playerColor={player.color}>
+          <AddBox ref={clickAwayRef} playerColor={player.color} onLeft>
             <Header>Dodaj wynik: {scoreType.name} <span>(kolumna: {columnId})</span></Header>
             <Section>
               <Label>Wynik:</Label>
