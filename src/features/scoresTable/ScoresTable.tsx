@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AppDispatch, RootState } from 'interfaces';
+import { AppDispatch, RootState, SaveScore } from 'interfaces';
 
 import ScoresTableComponent from 'components/ScoresTable';
 
-import { initScoresTable } from './scoresTableSlice';
+import { initScoresTable, saveScore, calculateSum } from './scoresTableSlice';
 
 const ScoresTable = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,11 +20,18 @@ const ScoresTable = () => {
 
   const scores = useSelector((state: RootState) => state.scoresTable.scores);
 
+  useEffect(() => {
+    dispatch(calculateSum({ allScores: scores }));
+  }, [dispatch, scores]);
+
   return scores && (
     <ScoresTableComponent
       config={config}
       scores={scores}
       options={{ columns, players }}
+      saveScore={({ score, playerId, scoreType }: SaveScore) => {
+        dispatch(saveScore({ score, playerId, scoreType, allScores: scores }));
+      }}
     />
   );
 };

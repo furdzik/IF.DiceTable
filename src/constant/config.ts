@@ -7,33 +7,33 @@ export enum ResultsId {
   Result
 }
 export enum FigureId {
-  School1,
-  School2,
-  School3,
-  School4,
-  School5,
-  School6,
-  TwoOfKind,
-  TwoOfTwoOfKind,
-  ThreeOfKind,
-  FourOfKind,
-  Vice,
-  General,
-  SmallTriangle,
-  BigTriangle,
-  Goat,
-  SmallStraight,
-  BigStraight,
-  Runner,
-  Evens,
-  Odds,
-  ThreeToThree,
-  TwoToFour,
-  FullHouse,
-  ThreeOfTwoOfKind,
-  SuperSmall,
-  SuperBig,
-  Chance
+  School1 = '1',
+  School2 = '2',
+  School3 = '3',
+  School4 = '4',
+  School5 = '5',
+  School6 = '6',
+  TwoOfKind = 'twoOfKind',
+  TwoOfTwoOfKind = 'twoOfTwoOfKind',
+  ThreeOfKind = 'threeOfKind',
+  FourOfKind = 'fourOfKind',
+  Vice = 'vice',
+  General = 'general',
+  SmallTriangle = 'smallTriangle',
+  BigTriangle = 'bigTriangle',
+  Goat = 'goat',
+  SmallStraight = 'smallStraight',
+  BigStraight = 'bigStraight',
+  Runner = 'runner',
+  Evens = 'evens',
+  Odds = 'odds',
+  ThreeToThree = 'threeToThree',
+  TwoToFour = 'twoToFour',
+  FullHouse = 'fullHouse',
+  ThreeOfTwoOfKind = 'threeOfTwoOfKind',
+  SuperSmall = 'superSmall',
+  SuperBig = 'superBig',
+  Chance = 'chance'
 }
 
 export const config: Config = {
@@ -41,37 +41,43 @@ export const config: Config = {
     1: {
       id: FigureId.School1,
       name: '1',
-      value: 3 * -1,
+      initialValue: 3 * -1,
+      value: 1,
       resultsId: ResultsId.School
     },
     2: {
       id: FigureId.School2,
       name: '2',
-      value: 3 * -2,
+      initialValue: 3 * -2,
+      value: 2,
       resultsId: ResultsId.School
     },
     3: {
       id: FigureId.School3,
       name: '3',
-      value: 3 * -3,
+      initialValue: 3 * -3,
+      value: 3,
       resultsId: ResultsId.School
     },
     4: {
       id: FigureId.School4,
       name: '4',
-      value: 3 * -4,
+      initialValue: 3 * -4,
+      value: 4,
       resultsId: ResultsId.School
     },
     5: {
       id: FigureId.School5,
       name: '5',
-      value: 3 * -5,
+      initialValue: 3 * -5,
+      value: 5,
       resultsId: ResultsId.School
     },
     6: {
       id: FigureId.School6,
       name: '6',
-      value: 3 * -6,
+      initialValue: 3 * -6,
+      value: 6,
       resultsId: ResultsId.School
     }
   },
@@ -171,13 +177,13 @@ export const config: Config = {
       }
     },
     section5: {
-      even: {
+      evens: {
         id: FigureId.Evens,
         name: 'Evens',
         value: 0,
         resultsId: ResultsId.Result
       },
-      odd: {
+      odds: {
         id: FigureId.Odds,
         name: 'Odds',
         value: 0,

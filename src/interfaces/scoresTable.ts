@@ -1,12 +1,13 @@
 import { FigureId, ResultsId } from 'constant';
 
 export enum Throw {
-  first,
-  second,
-  third
+  first = 1,
+  second = 2,
+  third = 3
 }
 
-export type X = 'X';
+export type TYP_X = 'X';
+export const X_VALUE: TYP_X = 'X';
 
 export interface ElementValue {
   [kay: number]: number;
@@ -23,7 +24,7 @@ export interface ScoreElement {
   columnId: number | null;
   throw: Throw | null;
   dice?: number | null;
-  value?: number | null | X;
+  value?: number | null | TYP_X;
   quantity?: number | null;
 }
 
@@ -76,4 +77,10 @@ export interface ScorePlayers {
 export interface ScoresTableState {
   config: Config;
   scores: ScorePlayers | null;
+}
+
+export interface SaveScore {
+  score: ScoreElement | null;
+  playerId: number;
+  scoreType: ConfigElement;
 }

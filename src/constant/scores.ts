@@ -39,8 +39,8 @@ export const scoresDefault: Score = {
       runner: []
     },
     section5: {
-      even: [],
-      odd: [],
+      evens: [],
+      odds: [],
       threeToThree: [],
       twoToFour: []
     },

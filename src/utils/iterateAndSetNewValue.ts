@@ -1,6 +1,8 @@
 import { figureScore } from 'constant';
+import { ConfigElement, ScoreElement } from '../interfaces';
+import _orderBy from 'lodash/orderBy';
 
-const getCorrectValue = (key: string, value: unknown, columns: number) => {
+export const getCorrectValue = (key: string, value: unknown, { columns }: { columns: number }) => {
   if (value === null) {
     return value;
   }
@@ -12,14 +14,41 @@ const getCorrectValue = (key: string, value: unknown, columns: number) => {
   return newValues;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const iterateAndSetNewValue = (obj: any, columns: number) => {
+export const updateScoreElement = (key: string, value: ScoreElement[] | null, { score, scoreType }: { score: ScoreElement, scoreType: ConfigElement }): ScoreElement[] | null => {
+  if (value === null || key !== scoreType.id) {
+    return value;
+  }
+
+  const restElements = (value as ScoreElement[]).filter((el) => el.columnId !== score.columnId);
+
+  const newValues = [
+    ...restElements,
+    score
+  ];
+
+  return _orderBy(newValues, ['columnId']);
+};
+
+export const getSum = (key: string, value: ScoreElement[] | null): number | null => {
+  if (value === null) {
+    return value;
+  }
+
+  return 2;
+};
+
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+export const iterateAndSetNewValue = (
+  callback: (...args: any[]) => unknown,
+  obj: any,
+  args?: any
+) => {
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
     if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
-      iterateAndSetNewValue(value, columns);
+      iterateAndSetNewValue(callback, value, {  ...args });
     } else {
-      obj[key] = getCorrectValue(key, value, columns);
+      obj[key] = callback(key, value, {  ...args });
     }
   });
 };

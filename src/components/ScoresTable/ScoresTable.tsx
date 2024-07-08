@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Config, ConfigElement, Options, Player, Score, ScorePlayers } from 'interfaces';
+import { Config, ConfigElement, Options, Player, SaveScore, Score, ScoreElement, ScorePlayers } from 'interfaces';
 
 import AddScore from 'components/AddScore';
 
@@ -21,14 +21,19 @@ export interface ScoresTableProps {
   config: Config;
   scores: ScorePlayers;
   options: Options;
+  saveScore: ({ score, scoreType, playerId }: SaveScore) => void;
   className?: string | undefined;
 }
 
 const TITLE_LENGTH = 1;
 
-const ScoresTable = ({ config, scores, options, className = '' }: ScoresTableProps) => {
+const ScoresTable = ({ config, scores, options, saveScore, className = '' }: ScoresTableProps) => {
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
+
+  const onAddScoreClick = (score: ScoreElement | null, scoreType: ConfigElement, playerId: number) => {
+    saveScore({ score, scoreType, playerId });
+  };
 
   return (
     <Wrapper className={className}>
@@ -68,7 +73,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                   <tr key={`${player.id}-${key}`}>
                     <Td playerColor={player.color}>{scoreType.name}</Td>
                     {columns.map((index) => {
-                      const columnValue = playerScore?.school?.[Number(key)][index]?.value;
+                      const columnValue = playerScore?.school?.[Number(key)][index];
                       return (
                         <Td key={`${player.id}-${key}-${index}`} playerColor={player.color}>
                           <AddScore
@@ -76,6 +81,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                             scoreType={scoreType}
                             player={player}
                             columnId={index + 1}
+                            onClick={onAddScoreClick}
                           />
                         </Td>
                       );
@@ -100,7 +106,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                       <tr key={`${player.id}-${figuresKey}-${key}`}>
                         <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
                         {columns.map((index) => {
-                          const columnValue = (playerScore?.figures?.[figuresKey][key][index])?.value;
+                          const columnValue = (playerScore?.figures?.[figuresKey][key][index]);
                           return (
                             <Td key={`${player.id}-${figuresKey}-${key}-${index}`} playerColor={player.color}>
                               <AddScore
@@ -108,6 +114,8 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                                 scoreType={scoreType}
                                 player={player}
                                 columnId={index + 1}
+                                position={{ onTop: true }}
+                                onClick={onAddScoreClick}
                               />
                             </Td>
                           );
@@ -146,7 +154,7 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                       <tr key={`${player.id}-${figuresKey}-${key}`}>
                         <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
                         {columns.map((colIndex) => {
-                          const columnValue = (playerScore?.figures?.[figuresKey][key][colIndex])?.value;
+                          const columnValue = (playerScore?.figures?.[figuresKey][key][colIndex]);
                           return (
                             <Td key={`${player.id}-${figuresKey}-${key}-${colIndex}`} playerColor={player.color}>
                               <AddScore
@@ -154,7 +162,8 @@ const ScoresTable = ({ config, scores, options, className = '' }: ScoresTablePro
                                 scoreType={scoreType}
                                 player={player}
                                 columnId={index + 1}
-                                onLeft
+                                position={{ onLeft: true }}
+                                onClick={onAddScoreClick}
                               />
                             </Td>
                           );

@@ -4,7 +4,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 
 import { Player, ScorePlayers, ScoresTableState } from 'interfaces';
 import { config, scoresDefault } from 'constant';
-import { iterateAndSetNewValue } from 'utils';
+import { iterateAndSetNewValue, getCorrectValue, updateScoreElement } from 'utils';
 
 const initialState: ScoresTableState = {
   config,
@@ -26,7 +26,7 @@ const scoresTable = createSlice({
       const { columns, players } = action.payload;
 
       const score = _cloneDeep(scoresDefault);
-      iterateAndSetNewValue(score, columns);
+      iterateAndSetNewValue(getCorrectValue, score, { columns });
 
       const newScores: ScorePlayers = {};
       players.forEach((element: Player) => {
@@ -42,10 +42,40 @@ const scoresTable = createSlice({
         ...state,
         scores: newScores
       };
+    },
+    saveScore (state, action) {
+      const { score, playerId, scoreType, allScores } = action.payload;
+
+      const newPlayerScore = _cloneDeep(allScores[`player${playerId}`]);
+      iterateAndSetNewValue(updateScoreElement, newPlayerScore, { score, scoreType });
+
+      localStorage.setItem('scoresTable', JSON.stringify({
+        ...state,
+        scores: {
+          ...allScores,
+          [`player${playerId}`]: newPlayerScore
+        }
+      }));
+
+      return {
+        ...state,
+        scores: {
+          ...allScores,
+          [`player${playerId}`]: newPlayerScore
+        }
+      };
+    },
+    calculateSum (state, action) {
+      // const { allScores } = action.payload;
+      // TODO
+
+      return {
+        ...state
+      };
     }
   }
 });
 
-export const { initScoresTable, loadScoresTable } = scoresTable.actions;
+export const { initScoresTable, loadScoresTable, saveScore, calculateSum } = scoresTable.actions;
 
 export default scoresTable.reducer;

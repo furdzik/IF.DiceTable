@@ -85,7 +85,7 @@ const ButtonWrapper = styled.button<Button>`
     }
     &[disabled] {
       background-color: ${props.theme.color.lightGray};
-      color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.gray};
       cursor: not-allowed;
     }
   `}
@@ -104,7 +104,7 @@ const ButtonWrapper = styled.button<Button>`
     }
     &[disabled] {
       background-color: ${props.theme.color.lightGray};
-      color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.gray};
       cursor: not-allowed;
     }
   `}
@@ -123,7 +123,7 @@ const ButtonWrapper = styled.button<Button>`
     }
     &[disabled] {
       background-color: ${props.theme.color.lightGray};
-      color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.gray};
       cursor: not-allowed;
     }
   `}
@@ -142,7 +142,7 @@ const ButtonWrapper = styled.button<Button>`
     }
     &[disabled] {
       background-color: ${props.theme.color.lightGray};
-      color: ${props.theme.color.lightGray};
+      color: ${props.theme.color.gray};
       cursor: not-allowed;
     }
   `}

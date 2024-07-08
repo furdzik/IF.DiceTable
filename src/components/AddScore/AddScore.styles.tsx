@@ -1,18 +1,20 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import Icon from '@mdi/react';
-
-import { Colors, X } from 'interfaces';
+import { Colors, TYP_X } from 'interfaces';
 import { ButtonColors, ButtonVariants } from 'constant';
 
 import { hexToRgbMixin } from 'styles/mixins';
 
 import Button from 'components/ui/Button';
 import Input from 'components/ui/Input';
+import { InputProps } from 'components/ui/Input';
+
+import { Position } from './AddScore';
 
 interface ScoreProps {
-  singleScore: number | null | X;
+  singleScore: number | null | TYP_X;
   addingInProgress?: boolean | undefined;
 }
 interface ColorPlayerProps {
@@ -23,7 +25,7 @@ interface IconWrapperProps {
   noBorder?: boolean | undefined;
 }
 interface AddBoxProps {
-  onLeft?: boolean | undefined;
+  position?: Position;
 }
 
 const Wrapper = styled.div`
@@ -38,7 +40,7 @@ const Section = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
 `;
 
 const ChoiceBox = styled.div`
@@ -60,9 +62,13 @@ const AddBox = styled.div<ColorPlayerProps & AddBoxProps>`
   box-shadow: 0 .6rem 1.2rem #999999;
   font-size: ${(props) => props.theme.fontSize.small};
 
-  ${(props) => props.onLeft && css`
-    left: auto;
+  ${(props) => props.position?.onLeft && css`
     right: 0;
+    left: auto;
+  `};
+  ${(props) => props.position?.onTop && css`
+    top: auto;
+    bottom: 100%;
   `};
 `;
 
@@ -133,29 +139,34 @@ const StyledButton = styled(Button)<ColorPlayerProps>`
       }
       &[disabled] {
         background-color: ${props.theme.color.lightGray};
-        color: ${props.theme.color.lightGray};
+        color: ${hexToRgbMixin(props.playerColor as string, 0.3)};
         cursor: not-allowed;
       }
     `};
   }
 `;
 
-const StyledInput = styled(Input)<ColorPlayerProps>`
-  && input {
-    border-color: ${(props) => props.theme.color.darkGray};
-    &:active,
-    &:focus {
-      border-color: ${(props) => props.playerColor};
-    }
+const StyledInput = styled(({
+  playerColor,
+  ...props
+} : InputProps & ColorPlayerProps) => (
+  <Input {...props} />
+))<InputProps>`
+&& input {
+  border-color: ${(props) => props.theme.color.darkGray};
+  &:active,
+  &:focus {
+    border-color: ${(props) => props.playerColor};
   }
+}
 `;
 
 const Selector = styled.button<IconWrapperProps & ColorPlayerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.4rem;
+  height: 2.4rem;
   padding: 0;
 
   border-radius: 50%;
@@ -172,14 +183,6 @@ const Selector = styled.button<IconWrapperProps & ColorPlayerProps>`
   `};
 `;
 
-const DiceIcon = styled(Icon)<IconWrapperProps & ColorPlayerProps>`
-  color: #5c5c5c;
-
-  ${(props) => props.selected && css`
-    color: ${props.playerColor};
-  `};
-`;
-
 export {
   Wrapper,
   Section,
@@ -191,6 +194,5 @@ export {
   ButtonWrapper,
   StyledButton,
   StyledInput,
-  Selector,
-  DiceIcon
+  Selector
 };
