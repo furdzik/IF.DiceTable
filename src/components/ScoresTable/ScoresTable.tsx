@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { Config, ConfigElement, Options, Player, SaveScore, Score, ScoreElement, ScorePlayers } from 'interfaces';
+import {
+  Config,
+  ConfigElement,
+  Options,
+  Player,
+  SaveScore,
+  Score,
+  ScoreElement,
+  ScorePlayers,
+  SumPlayers
+} from 'interfaces';
 
 import AddScore from 'components/AddScore';
 
@@ -15,11 +25,13 @@ import {
 export enum RowVariants {
   MainTitle,
   Sum,
+  SchoolSum,
   FigureGrup
 }
 export interface ScoresTableProps {
   config: Config;
   scores: ScorePlayers;
+  sum: SumPlayers;
   options: Options;
   saveScore: ({ score, scoreType, playerId }: SaveScore) => void;
   className?: string | undefined;
@@ -27,7 +39,7 @@ export interface ScoresTableProps {
 
 const TITLE_LENGTH = 1;
 
-const ScoresTable = ({ config, scores, options, saveScore, className = '' }: ScoresTableProps) => {
+const ScoresTable = ({ config, scores, sum, options, saveScore, className = '' }: ScoresTableProps) => {
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
 
@@ -53,7 +65,7 @@ const ScoresTable = ({ config, scores, options, saveScore, className = '' }: Sco
                 <tr>
                   <Th variant={RowVariants.Sum} playerColor={player.color}>Suma</Th>
                   <Th variant={RowVariants.Sum} playerColor={player.color}>
-                    {playerScore?.sum?.reduce((a, b) => Number(a + b), 0)}
+                    {sum?.[`player${player.id}`]?.all || 0}
                   </Th>
                 </tr>
               </thead>
@@ -88,6 +100,18 @@ const ScoresTable = ({ config, scores, options, saveScore, className = '' }: Sco
                     })}
                   </tr>
                 ))}
+                <tr>
+                  <Td variant={RowVariants.SchoolSum} playerColor={player.color}>Suma</Td>
+                  {columns.map((index) => (
+                    <Td
+                      key={`${player.id}-school-sum-${index}`}
+                      variant={RowVariants.SchoolSum}
+                      playerColor={player.color}
+                    >
+                      {sum?.[`player${player.id}`]?.school[index] || ''}
+                    </Td>
+                  ))}
+                </tr>
                 <tr>
                   <Th
                     variant={RowVariants.FigureGrup}
@@ -203,7 +227,9 @@ const ScoresTable = ({ config, scores, options, saveScore, className = '' }: Sco
                 </tr>
                 <tr>
                   <Th playerColor={player.color}>Reszta</Th>
-                  <Th colSpan={options.columns} playerColor={player.color}> </Th>
+                  <Th colSpan={options.columns} playerColor={player.color}>
+                    {sum?.[`player${player.id}`]?.bonuses || ''}
+                  </Th>
                 </tr>
               </tbody>
             </Table>

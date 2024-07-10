@@ -1,6 +1,13 @@
-import { figureScore } from 'constant';
-import { ConfigElement, ScoreElement } from '../interfaces';
 import _orderBy from 'lodash/orderBy';
+
+import { FigureId, figureScore } from 'constant';
+import { Config, ConfigElement, ScoreElement, Sum, X_VALUE } from 'interfaces';
+
+import { calculateScore } from './calculateScore';
+
+function instanceOfScoreElement (object: any): object is ScoreElement {
+  return 'columnId' in object;
+}
 
 export const getCorrectValue = (key: string, value: unknown, { columns }: { columns: number }) => {
   if (value === null) {
@@ -29,14 +36,6 @@ export const updateScoreElement = (key: string, value: ScoreElement[] | null, { 
   return _orderBy(newValues, ['columnId']);
 };
 
-export const getSum = (key: string, value: ScoreElement[] | null): number | null => {
-  if (value === null) {
-    return value;
-  }
-
-  return 2;
-};
-
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 export const iterateAndSetNewValue = (
   callback: (...args: any[]) => unknown,
@@ -52,3 +51,44 @@ export const iterateAndSetNewValue = (
     }
   });
 };
+
+export const iterateAndSumValues = (
+  obj: any,
+  config: Config,
+  results: Sum[] = [],
+  bonuses: number[] = [],
+  school: Sum[] = [],
+  prevKey = ''
+): { results: Sum[], bonuses: number, school: Sum[] } => {
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+
+    if (typeof value === 'object' && value !== null && !instanceOfScoreElement(value)) {
+      iterateAndSumValues(value, config, results, bonuses, school,prevKey ? `${prevKey},${key}` : key);
+    } else {
+      if (value !== null && value.throw !== null) {
+        const keys = prevKey.split(',');
+
+        const configValue = keys.reduce((acc: any, key) => acc[key], config);
+        const sum = calculateScore(value, configValue);
+
+        results.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
+
+        if (
+          configValue.id === FigureId.School1
+          || configValue.id === FigureId.School2
+          || configValue.id === FigureId.School3
+          || configValue.id === FigureId.School4
+          || configValue.id === FigureId.School5
+          || configValue.id === FigureId.School6
+        ) {
+          school.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
+        }
+      } else {
+        bonuses.push(Number(value));
+      }
+    }
+  });
+
+  return { results, bonuses: 0, school };
+}

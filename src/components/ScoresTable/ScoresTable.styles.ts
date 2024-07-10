@@ -91,9 +91,23 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   `};
   ${props.variant === RowVariants.Sum && css`
     &, &:first-of-type {
-      width: 50%;
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
       background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
+      text-transform: uppercase;
+    }
+  `};
+  ${props.variant === RowVariants.SchoolSum && css`
+    &, &:first-of-type {
+      background: linear-gradient(
+        -45deg,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 25%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 25%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 50%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 50%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 75%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 75%
+      );
+      background-size: 7px 7px;
       text-transform: uppercase;
     }
   `};
@@ -109,6 +123,7 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
     height: 0;
     padding: 0;
     border-bottom: .2rem solid #5e5e5e;
+    margin-top: -.1rem;
   `};
 `;
 

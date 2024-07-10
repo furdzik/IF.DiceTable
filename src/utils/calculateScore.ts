@@ -1,5 +1,5 @@
 import { ConfigElement, ElementValue, ScoreElement, Throw, X_VALUE } from 'interfaces';
-import { FigureId } from '../constant';
+import { FigureId } from 'constant';
 
 const getThrowMultiply = (throwCount: Throw | null) => {
   switch (throwCount) {
@@ -62,8 +62,6 @@ export const calculateScore = (singleScore: ScoreElement | null, scoreType: Conf
 
   const throwMultiply = getThrowMultiply(singleScore.throw);
   const calculatedValue = getCalculatedValue(singleScore, scoreType);
-
-  console.log('aaa', singleScore, scoreType, calculatedValue);
 
   return calculatedValue * throwMultiply;
 };

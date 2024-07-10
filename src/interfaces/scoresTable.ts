@@ -67,16 +67,33 @@ export interface Score {
   school: School;
   figures: Figures;
   bonuses: Bonuses;
-  sum?: number[] | null;
+}
+
+export interface Sum {
+  columnId: number;
+  value: number | null;
 }
 
 export interface ScorePlayers {
   [kay: string]: Score | null;
 }
 
+export interface SumPlayer {
+  round: number;
+  columns: number[];
+  bonuses: number;
+  school: number[];
+  all: number;
+}
+
+export interface SumPlayers {
+  [kay: string]: SumPlayer;
+}
+
 export interface ScoresTableState {
   config: Config;
   scores: ScorePlayers | null;
+  sum: SumPlayers | null;
 }
 
 export interface SaveScore {

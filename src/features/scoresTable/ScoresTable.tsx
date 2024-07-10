@@ -19,15 +19,18 @@ const ScoresTable = () => {
   }, [dispatch, columns, players]);
 
   const scores = useSelector((state: RootState) => state.scoresTable.scores);
+  const sum = useSelector((state: RootState) => state.scoresTable.sum);
 
   useEffect(() => {
-    dispatch(calculateSum({ allScores: scores }));
-  }, [dispatch, scores]);
+    dispatch(calculateSum({ allScores: scores, config, columns }));
+    // TODO: check and add bonuses
+  }, [dispatch, scores, config, players, columns]);
 
-  return scores && (
+  return scores && sum && (
     <ScoresTableComponent
       config={config}
       scores={scores}
+      sum={sum}
       options={{ columns, players }}
       saveScore={({ score, playerId, scoreType }: SaveScore) => {
         dispatch(saveScore({ score, playerId, scoreType, allScores: scores }));

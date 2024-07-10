@@ -65,6 +65,5 @@ export const scoresDefault: Score = {
     section5AllResults: null,
     section6AllResults: null,
     columnAllResults: []
-  },
-  sum: []
+  }
 };

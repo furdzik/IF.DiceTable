@@ -2,13 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
-import { Player, ScorePlayers, ScoresTableState } from 'interfaces';
+import { Player, ScorePlayers, ScoresTableState, SumPlayers } from 'interfaces';
 import { config, scoresDefault } from 'constant';
-import { iterateAndSetNewValue, getCorrectValue, updateScoreElement } from 'utils';
+import {
+  iterateAndSetNewValue,
+  getCorrectValue,
+  updateScoreElement,
+  iterateAndSumValues,
+  getSum
+} from 'utils';
 
 const initialState: ScoresTableState = {
   config,
-  scores: null
+  scores: null,
+  sum: null
 };
 
 const scoresTable = createSlice({
@@ -24,13 +31,14 @@ const scoresTable = createSlice({
     },
     initScoresTable (state, action) {
       const { columns, players } = action.payload;
+      const stateFromStorage = JSON.parse(localStorage.getItem('scoresTable') || '{}');
 
       const score = _cloneDeep(scoresDefault);
       iterateAndSetNewValue(getCorrectValue, score, { columns });
 
       const newScores: ScorePlayers = {};
       players.forEach((element: Player) => {
-        newScores[`player${element.id}`] = _cloneDeep(score);
+        newScores[`player${element.id}`] = stateFromStorage?.scores?.[`player${element.id}`] || _cloneDeep(score);
       });
 
       localStorage.setItem('scoresTable', JSON.stringify({
@@ -66,11 +74,33 @@ const scoresTable = createSlice({
       };
     },
     calculateSum (state, action) {
-      // const { allScores } = action.payload;
-      // TODO
+      const { allScores, config, columns } = action.payload;
+      const newSum: SumPlayers =  {};
+
+      Object.entries(allScores || {})?.forEach(([key, value]) => {
+        const scores = iterateAndSumValues(value, config);
+
+        const playerSum = getSum(scores.results, columns);
+        const playerSumSchool = getSum(scores.school, columns);
+        const bonuses = scores.bonuses;
+
+        newSum[key] = {
+          round: scores?.results?.length || 1,
+          columns: playerSum.sumByColumn,
+          bonuses,
+          school: playerSumSchool.sumByColumn,
+          all: playerSum.sum + bonuses
+        };
+      });
+
+      localStorage.setItem('scoresTable', JSON.stringify({
+        ...state,
+        sum: newSum
+      }));
 
       return {
-        ...state
+        ...state,
+        sum: newSum
       };
     }
   }
