@@ -1,19 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { isEmpty } from 'lodash';
 
 import { OptionsState } from 'interfaces';
 import { colorsByOrder } from 'constant';
 
-const initialState: OptionsState = {
+const initialStateFromStorage: OptionsState = JSON.parse(localStorage.getItem('options') || '{}');
+const initialStateDefault: OptionsState = {
   columns: 3,
-  players: [
+  players:  [
     { id: 1, name: 'Gracz 1', color: colorsByOrder[0] },
     { id: 2, name: 'Gracz 2', color: colorsByOrder[1] }
-  ]
+  ],
+  showStats: true
 };
 
 const options = createSlice({
   name: 'options',
-  initialState,
+  initialState: !isEmpty(initialStateFromStorage) ? initialStateFromStorage : initialStateDefault,
   reducers: {
     loadOptions (state) {
       const stateFromStorage = JSON.parse(localStorage.getItem('options') || '{}');
@@ -33,20 +36,20 @@ const options = createSlice({
         ...action.payload
       };
     },
-    clearData (state) {
+    clearOptionData (state) {
       localStorage.setItem('options', JSON.stringify({
         ...state,
-        ...initialState
+        ...initialStateDefault
       }));
 
       return {
         ...state,
-        ...initialState
+        ...initialStateDefault
       };
     }
   }
 });
 
-export const { loadOptions, saveData, clearData } = options.actions;
+export const { loadOptions, saveData, clearOptionData } = options.actions;
 
 export default options.reducer;

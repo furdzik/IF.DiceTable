@@ -83,6 +83,7 @@ const GlobalStyles = css`
     background: none;
     font: inherit;
     text-transform: inherit;
+    padding: 0;
     &:hover, &:active, &:focus {
       outline: none;
       cursor: pointer;

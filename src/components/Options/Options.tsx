@@ -19,13 +19,15 @@ import {
 import { OptionsState, Player } from 'interfaces';
 
 import {
-  AddPlayer,
-  AddPlayerWrapper,
-  ClearDataWrapper,
+  Wrapper,
   InnerWrapper,
+  Label,
   InputStyled,
-  Wrapper
+  AddPlayerWrapper,
+  AddPlayer,
+  ClearDataWrapper
 } from './Options.styles';
+import Switch from '../ui/Switch';
 
 export interface OptionsProps {
   options: OptionsState;
@@ -38,6 +40,7 @@ export interface OptionsProps {
 const Options = ({ options, saveData, clearData, onModalClose, className = '' }: OptionsProps) => {
   const [columns, setColumns] = useState<number>(0);
   const [players, setPlayers] = useState<Player[]>([]);
+  const [showStats, setShowStats] = useState(options.showStats);
 
   const delatePlayer = (id: number) => {
     const restPlayers = _cloneDeep(players).filter((element: Player) => element.id !== id);
@@ -78,13 +81,14 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
   useEffect(() => {
     setColumns(options?.columns);
     setPlayers(options?.players);
+    setShowStats(options?.showStats);
   }, [options]);
 
   return (
     <React.Fragment>
       <Wrapper className={className}>
         <InnerWrapper>
-          <label htmlFor="oprionsComuns">Ilość kolumn</label>
+          <Label htmlFor="oprionsComuns">Ilość kolumn</Label>
           <InputStyled
             type={InputTypes.Number}
             name="columnsNumber"
@@ -93,13 +97,24 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
             }}
             value={columns}
           />
+
+        </InnerWrapper>
+        <InnerWrapper>
+          <Label htmlFor="showStats">Pokaż statystyki</Label>
+          <Switch
+            id="showStats"
+            checked={showStats}
+            onClick={() => {
+              setShowStats(!showStats);
+            }}
+          />
         </InnerWrapper>
       </Wrapper>
       <Wrapper>
         <h1>Gracze</h1>
         {players.map((item: Player, index: number) => (
           <InnerWrapper key={index}>
-            <label>Gracz {index + 1}</label>
+            <Label>Gracz {index + 1}</Label>
             <InputStyled
               type={InputTypes.Text}
               name={`options.players[${index}].name`}
@@ -132,7 +147,7 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
         <Button
           type={ButtonTypes.Submit}
           onClick={() => {
-            saveData({ columns, players });
+            saveData({ columns, players, showStats });
             onModalClose();
           }}
         >

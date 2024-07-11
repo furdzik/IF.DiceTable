@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from '@mdi/react';
+import { mdiChevronRightCircleOutline, mdiCrown } from '@mdi/js';
 
 import {
   Config,
@@ -11,6 +13,7 @@ import {
   ScorePlayers,
   SumPlayers
 } from 'interfaces';
+import { getStats } from 'utils';
 
 import AddScore from 'components/AddScore';
 
@@ -19,19 +22,26 @@ import {
   TablesWrapper,
   Table,
   Th,
-  Td
+  Td,
+  StatsWrapper,
+  StatsTitle,
+  Stats,
+  StatsLabel,
+  PlayerName
 } from './ScoresTable.styles';
 
 export enum RowVariants {
   MainTitle,
   Sum,
   SchoolSum,
-  FigureGrup
+  FigureGrup,
+  Stats
 }
 export interface ScoresTableProps {
   config: Config;
   scores: ScorePlayers;
   sum: SumPlayers;
+  gameStarted: boolean;
   options: Options;
   saveScore: ({ score, scoreType, playerId }: SaveScore) => void;
   className?: string | undefined;
@@ -39,7 +49,7 @@ export interface ScoresTableProps {
 
 const TITLE_LENGTH = 1;
 
-const ScoresTable = ({ config, scores, sum, options, saveScore, className = '' }: ScoresTableProps) => {
+const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, className = '' }: ScoresTableProps) => {
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
 
@@ -47,196 +57,240 @@ const ScoresTable = ({ config, scores, sum, options, saveScore, className = '' }
     saveScore({ score, scoreType, playerId });
   };
 
-  return (
-    <Wrapper className={className}>
-      {options.players.map((player: Player) => {
-        const playerScore: Score | null = scores?.[`player${player.id}`];
-        const columns: number[] = [...Array(options.columns).keys()];
+  const stats = getStats(options, sum);
 
-        return (
-          <TablesWrapper players={options.players.length}>
-            <Table playerColor={player.color}>
-              <thead>
-                <tr>
-                  <Th variant={RowVariants.MainTitle} colSpan={2} playerColor={player.color}>
-                    {player.name}
-                  </Th>
-                </tr>
-                <tr>
-                  <Th variant={RowVariants.Sum} playerColor={player.color}>Suma</Th>
-                  <Th variant={RowVariants.Sum} playerColor={player.color}>
-                    {sum?.[`player${player.id}`]?.all || 0}
-                  </Th>
-                </tr>
-              </thead>
-            </Table>
-            <Table players={options.players.length} playerColor={player.color}>
-              <tbody>
-                <tr>
-                  <Th
-                    variant={RowVariants.FigureGrup}
-                    colSpan={options.columns + TITLE_LENGTH}
-                    playerColor={player.color}
-                  >
-                    Szkoła
-                  </Th>
-                </tr>
-                {Object.entries(config.school).map(([key, scoreType]) => (
-                  <tr key={`${player.id}-${key}`}>
-                    <Td playerColor={player.color}>{scoreType.name}</Td>
+  return (
+    <React.Fragment>
+      {
+        gameStarted && options.showStats && (
+          <StatsWrapper>
+            <StatsTitle>
+              Statystyki
+              <Icon path={mdiChevronRightCircleOutline} size={1} />
+            </StatsTitle>
+            <Stats>
+              <div>
+                <StatsLabel>Runda:</StatsLabel> {stats.currentRound}/{stats.numberOfRounds}
+              </div>
+              <div>
+                <StatsLabel>Kolejność:</StatsLabel> {stats.winners.join(', ')}
+              </div>
+              <div>
+                <StatsLabel>Różnica do zwycięzcy:</StatsLabel> {stats.difference.join(', ')}
+              </div>
+            </Stats>
+          </StatsWrapper>
+        )
+      }
+      <Wrapper className={className}>
+        {options.players?.map((player: Player) => {
+          const playerScore: Score | null = scores?.[`player${player.id}`];
+          const columns: number[] = [...Array(options.columns).keys()];
+
+          return (
+            <TablesWrapper players={options.players.length}>
+              <Table playerColor={player.color}>
+                <thead>
+                  <tr>
+                    <Th variant={RowVariants.MainTitle} colSpan={2} playerColor={player.color}>
+                      <PlayerName>
+                        {player.name}
+                        {
+                          gameStarted && stats.winners[0] === player.name && (
+                            <Icon path={mdiCrown} size={1.5} color="#ffe700" />
+                          )
+                        }
+                      </PlayerName>
+                    </Th>
+                  </tr>
+                  <tr>
+                    <Th variant={RowVariants.Sum} playerColor={player.color}>Suma punktów</Th>
+                    <Th variant={RowVariants.Sum} playerColor={player.color}>
+                      {sum?.[`player${player.id}`]?.all || 0}
+                    </Th>
+                  </tr>
+                  {
+                    gameStarted && options.showStats && (
+                      <tr>
+                        <Td variant={RowVariants.Stats} >
+                          Runda
+                        </Td>
+                        <Td variant={RowVariants.Stats} >
+                          {sum?.[`player${player.id}`]?.round}
+                        </Td>
+                      </tr>
+                    )
+                  }
+                </thead>
+              </Table>
+              <Table players={options.players.length} playerColor={player.color}>
+                <tbody>
+                  <tr>
+                    <Th
+                      variant={RowVariants.FigureGrup}
+                      colSpan={options.columns + TITLE_LENGTH}
+                      playerColor={player.color}
+                    >
+                      Szkoła
+                    </Th>
+                  </tr>
+                  {Object.entries(config.school).map(([key, scoreType]) => (
+                    <tr key={`${player.id}-${key}`}>
+                      <Td playerColor={player.color}>{scoreType.name}</Td>
+                      {columns.map((index) => {
+                        const columnValue = playerScore?.school?.[Number(key)][index];
+                        return (
+                          <Td key={`${player.id}-${key}-${index}`} playerColor={player.color}>
+                            <AddScore
+                              singleScore={columnValue || null}
+                              scoreType={scoreType}
+                              player={player}
+                              columnId={index + 1}
+                              onClick={onAddScoreClick}
+                            />
+                          </Td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                  <tr>
+                    <Td variant={RowVariants.SchoolSum} playerColor={player.color}>Suma</Td>
+                    {columns.map((index) => (
+                      <Td
+                        key={`${player.id}-school-sum-${index}`}
+                        variant={RowVariants.SchoolSum}
+                        playerColor={player.color}
+                      >
+                        {sum?.[`player${player.id}`]?.school[index] || ''}
+                      </Td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <Th
+                      variant={RowVariants.FigureGrup}
+                      colSpan={options.columns + TITLE_LENGTH}
+                      playerColor={player.color}
+                    >
+                      Figury
+                    </Th>
+                  </tr>
+                  {figuresPart1.map(([figuresKey, figuresValue]) => (
+                    <React.Fragment key={`${player.id}-${figuresKey}`}>
+                      <tr>
+                        <Td separator colSpan={options.columns + TITLE_LENGTH} />
+                      </tr>
+                      {Object.entries(figuresValue).map(([key, scoreType]) => (
+                        <tr key={`${player.id}-${figuresKey}-${key}`}>
+                          <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
+                          {columns.map((index) => {
+                            const columnValue = (playerScore?.figures?.[figuresKey][key][index]);
+                            return (
+                              <Td key={`${player.id}-${figuresKey}-${key}-${index}`} playerColor={player.color}>
+                                <AddScore
+                                  singleScore={columnValue || null}
+                                  scoreType={scoreType}
+                                  player={player}
+                                  columnId={index + 1}
+                                  position={{ onTop: true }}
+                                  onClick={onAddScoreClick}
+                                />
+                              </Td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </Table>
+              <Table players={options.players.length} playerColor={player.color}>
+                <tbody>
+                  <tr>
+                    <Th
+                      variant={RowVariants.FigureGrup}
+                      colSpan={options.columns + TITLE_LENGTH}
+                      playerColor={player.color}
+                    >
+                      Figury
+                    </Th>
+                  </tr>
+                  {figuresPart2.map(([figuresKey, figuresValue], index) => (
+                    <React.Fragment key={`${player.id}-${figuresKey}`}>
+                      {
+                        index !== 0 && (
+                          <tr>
+                            <Td
+                              separator
+                              colSpan={options.columns + TITLE_LENGTH}
+                              playerColor={player.color}
+                            />
+                          </tr>
+                        )
+                      }
+                      {Object.entries(figuresValue).map(([key, scoreType]) => (
+                        <tr key={`${player.id}-${figuresKey}-${key}`}>
+                          <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
+                          {columns.map((colIndex) => {
+                            const columnValue = (playerScore?.figures?.[figuresKey][key][colIndex]);
+                            return (
+                              <Td key={`${player.id}-${figuresKey}-${key}-${colIndex}`} playerColor={player.color}>
+                                <AddScore
+                                  singleScore={columnValue || null}
+                                  scoreType={scoreType}
+                                  player={player}
+                                  columnId={index + 1}
+                                  position={{ onLeft: true }}
+                                  onClick={onAddScoreClick}
+                                />
+                              </Td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                  <tr>
+                    <Td separator colSpan={options.columns + TITLE_LENGTH} playerColor={player.color} />
+                  </tr>
+                  <tr>
+                    <Td playerColor={player.color}>Kolumny</Td>
                     {columns.map((index) => {
-                      const columnValue = playerScore?.school?.[Number(key)][index];
+                      const columnValue = (playerScore?.bonuses?.columnAllResults as number[])?.[index];
                       return (
-                        <Td key={`${player.id}-${key}-${index}`} playerColor={player.color}>
-                          <AddScore
-                            singleScore={columnValue || null}
-                            scoreType={scoreType}
-                            player={player}
-                            columnId={index + 1}
-                            onClick={onAddScoreClick}
-                          />
+                        <Td key={`${player.id}-bonuses-columnAllResults-${index}`} playerColor={player.color}>
+                          {columnValue}
                         </Td>
                       );
                     })}
                   </tr>
-                ))}
-                <tr>
-                  <Td variant={RowVariants.SchoolSum} playerColor={player.color}>Suma</Td>
-                  {columns.map((index) => (
-                    <Td
-                      key={`${player.id}-school-sum-${index}`}
-                      variant={RowVariants.SchoolSum}
+                  <tr>
+                    <Th
+                      variant={RowVariants.FigureGrup}
+                      colSpan={options.columns + TITLE_LENGTH}
                       playerColor={player.color}
                     >
-                      {sum?.[`player${player.id}`]?.school[index] || ''}
-                    </Td>
-                  ))}
-                </tr>
-                <tr>
-                  <Th
-                    variant={RowVariants.FigureGrup}
-                    colSpan={options.columns + TITLE_LENGTH}
-                    playerColor={player.color}
-                  >
-                    Figury
-                  </Th>
-                </tr>
-                {figuresPart1.map(([figuresKey, figuresValue]) => (
-                  <React.Fragment key={`${player.id}-${figuresKey}`}>
-                    <tr>
-                      <Td separator colSpan={options.columns + TITLE_LENGTH} />
-                    </tr>
-                    {Object.entries(figuresValue).map(([key, scoreType]) => (
-                      <tr key={`${player.id}-${figuresKey}-${key}`}>
-                        <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
-                        {columns.map((index) => {
-                          const columnValue = (playerScore?.figures?.[figuresKey][key][index]);
-                          return (
-                            <Td key={`${player.id}-${figuresKey}-${key}-${index}`} playerColor={player.color}>
-                              <AddScore
-                                singleScore={columnValue || null}
-                                scoreType={scoreType}
-                                player={player}
-                                columnId={index + 1}
-                                position={{ onTop: true }}
-                                onClick={onAddScoreClick}
-                              />
-                            </Td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </Table>
-            <Table players={options.players.length} playerColor={player.color}>
-              <tbody>
-                <tr>
-                  <Th
-                    variant={RowVariants.FigureGrup}
-                    colSpan={options.columns + TITLE_LENGTH}
-                    playerColor={player.color}
-                  >
-                    Figury
-                  </Th>
-                </tr>
-                {figuresPart2.map(([figuresKey, figuresValue], index) => (
-                  <React.Fragment key={`${player.id}-${figuresKey}`}>
-                    {
-                      index !== 0 && (
-                        <tr>
-                          <Td
-                            separator
-                            colSpan={options.columns + TITLE_LENGTH}
-                            playerColor={player.color}
-                          />
-                        </tr>
-                      )
-                    }
-                    {Object.entries(figuresValue).map(([key, scoreType]) => (
-                      <tr key={`${player.id}-${figuresKey}-${key}`}>
-                        <Td playerColor={player.color}>{(scoreType as ConfigElement).name}</Td>
-                        {columns.map((colIndex) => {
-                          const columnValue = (playerScore?.figures?.[figuresKey][key][colIndex]);
-                          return (
-                            <Td key={`${player.id}-${figuresKey}-${key}-${colIndex}`} playerColor={player.color}>
-                              <AddScore
-                                singleScore={columnValue || null}
-                                scoreType={scoreType}
-                                player={player}
-                                columnId={index + 1}
-                                position={{ onLeft: true }}
-                                onClick={onAddScoreClick}
-                              />
-                            </Td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-                <tr>
-                  <Td separator colSpan={options.columns + TITLE_LENGTH} playerColor={player.color} />
-                </tr>
-                <tr>
-                  <Td playerColor={player.color}>Kolumny</Td>
-                  {columns.map((index) => {
-                    const columnValue = (playerScore?.bonuses?.columnAllResults as number[])?.[index];
-                    return (
-                      <Td key={`${player.id}-bonuses-columnAllResults-${index}`} playerColor={player.color}>
-                        {columnValue}
-                      </Td>
-                    );
-                  })}
-                </tr>
-                <tr>
-                  <Th
-                    variant={RowVariants.FigureGrup}
-                    colSpan={options.columns + TITLE_LENGTH}
-                    playerColor={player.color}
-                  >
-                    Bonusy
-                  </Th>
-                </tr>
-                <tr>
-                  <Th playerColor={player.color}>{'>'} 1000</Th>
-                  <Th colSpan={options.columns} playerColor={player.color}>
-                    {playerScore?.bonuses?.firstAboveThousand?.toString()}
-                  </Th>
-                </tr>
-                <tr>
-                  <Th playerColor={player.color}>Reszta</Th>
-                  <Th colSpan={options.columns} playerColor={player.color}>
-                    {sum?.[`player${player.id}`]?.bonuses || ''}
-                  </Th>
-                </tr>
-              </tbody>
-            </Table>
-          </TablesWrapper>
-        );
-      })}
-    </Wrapper>
+                      Bonusy
+                    </Th>
+                  </tr>
+                  <tr>
+                    <Th playerColor={player.color}>{'>'} 1000</Th>
+                    <Th colSpan={options.columns} playerColor={player.color}>
+                      {playerScore?.bonuses?.firstAboveThousand?.toString()}
+                    </Th>
+                  </tr>
+                  <tr>
+                    <Th playerColor={player.color}>Reszta</Th>
+                    <Th colSpan={options.columns} playerColor={player.color}>
+                      {sum?.[`player${player.id}`]?.bonuses || ''}
+                    </Th>
+                  </tr>
+                </tbody>
+              </Table>
+            </TablesWrapper>
+          );
+        })}
+      </Wrapper>
+    </React.Fragment>
   );
 };
 

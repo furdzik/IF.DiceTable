@@ -86,25 +86,25 @@ export const config: Config = {
       twoOfKind: {
         id: FigureId.TwoOfKind,
         name: 'Para',
-        value: 1,
+        value: 0,
         resultsId: ResultsId.ChoseDice
       },
       twoOfTwoOfKind: {
         id: FigureId.TwoOfTwoOfKind,
         name: '2 x Para',
-        value: 1,
+        value: 0,
         resultsId: ResultsId.Result
       },
       threeOfKind: {
         id: FigureId.ThreeOfKind,
         name: 'Trójka',
-        value: 1,
+        value: 0,
         resultsId: ResultsId.ChoseDice
       },
       fourOfKind: {
         id: FigureId.FourOfKind,
         name: 'Kareta',
-        value: 1,
+        value: 0,
         resultsId: ResultsId.ChoseDice
       }
     },

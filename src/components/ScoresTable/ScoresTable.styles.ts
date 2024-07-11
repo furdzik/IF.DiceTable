@@ -82,6 +82,8 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
 
   ${props.variant === RowVariants.MainTitle && css`
     &, &:first-of-type {
+      padding: 0;
+      height: 3rem;
       border: none;
       background: ${props.playerColor || props.theme.mainColors.secondary};
       font-size: ${props.theme.fontSize.big};
@@ -91,6 +93,7 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   `};
   ${props.variant === RowVariants.Sum && css`
     &, &:first-of-type {
+      width: 50%;
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
       background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
       text-transform: uppercase;
@@ -119,6 +122,18 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       text-transform: uppercase;
     }
   `};
+  ${props.variant === RowVariants.Stats && css`
+    &, &:first-of-type {
+      border: .2rem solid #e2e2e2;
+      background: #e2e2e2;
+      font-size: 1rem;
+      font-weight: normal;
+      color: ${props.theme.colorMono.black};
+      text-transform: uppercase;
+      padding: .4rem 0 .2rem;
+      height: auto;
+    }
+  `};
   ${props.separator && css`
     height: 0;
     padding: 0;
@@ -135,10 +150,58 @@ const Td = styled.td<RowProps & PlayersProps>`
   ${Row};
 `;
 
+const StatsWrapper = styled.section`
+  background: #e2e2e2;
+  border: .2rem solid #969696;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`;
+
+const StatsTitle = styled.h4`
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 0;
+  font-size: ${(props) => props.theme.fontSize.small};
+  font-weight: ${(props) => props.theme.fontWeight.bold};
+  text-transform: uppercase;
+  color: #494747;
+`;
+
+const Stats = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const StatsLabel = styled.b`
+  text-transform: uppercase;
+`;
+
+const PlayerName = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  svg > {
+    margin-top: -.3rem;
+  }
+`;
+
 export {
   Wrapper,
   TablesWrapper,
   Table,
   Th,
-  Td
+  Td,
+  StatsWrapper,
+  StatsTitle,
+  Stats,
+  StatsLabel,
+  PlayerName
 };

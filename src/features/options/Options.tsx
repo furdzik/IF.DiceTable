@@ -5,7 +5,9 @@ import { AppDispatch, OptionsState, RootState } from 'interfaces';
 
 import OptionsComponent from 'components/Options';
 
-import { loadOptions, saveData, clearData } from './optionsSlice';
+import { clearScoreData } from 'features/scoresTable/scoresTableSlice';
+
+import { loadOptions, saveData, clearOptionData } from './optionsSlice';
 
 export interface OptionsProps {
   onModalClose: () => void;
@@ -16,6 +18,7 @@ const Options = (props: OptionsProps) => {
 
   const columns = useSelector((state: RootState) => state.options.columns);
   const players = useSelector((state: RootState) => state.options.players);
+  const showStats = useSelector((state: RootState) => state.options.showStats);
 
   useEffect(() => {
     dispatch(loadOptions());
@@ -23,9 +26,14 @@ const Options = (props: OptionsProps) => {
 
   return (
     <OptionsComponent
-      options={{ columns, players }}
-      saveData={(data: OptionsState) => dispatch(saveData(data))}
-      clearData={() => dispatch(clearData())}
+      options={{ columns, players, showStats }}
+      saveData={(data: OptionsState) => {
+        dispatch(saveData(data));
+      }}
+      clearData={() => {
+        dispatch(clearOptionData());
+        dispatch(clearScoreData());
+      }}
       onModalClose={props.onModalClose}
     />
   );

@@ -94,10 +94,16 @@ export interface ScoresTableState {
   config: Config;
   scores: ScorePlayers | null;
   sum: SumPlayers | null;
+  gameStarted: boolean;
 }
 
 export interface SaveScore {
   score: ScoreElement | null;
   playerId: number;
   scoreType: ConfigElement;
+}
+
+export interface StatsValues {
+  player: number;
+  [kay: string]: number;
 }

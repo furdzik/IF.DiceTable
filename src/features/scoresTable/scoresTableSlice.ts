@@ -15,7 +15,8 @@ import {
 const initialState: ScoresTableState = {
   config,
   scores: null,
-  sum: null
+  sum: null,
+  gameStarted: false
 };
 
 const scoresTable = createSlice({
@@ -37,8 +38,8 @@ const scoresTable = createSlice({
       iterateAndSetNewValue(getCorrectValue, score, { columns });
 
       const newScores: ScorePlayers = {};
-      players.forEach((element: Player) => {
-        newScores[`player${element.id}`] = stateFromStorage?.scores?.[`player${element.id}`] || _cloneDeep(score);
+      players?.forEach((player: Player) => {
+        newScores[`player${player.id}`] = stateFromStorage?.scores?.[`player${player.id}`] || _cloneDeep(score);
       });
 
       localStorage.setItem('scoresTable', JSON.stringify({
@@ -76,6 +77,7 @@ const scoresTable = createSlice({
     calculateSum (state, action) {
       const { allScores, config, columns } = action.payload;
       const newSum: SumPlayers =  {};
+      let gameStarted = false;
 
       Object.entries(allScores || {})?.forEach(([key, value]) => {
         const scores = iterateAndSumValues(value, config);
@@ -85,27 +87,48 @@ const scoresTable = createSlice({
         const bonuses = scores.bonuses;
 
         newSum[key] = {
-          round: scores?.results?.length || 1,
+          round: scores?.results?.length,
           columns: playerSum.sumByColumn,
           bonuses,
           school: playerSumSchool.sumByColumn,
           all: playerSum.sum + bonuses
         };
+
+        gameStarted = !gameStarted ? scores?.results?.length > 0 : gameStarted;
       });
 
       localStorage.setItem('scoresTable', JSON.stringify({
         ...state,
-        sum: newSum
+        sum: newSum,
+        gameStarted
       }));
 
       return {
         ...state,
-        sum: newSum
+        sum: newSum,
+        gameStarted
+      };
+    },
+    clearScoreData (state) {
+      localStorage.setItem('scoresTable', JSON.stringify({
+        ...state,
+        ...initialState
+      }));
+
+      return {
+        ...state,
+        ...initialState
       };
     }
   }
 });
 
-export const { initScoresTable, loadScoresTable, saveScore, calculateSum } = scoresTable.actions;
+export const {
+  initScoresTable,
+  loadScoresTable,
+  saveScore,
+  calculateSum,
+  clearScoreData
+} = scoresTable.actions;
 
 export default scoresTable.reducer;

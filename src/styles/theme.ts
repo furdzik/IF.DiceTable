@@ -12,7 +12,7 @@ export const theme: ITheme = {
     modalDefaultPadding: '3rem',
     borderColor: '',
     boxShadow: '',
-    transition: ''
+    transition: 'all .3s ease-in'
   }
 };
 

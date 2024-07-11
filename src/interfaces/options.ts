@@ -16,9 +16,11 @@ export interface Player {
 export interface OptionsState {
   columns: number;
   players: Player[];
+  showStats: boolean;
 }
 
 export interface Options {
   columns: number;
   players: Player[];
+  showStats: boolean;
 }

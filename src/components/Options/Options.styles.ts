@@ -19,6 +19,10 @@ const InnerWrapper = styled.div`
   }
 `;
 
+const Label = styled.label`
+  min-width: 10rem;
+`;
+
 const InputStyled = styled(Input)`
   max-width: 17rem;
 `;
@@ -47,6 +51,7 @@ const ClearDataWrapper = styled.section`
 export {
   Wrapper,
   InnerWrapper,
+  Label,
   InputStyled,
   AddPlayerWrapper,
   AddPlayer,

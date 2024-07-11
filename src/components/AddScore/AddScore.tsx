@@ -65,6 +65,10 @@ const AddScore = ({
     setCalculatedScore(calculateScore(singleScore, scoreType));
   }, [singleScore, scoreType]);
 
+  useEffect(() => {
+    setScoreOptions(singleScore);
+  }, [singleScore]);
+
   return (
     <Wrapper className={className}>
       <Score

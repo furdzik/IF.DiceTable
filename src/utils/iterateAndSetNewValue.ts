@@ -74,14 +74,14 @@ export const iterateAndSumValues = (
 
         results.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
 
-        if (
+        if (configValue && (
           configValue.id === FigureId.School1
           || configValue.id === FigureId.School2
           || configValue.id === FigureId.School3
           || configValue.id === FigureId.School4
           || configValue.id === FigureId.School5
           || configValue.id === FigureId.School6
-        ) {
+        )) {
           school.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
         }
       } else {
