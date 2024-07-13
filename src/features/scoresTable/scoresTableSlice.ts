@@ -107,8 +107,9 @@ const scoresTable = createSlice({
           school: playerSumSchool.sumByColumn,
           schoolAll: playerSumSchool.sum,
           sumFor1000Bonus: playerSum.sum - playerSumSchool.sum,
+          // @TODO: sum should be without school
           sumWithoutBonuses: playerSum.sum,
-          all: playerSum.sum + thousandBonus + restBonuses + schoolBonus
+          all: playerSum.sum - playerSumSchool.sum + thousandBonus + restBonuses + schoolBonus
         };
 
         gameStarted = !gameStarted ? scores?.results?.length > 0 : gameStarted;
