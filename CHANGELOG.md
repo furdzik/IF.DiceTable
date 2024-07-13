@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/furdzik/IF.DiceTable/compare/v1.1.0...v1.2.0) (2024-07-13)
+
+
+### Features
+
+* **app:** change sum ([6bc327a](https://github.com/furdzik/IF.DiceTable/commit/6bc327aba4f315dfb6a505d0bcda03a95846421b))
+
 ## [1.1.0](https://github.com/furdzik/IF.DiceTable/compare/v1.0.0...v1.1.0) (2024-07-13)
 
 
