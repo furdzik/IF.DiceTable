@@ -5,7 +5,7 @@ import { AppDispatch, RootState, SaveScore } from 'interfaces';
 
 import ScoresTableComponent from 'components/ScoresTable';
 
-import { initScoresTable, saveScore, calculateSum } from './scoresTableSlice';
+import { initScoresTable, saveScore, calculateSum, calculateBonus } from './scoresTableSlice';
 
 const ScoresTable = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,18 +20,23 @@ const ScoresTable = () => {
   }, [dispatch, columns, players]);
 
   const scores = useSelector((state: RootState) => state.scoresTable.scores);
+  const bonuses = useSelector((state: RootState) => state.scoresTable.bonuses);
   const sum = useSelector((state: RootState) => state.scoresTable.sum);
   const gameStarted = useSelector((state: RootState) => state.scoresTable.gameStarted);
 
   useEffect(() => {
     dispatch(calculateSum({ allScores: scores, config, columns }));
-    // TODO: check and add bonuses
-  }, [dispatch, scores, config, players, columns]);
+  }, [dispatch, scores, config, columns]);
 
-  return scores && sum && (
+  useEffect(() => {
+    dispatch(calculateBonus({ allScores: scores, players, sum, config: config.bonuses }));
+  }, [dispatch, scores, players, sum, config]);
+
+  return scores && bonuses && sum && (
     <ScoresTableComponent
       config={config}
       scores={scores}
+      bonuses={bonuses}
       sum={sum}
       gameStarted={gameStarted}
       options={{ columns, players, showStats }}

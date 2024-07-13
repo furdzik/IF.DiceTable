@@ -53,17 +53,18 @@ export const scoresDefault: Score = {
     section7: {
       chance: []
     }
-  },
-  bonuses: {
-    schoolGeneral: null,
-    firstAboveThousand: null,
-    sameValueVice: null,
-    sameValueGeneral: null,
-    section1AllResults: null,
-    section3AllResults: null,
-    section4AllResults: null,
-    section5AllResults: null,
-    section6AllResults: null,
-    columnAllResults: []
   }
+};
+
+const bonusesDefault =  {
+  school: [],
+  firstAboveThousand: null,
+  sameValueVice: null,
+  sameValueGeneral: null,
+  section1AllResults: null,
+  section3AllResults: null,
+  section4AllResults: null,
+  section5AllResults: null,
+  section6AllResults: null,
+  columnAllResults: []
 };

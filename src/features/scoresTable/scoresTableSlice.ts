@@ -2,21 +2,31 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import _cloneDeep from 'lodash/cloneDeep';
 
-import { Player, ScorePlayers, ScoresTableState, SumPlayers } from 'interfaces';
+import {
+  BonusesPlayers,
+  Player,
+  PlayerCompareValues,
+  ScorePlayers,
+  ScoresTableState,
+  SumPlayers
+} from 'interfaces';
 import { config, scoresDefault } from 'constant';
 import {
   iterateAndSetNewValue,
   getCorrectValue,
   updateScoreElement,
   iterateAndSumValues,
-  getSum
+  getSum,
+  calculatePlayerBonus
 } from 'utils';
 
 const initialState: ScoresTableState = {
   config,
   scores: null,
+  bonuses: null,
   sum: null,
-  gameStarted: false
+  gameStarted: false,
+  bonusThousandGranted: false
 };
 
 const scoresTable = createSlice({
@@ -84,14 +94,21 @@ const scoresTable = createSlice({
 
         const playerSum = getSum(scores.results, columns);
         const playerSumSchool = getSum(scores.school, columns);
-        const bonuses = scores.bonuses;
+        const thousandBonus = scores.thousandBonus;
+        const restBonuses = scores.restBonuses;
+        const schoolBonus = scores.schoolBonus;
 
         newSum[key] = {
           round: scores?.results?.length,
           columns: playerSum.sumByColumn,
-          bonuses,
+          thousandBonus,
+          restBonuses,
+          schoolBonus,
           school: playerSumSchool.sumByColumn,
-          all: playerSum.sum + bonuses
+          schoolAll: playerSumSchool.sum,
+          sumFor1000Bonus: playerSum.sum - playerSumSchool.sum,
+          sumWithoutBonuses: playerSum.sum,
+          all: playerSum.sum + thousandBonus + restBonuses + schoolBonus
         };
 
         gameStarted = !gameStarted ? scores?.results?.length > 0 : gameStarted;
@@ -107,6 +124,52 @@ const scoresTable = createSlice({
         ...state,
         sum: newSum,
         gameStarted
+      };
+    },
+    calculateBonus (state, action) {
+      const { allScores, players, sum, config } = action.payload;
+      let newBonuses: BonusesPlayers = {};
+      const bonusThousandGrantedResultsBefore: boolean[] = [];
+      const bonusThousandGrantedResultsAfter: boolean[] = [];
+
+      const thousandBonusResult: PlayerCompareValues[] = [];
+
+      players?.forEach((player: Player) => {
+        thousandBonusResult.push({
+          player: player.id,
+          sum: sum?.[`player${player?.id}`]?.sumFor1000Bonus,
+          round: sum?.[`player${player?.id}`]?.round
+        });
+        bonusThousandGrantedResultsBefore.push((state.bonuses?.[`player${player?.id}`]?.thousandBonus || 0) > 0);
+      });
+
+      players?.forEach((player: Player) => {
+        const playerBonuses = calculatePlayerBonus(
+          player,
+          allScores?.[`player${player?.id}`],
+          sum?.[`player${player?.id}`],
+          state.bonuses,
+          config,
+          thousandBonusResult,
+          bonusThousandGrantedResultsBefore.includes(true)
+        )
+        newBonuses = {
+          ...newBonuses,
+          [`player${player?.id}`]: playerBonuses
+        };
+        bonusThousandGrantedResultsAfter.push((playerBonuses?.thousandBonus as number || 0) > 0);
+      });
+
+      localStorage.setItem('scoresTable', JSON.stringify({
+        ...state,
+        bonuses: newBonuses,
+        bonusThousandGranted: bonusThousandGrantedResultsAfter.includes(true)
+      }));
+
+      return {
+        ...state,
+        bonuses: newBonuses,
+        bonusThousandGranted: bonusThousandGrantedResultsAfter.includes(true)
       };
     },
     clearScoreData (state) {
@@ -128,6 +191,7 @@ export const {
   loadScoresTable,
   saveScore,
   calculateSum,
+  calculateBonus,
   clearScoreData
 } = scoresTable.actions;
 

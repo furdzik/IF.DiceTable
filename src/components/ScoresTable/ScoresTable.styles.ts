@@ -97,21 +97,22 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
       background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
       text-transform: uppercase;
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+      }
+      small {
+        font-size: 1rem;
+        font-weight: ${props.theme.fontWeight.regular};
+      }
     }
   `};
   ${props.variant === RowVariants.SchoolSum && css`
     &, &:first-of-type {
-      background: linear-gradient(
-        -45deg,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 25%,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 25%,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 50%,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 50%,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 75%,
-        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 75%
-      );
-      background-size: 7px 7px;
-      text-transform: uppercase;
+      background: ${hexToRgbMixin(props.playerColor as string, .3) || props.theme.color.lightGreen};
+      font-weight: ${props.theme.fontWeight.bold};
     }
   `};
   ${props.variant === RowVariants.FigureGrup && css`
@@ -132,6 +133,21 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       text-transform: uppercase;
       padding: .4rem 0 .2rem;
       height: auto;
+    }
+  `};
+  ${props.variant === RowVariants.Bonus && css`
+    &, &:first-of-type {
+      background: linear-gradient(
+        -45deg,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 25%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 25%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 50%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 50%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)} 75%,
+        ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .3)} 75%
+      );
+      background-size: 7px 7px;
+      font-size: ${props.theme.fontSize.small};
     }
   `};
   ${props.separator && css`

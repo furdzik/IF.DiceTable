@@ -66,7 +66,6 @@ export interface Config {
 export interface Score {
   school: School;
   figures: Figures;
-  bonuses: Bonuses;
 }
 
 export interface Sum {
@@ -81,8 +80,13 @@ export interface ScorePlayers {
 export interface SumPlayer {
   round: number;
   columns: number[];
-  bonuses: number;
+  thousandBonus: number;
+  restBonuses: number;
+  schoolBonus: number;
   school: number[];
+  schoolAll?: number;
+  sumFor1000Bonus?: number;
+  sumWithoutBonuses?: number;
   all: number;
 }
 
@@ -93,8 +97,10 @@ export interface SumPlayers {
 export interface ScoresTableState {
   config: Config;
   scores: ScorePlayers | null;
+  bonuses: BonusesPlayers | null;
   sum: SumPlayers | null;
   gameStarted: boolean;
+  bonusThousandGranted: boolean;
 }
 
 export interface SaveScore {
@@ -106,4 +112,13 @@ export interface SaveScore {
 export interface StatsValues {
   player: number;
   [kay: string]: number;
+}
+
+export interface PlayerCompareValues {
+  player: number;
+  [kay: string]: number;
+}
+
+export interface BonusesPlayers {
+  [kay: string]: Bonuses;
 }

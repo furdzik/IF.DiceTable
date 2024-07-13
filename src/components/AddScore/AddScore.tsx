@@ -10,17 +10,17 @@ import { calculateScore } from 'utils';
 import { getDiceOrNumberIconPath, getThrowIconPath } from 'utils/getScoreIconPath';
 
 import {
-  Wrapper,
-  Section,
-  ChoiceBox,
   AddBox,
+  ButtonWrapper,
+  ChoiceBox,
   Header,
   Label,
   Score,
-  ButtonWrapper,
+  Section,
+  Selector,
   StyledButton,
   StyledInput,
-  Selector
+  Wrapper
 } from './AddScore.styles';
 
 const ICON_SIZE = 1.4;
@@ -75,7 +75,13 @@ const AddScore = ({
         singleScore={calculatedScore}
         playerColor={player.color}
         addingInProgress={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setScoreOptions({
+            ...scoreOptions as ScoreElement,
+            throw: scoreOptions?.throw || Throw.third
+          });
+          setIsOpen(!isOpen);
+        }}
       >
         {calculatedScore}
       </Score>

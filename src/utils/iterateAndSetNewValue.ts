@@ -56,15 +56,28 @@ export const iterateAndSumValues = (
   obj: any,
   config: Config,
   results: Sum[] = [],
-  bonuses: number[] = [],
+  thousandBonus = 0,
+  restBonuses = 0,
+  schoolBonus = 0,
   school: Sum[] = [],
   prevKey = ''
-): { results: Sum[], bonuses: number, school: Sum[] } => {
+): {
+  results: Sum[], thousandBonus: number, restBonuses: number, schoolBonus: number, school: Sum[]
+} => {
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
 
     if (typeof value === 'object' && value !== null && !instanceOfScoreElement(value)) {
-      iterateAndSumValues(value, config, results, bonuses, school,prevKey ? `${prevKey},${key}` : key);
+      iterateAndSumValues(
+        value,
+        config,
+        results,
+        thousandBonus,
+        restBonuses,
+        schoolBonus,
+        school,
+        prevKey ? `${prevKey},${key}` : key
+      );
     } else {
       if (value !== null && value.throw !== null) {
         const keys = prevKey.split(',');
@@ -85,10 +98,19 @@ export const iterateAndSumValues = (
           school.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
         }
       } else {
-        bonuses.push(Number(value));
+        // @TODO
+        if (key === 'thousandBonus') {
+          thousandBonus = value;
+        } else if (key === 'schoolBonus') {
+          schoolBonus += value;
+        } else if (key === 'columnAllResults') {
+          restBonuses += value;
+        } else {
+          restBonuses += value;
+        }
       }
     }
   });
 
-  return { results, bonuses: 0, school };
+  return { results, thousandBonus, restBonuses, schoolBonus, school };
 }

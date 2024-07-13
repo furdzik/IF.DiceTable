@@ -3,6 +3,8 @@ import Icon from '@mdi/react';
 import { mdiChevronRightCircleOutline, mdiCrown } from '@mdi/js';
 
 import {
+  Bonuses,
+  BonusesPlayers,
   Config,
   ConfigElement,
   Options,
@@ -34,12 +36,14 @@ export enum RowVariants {
   MainTitle,
   Sum,
   SchoolSum,
+  Bonus,
   FigureGrup,
   Stats
 }
 export interface ScoresTableProps {
   config: Config;
   scores: ScorePlayers;
+  bonuses: BonusesPlayers;
   sum: SumPlayers;
   gameStarted: boolean;
   options: Options;
@@ -49,7 +53,7 @@ export interface ScoresTableProps {
 
 const TITLE_LENGTH = 1;
 
-const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, className = '' }: ScoresTableProps) => {
+const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveScore, className = '' }: ScoresTableProps) => {
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
 
@@ -85,6 +89,7 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
       <Wrapper className={className}>
         {options.players?.map((player: Player) => {
           const playerScore: Score | null = scores?.[`player${player.id}`];
+          const playerBonuses: Bonuses | null = bonuses?.[`player${player.id}`];
           const columns: number[] = [...Array(options.columns).keys()];
 
           return (
@@ -106,7 +111,10 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
                   <tr>
                     <Th variant={RowVariants.Sum} playerColor={player.color}>Suma punktów</Th>
                     <Th variant={RowVariants.Sum} playerColor={player.color}>
-                      {sum?.[`player${player.id}`]?.all || 0}
+                      <div>
+                        {sum?.[`player${player.id}`]?.all || 0}
+                        <small>({'>'}1000: {sum?.[`player${player.id}`]?.sumFor1000Bonus || 0})</small>
+                      </div>
                     </Th>
                   </tr>
                   {
@@ -166,6 +174,18 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
                     ))}
                   </tr>
                   <tr>
+                    <Td variant={RowVariants.Bonus} playerColor={player.color}>Bonus</Td>
+                    {columns.map((index) => (
+                      <Td
+                        key={`${player.id}-school-sum-${index}`}
+                        variant={RowVariants.Bonus}
+                        playerColor={player.color}
+                      >
+                        {/*{playerBonuses?.school?.[index] || ''}*/}
+                      </Td>
+                    ))}
+                  </tr>
+                  <tr>
                     <Th
                       variant={RowVariants.FigureGrup}
                       colSpan={options.columns + TITLE_LENGTH}
@@ -177,7 +197,7 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
                   {figuresPart1.map(([figuresKey, figuresValue]) => (
                     <React.Fragment key={`${player.id}-${figuresKey}`}>
                       <tr>
-                        <Td separator colSpan={options.columns + TITLE_LENGTH} />
+                        <Td separator colSpan={options.columns + TITLE_LENGTH}/>
                       </tr>
                       {Object.entries(figuresValue).map(([key, scoreType]) => (
                         <tr key={`${player.id}-${figuresKey}-${key}`}>
@@ -255,7 +275,7 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
                   <tr>
                     <Td playerColor={player.color}>Kolumny</Td>
                     {columns.map((index) => {
-                      const columnValue = (playerScore?.bonuses?.columnAllResults as number[])?.[index];
+                      const columnValue = (playerBonuses?.columnAllResults as number[])?.[index];
                       return (
                         <Td key={`${player.id}-bonuses-columnAllResults-${index}`} playerColor={player.color}>
                           {columnValue}
@@ -273,15 +293,15 @@ const ScoresTable = ({ config, scores, sum, gameStarted, options, saveScore, cla
                     </Th>
                   </tr>
                   <tr>
-                    <Th playerColor={player.color}>{'>'} 1000</Th>
-                    <Th colSpan={options.columns} playerColor={player.color}>
-                      {playerScore?.bonuses?.firstAboveThousand?.toString()}
+                    <Th variant={RowVariants.Bonus} playerColor={player.color}>{'>'}1000</Th>
+                    <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
+                      {bonuses?.[`player${player.id}`]?.thousandBonus || 0}
                     </Th>
                   </tr>
                   <tr>
-                    <Th playerColor={player.color}>Reszta</Th>
-                    <Th colSpan={options.columns} playerColor={player.color}>
-                      {sum?.[`player${player.id}`]?.bonuses || ''}
+                    <Th variant={RowVariants.Bonus} playerColor={player.color}>Reszta</Th>
+                    <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
+                      {sum?.[`player${player.id}`]?.restBonuses || 0}
                     </Th>
                   </tr>
                 </tbody>

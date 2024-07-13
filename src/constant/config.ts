@@ -249,12 +249,12 @@ export const config: Config = {
     }
   },
   bonuses: {
-    schoolGeneral: {
+    school: {
       name: 'Bonus za szkołę',
-      value: 100
+      value: 50
     },
-    firstAboveThousand: {
-      name: '> 1000',
+    thousandBonus: {
+      name: 'Przekroczenie 1000 punktów',
       value: 100
     },
     sameValueVice: {
