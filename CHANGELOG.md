@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/furdzik/IF.DiceTable/compare/v1.0.0...v1.1.0) (2024-07-13)
+
+
+### Features
+
+* **app:** fix build ([d217b36](https://github.com/furdzik/IF.DiceTable/commit/d217b366d718e4ed1bb4aeac30209ca21a3c3c9a))
+
 ## 1.0.0 (2024-07-13)
 
 
