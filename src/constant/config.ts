@@ -197,7 +197,7 @@ export const config: Config = {
       },
       twoToFour: {
         id: FigureId.TwoToFour,
-        name: '2 + 4',
+        name: '4 + 2',
         value: 0,
         resultsId: ResultsId.Result
       }
