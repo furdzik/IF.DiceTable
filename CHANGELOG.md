@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/furdzik/IF.DiceTable/compare/v1.2.0...v1.3.0) (2024-07-14)
+
+
+### Features
+
+* **app:** change config ([a619f06](https://github.com/furdzik/IF.DiceTable/commit/a619f06e094b23e4fb95bd460fed97e43488aec2))
+
+
+### Bug Fixes
+
+* **app:** correct bonuses and other fixes ([e973dcd](https://github.com/furdzik/IF.DiceTable/commit/e973dcd2f62ca3ffac48bb4ae08a30f9fd8ebc7a))
+
 ## [1.2.0](https://github.com/furdzik/IF.DiceTable/compare/v1.1.0...v1.2.0) (2024-07-13)
 
 
