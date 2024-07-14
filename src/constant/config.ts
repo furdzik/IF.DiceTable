@@ -152,8 +152,8 @@ export const config: Config = {
       goat: {
         id: FigureId.Goat,
         name: 'Kozy',
-        value: 0,
-        resultsId: ResultsId.Result
+        value: 25,
+        resultsId: ResultsId.ThrowCount
       }
     },
     section4: {
