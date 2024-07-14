@@ -127,7 +127,7 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
     &, &:first-of-type {
       border: .2rem solid #e2e2e2;
       background: #e2e2e2;
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: normal;
       color: ${props.theme.colorMono.black};
       text-transform: uppercase;
@@ -171,7 +171,7 @@ const StatsWrapper = styled.section`
   border: .2rem solid #969696;
   padding: 1rem;
   margin-bottom: 1rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 
   display: flex;
   align-items: center;

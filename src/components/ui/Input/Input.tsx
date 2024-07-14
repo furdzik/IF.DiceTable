@@ -10,13 +10,16 @@ import {
 export interface InputProps {
   name: string;
   value: string | number;
+  id?: string;
   className?: string;
   disabled?: boolean;
   maxLength?: number;
   placeholder?: string;
   type?: InputTypes;
   size?: ButtonsSizes;
+  autoFocus?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   onFocus?: () => void;
 }
@@ -24,13 +27,16 @@ export interface InputProps {
 const Input = React.forwardRef(({
   name,
   value,
+  id = '',
   className = '',
   disabled = false,
   maxLength,
   placeholder,
   type = InputTypes.Text,
   size = ButtonsSizes.Normal,
+  autoFocus = false,
   onChange = () => {},
+  onKeyDown = () => {},
   onBlur = () => {},
   onFocus = () => {}
 }: InputProps, ref) => (
@@ -39,16 +45,18 @@ const Input = React.forwardRef(({
       ref={ref as React.RefObject<HTMLInputElement>}
       type={type}
       name={name}
-      id={`input_${name}`}
+      id={id}
       value={value}
       inputSize={size}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       disabled={disabled}
       placeholder={placeholder}
       onFocus={onFocus}
       onBlur={onBlur}
       autoComplete="off"
       maxLength={maxLength}
+      autoFocus={autoFocus}
     />
   </InputWrapper>
 ));

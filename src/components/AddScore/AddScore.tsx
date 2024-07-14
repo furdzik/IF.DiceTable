@@ -7,7 +7,7 @@ import { ConfigElement, Player, ScoreElement, Throw, X_VALUE } from 'interfaces'
 import { ButtonColors, ButtonsSizes, ButtonVariants, InputTypes, ResultsId } from 'constant';
 import { calculateScore } from 'utils';
 
-import { getDiceOrNumberIconPath, getThrowIconPath } from 'utils/getScoreIconPath';
+import { getDiceIconPath, getNumberIconPath, getThrowIconPath } from 'utils/getScoreIconPath';
 
 import {
   AddBox,
@@ -69,6 +69,12 @@ const AddScore = ({
     setScoreOptions(singleScore);
   }, [singleScore]);
 
+  const onSubmit = () => {
+    setCalculatedScore(calculateScore(singleScore, scoreType));
+    onClick(scoreOptions, scoreType, player.id);
+    setIsOpen(false);
+  };
+
   return (
     <Wrapper className={className}>
       <Score
@@ -95,8 +101,9 @@ const AddScore = ({
             {
               showValue.indexOf(scoreType.resultsId as ResultsId) > -1 && (
                 <Section id="value">
-                  <Label>Wynik:</Label>
+                  <Label htmlFor="form-value">Wynik:</Label>
                   <StyledInput
+                    id="form-value"
                     type={InputTypes.Text}
                     size={ButtonsSizes.Small}
                     name="scoreTyped"
@@ -106,6 +113,17 @@ const AddScore = ({
                       ...scoreOptions as ScoreElement,
                       value: Number(event.target.value)
                     })}
+                    onKeyDown={(event) => {
+                      if (event.code === 'Enter') {
+                        setScoreOptions({
+                          ...scoreOptions as ScoreElement,
+                          value: Number(event.target.value)
+                        });
+
+                        onSubmit();
+                      }
+                    }}
+                    autoFocus
                   />
                 </Section>
               )
@@ -117,17 +135,17 @@ const AddScore = ({
                   <div>
                     <ChoiceBox>
                       {
-                        diceAndQuantityOptions.map((dice) => (
+                        diceAndQuantityOptions.map((number) => (
                           <Selector
-                            key={dice}
+                            key={number}
                             playerColor={player.color}
-                            selected={scoreOptions?.quantity === dice}
+                            selected={scoreOptions?.quantity === number}
                             onClick={() => setScoreOptions({
                               ...scoreOptions as ScoreElement,
-                              quantity: dice
+                              quantity: number
                             })}
                           >
-                            <Icon path={getDiceOrNumberIconPath(dice, false)} size={ICON_SIZE} />
+                            <Icon path={getNumberIconPath(number)} size={ICON_SIZE} />
                           </Selector>
                         ))
                       }
@@ -154,7 +172,7 @@ const AddScore = ({
                           })}
                         >
                           <Icon
-                            path={getDiceOrNumberIconPath(dice, true)}
+                            path={getDiceIconPath(dice, scoreOptions?.dice === dice)}
                             size={ICON_SIZE}
                             color={scoreOptions?.dice === dice ? player.color : '#5c5c5c'}
                           />
@@ -195,11 +213,7 @@ const AddScore = ({
                 size={ButtonsSizes.Small}
                 playerColor={player.color}
                 disabled={!scoreOptions?.throw}
-                onClick={() => {
-                  setCalculatedScore(calculateScore(singleScore, scoreType));
-                  onClick(scoreOptions, scoreType, player.id);
-                  setIsOpen(false);
-                }}
+                onClick={onSubmit}
               >
                 Zapisz
               </StyledButton>

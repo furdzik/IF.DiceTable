@@ -85,7 +85,6 @@ export interface SumPlayer {
   schoolBonus: number;
   school: number[];
   schoolAll?: number;
-  sumFor1000Bonus?: number;
   sumWithoutBonuses?: number;
   all: number;
 }

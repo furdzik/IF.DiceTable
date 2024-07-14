@@ -15,7 +15,7 @@ export const getCorrectValue = (key: string, value: unknown, { columns }: { colu
   }
   const newValues = [];
   for (let i = 1; i <= columns; i++) {
-    newValues.push(key === 'columnAllResults' || key === 'sum' ? null : { ...figureScore, columnId: i });
+    newValues.push(key === 'columnAllResults' || key === 'schoolGeneral' ? null : { ...figureScore, columnId: i });
   }
 
   return newValues;
@@ -96,17 +96,6 @@ export const iterateAndSumValues = (
           || configValue.id === FigureId.School6
         )) {
           school.push({ columnId: value.columnId, value: sum === X_VALUE ? 0 : sum });
-        }
-      } else {
-        // @TODO
-        if (key === 'thousandBonus') {
-          thousandBonus = value;
-        } else if (key === 'schoolBonus') {
-          schoolBonus += value;
-        } else if (key === 'columnAllResults') {
-          restBonuses += value;
-        } else {
-          restBonuses += value;
         }
       }
     }

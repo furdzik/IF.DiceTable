@@ -4,7 +4,7 @@ export {
   updateScoreElement,
   iterateAndSumValues
 } from './iterateAndSetNewValue';
-export { getDiceOrNumberIconPath, getThrowIconPath } from './getScoreIconPath';
+export { getDiceIconPath, getNumberIconPath, getThrowIconPath } from './getScoreIconPath';
 export { calculateScore } from './calculateScore';
 export { calculatePlayerBonus } from './calculatePlayerBonus';
 export { getSum } from './getSum';

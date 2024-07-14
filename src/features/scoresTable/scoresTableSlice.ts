@@ -10,7 +10,7 @@ import {
   ScoresTableState,
   SumPlayers
 } from 'interfaces';
-import { config, scoresDefault } from 'constant';
+import { config, scoresDefault, bonusesDefault } from 'constant';
 import {
   iterateAndSetNewValue,
   getCorrectValue,
@@ -45,21 +45,28 @@ const scoresTable = createSlice({
       const stateFromStorage = JSON.parse(localStorage.getItem('scoresTable') || '{}');
 
       const score = _cloneDeep(scoresDefault);
+      const bonuses = _cloneDeep(bonusesDefault);
+
       iterateAndSetNewValue(getCorrectValue, score, { columns });
+      iterateAndSetNewValue(getCorrectValue, bonuses, { columns });
 
       const newScores: ScorePlayers = {};
+      const newBonuses: BonusesPlayers = {};
       players?.forEach((player: Player) => {
         newScores[`player${player.id}`] = stateFromStorage?.scores?.[`player${player.id}`] || _cloneDeep(score);
+        newBonuses[`player${player.id}`] = stateFromStorage?.bonuses?.[`player${player.id}`] || _cloneDeep(bonuses);
       });
 
       localStorage.setItem('scoresTable', JSON.stringify({
         ...state,
-        scores: newScores
+        scores: newScores,
+        bonuses: newBonuses
       }));
 
       return {
         ...state,
-        scores: newScores
+        scores: newScores,
+        bonuses: newBonuses
       };
     },
     saveScore (state, action) {
@@ -89,27 +96,29 @@ const scoresTable = createSlice({
       const newSum: SumPlayers =  {};
       let gameStarted = false;
 
-      Object.entries(allScores || {})?.forEach(([key, value]) => {
+      Object.entries(allScores || {})?.forEach(([player, value]) => {
         const scores = iterateAndSumValues(value, config);
 
-        const playerSum = getSum(scores.results, columns);
-        const playerSumSchool = getSum(scores.school, columns);
-        const thousandBonus = scores.thousandBonus;
-        const restBonuses = scores.restBonuses;
-        const schoolBonus = scores.schoolBonus;
+        const sums = getSum(scores.results, columns);
+        const sumsSchool = getSum(scores.school, columns);
 
-        newSum[key] = {
+        const playerSum = sums.sum - sumsSchool.sum;
+
+        const bonuses = state.bonuses?.[player];
+        const thousandBonus = (bonuses?.thousandBonus || 0) as number;
+        const restBonuses = 0; // bonuses.restBonuses;
+        const schoolBonus = 0; // bonuses.schoolBonus;
+
+        newSum[player] = {
           round: scores?.results?.length,
-          columns: playerSum.sumByColumn,
+          columns: sums.sumByColumn,
           thousandBonus,
           restBonuses,
           schoolBonus,
-          school: playerSumSchool.sumByColumn,
-          schoolAll: playerSumSchool.sum,
-          sumFor1000Bonus: playerSum.sum - playerSumSchool.sum,
-          // @TODO: sum should be without school
-          sumWithoutBonuses: playerSum.sum,
-          all: playerSum.sum - playerSumSchool.sum + thousandBonus + restBonuses + schoolBonus
+          school: sumsSchool.sumByColumn,
+          schoolAll: sumsSchool.sum,
+          sumWithoutBonuses: playerSum,
+          all: playerSum + thousandBonus + restBonuses + schoolBonus
         };
 
         gameStarted = !gameStarted ? scores?.results?.length > 0 : gameStarted;
@@ -138,7 +147,7 @@ const scoresTable = createSlice({
       players?.forEach((player: Player) => {
         thousandBonusResult.push({
           player: player.id,
-          sum: sum?.[`player${player?.id}`]?.sumFor1000Bonus,
+          sum: sum?.[`player${player?.id}`]?.sumWithoutBonuses,
           round: sum?.[`player${player?.id}`]?.round
         });
         bonusThousandGrantedResultsBefore.push((state.bonuses?.[`player${player?.id}`]?.thousandBonus || 0) > 0);

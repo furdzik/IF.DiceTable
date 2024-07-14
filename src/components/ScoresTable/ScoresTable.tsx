@@ -113,7 +113,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                     <Th variant={RowVariants.Sum} playerColor={player.color}>
                       <div>
                         {sum?.[`player${player.id}`]?.all || 0}
-                        <small>({'>'}1000: {sum?.[`player${player.id}`]?.sumFor1000Bonus || 0})</small>
+                        <small>({'>'}1000: {sum?.[`player${player.id}`]?.sumWithoutBonuses || 0})</small>
                       </div>
                     </Th>
                   </tr>

@@ -12,7 +12,8 @@ export const calculatePlayerBonus = (
   thousandBonusResult: PlayerCompareValues[],
   bonusThousandGranted: boolean
 ): Bonuses => {
-  let thousandBonus = bonuses?.[`player${player.id}`]?.thousandBonus || 0;
+  const playerBonuses = bonuses?.[`player${player.id}`];
+  let thousandBonus = playerBonuses?.thousandBonus || 0;
 
   if (!bonusThousandGranted) {
     const maxValue =_maxBy(thousandBonusResult, 'sum');
@@ -24,6 +25,7 @@ export const calculatePlayerBonus = (
   }
 
   return {
+    ...playerBonuses,
     thousandBonus: thousandBonus
   };
 }

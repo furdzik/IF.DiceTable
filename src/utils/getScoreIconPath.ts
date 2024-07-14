@@ -1,4 +1,10 @@
 import {
+  mdiDice1,
+  mdiDice2,
+  mdiDice3,
+  mdiDice4,
+  mdiDice5,
+  mdiDice6,
   mdiDice1Outline,
   mdiDice2Outline,
   mdiDice3Outline,
@@ -16,25 +22,50 @@ import {
   mdiRomanNumeral3
 } from '@mdi/js';
 
-export const getDiceOrNumberIconPath = (dice: number, isDice: boolean) => {
+export const getDiceIconPath = (dice: number, isSelected: boolean) => {
   switch (dice) {
     case 1: {
-      return isDice ? mdiDice1Outline : mdiNumeric1;
+      return isSelected ? mdiDice1 : mdiDice1Outline;
     }
     case 2: {
-      return isDice ? mdiDice2Outline : mdiNumeric2;
+      return isSelected ? mdiDice2 : mdiDice2Outline;
     }
     case 3: {
-      return isDice ? mdiDice3Outline : mdiNumeric3;
+      return isSelected ? mdiDice3 : mdiDice3Outline;
     }
     case 4: {
-      return isDice ? mdiDice4Outline : mdiNumeric4;
+      return isSelected ? mdiDice4 : mdiDice4Outline;
     }
     case 5: {
-      return isDice ? mdiDice5Outline : mdiNumeric5;
+      return isSelected ? mdiDice5 : mdiDice5Outline;
     }
     case 6: {
-      return isDice ? mdiDice6Outline : mdiNumeric6;
+      return isSelected ? mdiDice6 : mdiDice6Outline;
+    }
+  }
+
+  return '';
+};
+
+export const getNumberIconPath = (dice: number) => {
+  switch (dice) {
+    case 1: {
+      return mdiNumeric1;
+    }
+    case 2: {
+      return mdiNumeric2;
+    }
+    case 3: {
+      return mdiNumeric3;
+    }
+    case 4: {
+      return mdiNumeric4;
+    }
+    case 5: {
+      return mdiNumeric5;
+    }
+    case 6: {
+      return mdiNumeric6;
     }
   }
 

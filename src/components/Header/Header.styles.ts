@@ -4,7 +4,7 @@ import Container from 'components/Container';
 
 const Wrapper = styled.div`
   margin-bottom: 1rem;
-  padding: 1.3rem 0;
+  padding: 1rem 0;
   background: ${(props) => props.theme.mainColors.primary};
   box-shadow: 0 0 .5rem #999999;
 `;
