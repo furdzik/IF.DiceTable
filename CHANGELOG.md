@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/furdzik/IF.DiceTable/compare/v1.3.0...v1.3.1) (2024-07-14)
+
+
+### Bug Fixes
+
+* **app:** change text ([abe149e](https://github.com/furdzik/IF.DiceTable/commit/abe149e389faec9e366dcfd72b95084785bbdd2c))
+
 ## [1.3.0](https://github.com/furdzik/IF.DiceTable/compare/v1.2.0...v1.3.0) (2024-07-14)
 
 
