@@ -29,8 +29,8 @@ const ScoresTable = () => {
   }, [dispatch, scores, config, columns]);
 
   useEffect(() => {
-    dispatch(calculateBonus({ allScores: scores, players, sum, config: config.bonuses }));
-  }, [dispatch, scores, players, sum, config]);
+    dispatch(calculateBonus({ allScores: scores, players, sum, bonusesConfig: config.bonuses }));
+  }, [dispatch, scores, players, sum, config, columns]);
 
   return scores && bonuses && sum && (
     <ScoresTableComponent

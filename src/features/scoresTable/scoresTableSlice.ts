@@ -3,9 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import _cloneDeep from 'lodash/cloneDeep';
 
 import {
+  Bonuses,
   BonusesPlayers,
   Player,
-  PlayerCompareValues,
+  PlayerCompareValues, Score,
   ScorePlayers,
   ScoresTableState,
   SumPlayers
@@ -19,6 +20,7 @@ import {
   getSum,
   calculatePlayerBonus
 } from 'utils';
+import { handleColumnChange } from '../../utils/handleColumnChange';
 
 const initialState: ScoresTableState = {
   config,
@@ -53,10 +55,19 @@ const scoresTable = createSlice({
       const newScores: ScorePlayers = {};
       const newBonuses: BonusesPlayers = {};
       players?.forEach((player: Player) => {
-        newScores[`player${player.id}`] = stateFromStorage?.scores?.[`player${player.id}`] || _cloneDeep(score);
-        newBonuses[`player${player.id}`] = stateFromStorage?.bonuses?.[`player${player.id}`] || _cloneDeep(bonuses);
+        newScores[`player${player.id}`] = handleColumnChange(
+          columns,
+          stateFromStorage?.scores?.[`player${player.id}`],
+          _cloneDeep(score)
+        ) as Score;
+        newBonuses[`player${player.id}`] = handleColumnChange(
+          columns,
+          stateFromStorage?.bonuses?.[`player${player.id}`],
+          _cloneDeep(bonuses)
+        ) as Bonuses;
       });
 
+      localStorage.setItem('previousNumberOfColumns', columns);
       localStorage.setItem('scoresTable', JSON.stringify({
         ...state,
         scores: newScores,
@@ -107,7 +118,8 @@ const scoresTable = createSlice({
         const bonuses = state.bonuses?.[player];
         const thousandBonus = (bonuses?.thousandBonus || 0) as number;
         const restBonuses = 0; // bonuses.restBonuses;
-        const schoolBonus = 0; // bonuses.schoolBonus;
+        const schoolBonus: number | number[] | null = bonuses?.schoolGeneral || [];
+        const schoolSumBonus: number = (schoolBonus as number[])?.reduce((a, b) => a + b, 0);
 
         newSum[player] = {
           round: scores?.results?.length,
@@ -118,7 +130,8 @@ const scoresTable = createSlice({
           school: sumsSchool.sumByColumn,
           schoolAll: sumsSchool.sum,
           sumWithoutBonuses: playerSum,
-          all: playerSum + thousandBonus + restBonuses + schoolBonus
+          all: playerSum + thousandBonus + restBonuses + schoolSumBonus,
+          allSumWithoutSchool: playerSum + thousandBonus + restBonuses
         };
 
         gameStarted = !gameStarted ? scores?.results?.length > 0 : gameStarted;
@@ -137,7 +150,7 @@ const scoresTable = createSlice({
       };
     },
     calculateBonus (state, action) {
-      const { allScores, players, sum, config } = action.payload;
+      const { allScores, players, sum, bonusesConfig } = action.payload;
       let newBonuses: BonusesPlayers = {};
       const bonusThousandGrantedResultsBefore: boolean[] = [];
       const bonusThousandGrantedResultsAfter: boolean[] = [];
@@ -159,7 +172,7 @@ const scoresTable = createSlice({
           allScores?.[`player${player?.id}`],
           sum?.[`player${player?.id}`],
           state.bonuses,
-          config,
+          bonusesConfig,
           thousandBonusResult,
           bonusThousandGrantedResultsBefore.includes(true)
         )

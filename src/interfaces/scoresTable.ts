@@ -82,11 +82,12 @@ export interface SumPlayer {
   columns: number[];
   thousandBonus: number;
   restBonuses: number;
-  schoolBonus: number;
+  schoolBonus: number | number[];
   school: number[];
   schoolAll?: number;
   sumWithoutBonuses?: number;
   all: number;
+  allSumWithoutSchool: number;
 }
 
 export interface SumPlayers {

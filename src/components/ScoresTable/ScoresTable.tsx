@@ -112,7 +112,11 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                     <Th variant={RowVariants.Sum} playerColor={player.color}>Suma punktów</Th>
                     <Th variant={RowVariants.Sum} playerColor={player.color}>
                       <div>
-                        {sum?.[`player${player.id}`]?.all || 0}
+                        {
+                          (stats.currentRound || 0) < stats.numberOfRounds
+                            ? sum?.[`player${player.id}`]?.allSumWithoutSchool
+                            : sum?.[`player${player.id}`]?.all || 0
+                        }
                         <small>(bez bonusów: {sum?.[`player${player.id}`]?.sumWithoutBonuses || 0})</small>
                       </div>
                     </Th>
@@ -181,7 +185,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                         variant={RowVariants.Bonus}
                         playerColor={player.color}
                       >
-                        {/*{playerBonuses?.school?.[index] || ''}*/}
+                        {gameStarted ? (playerBonuses?.schoolGeneral as number[])?.[index] || 0 : ''}
                       </Td>
                     ))}
                   </tr>
@@ -295,13 +299,13 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                   <tr>
                     <Th variant={RowVariants.Bonus} playerColor={player.color}>{'>'}1000</Th>
                     <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
-                      {bonuses?.[`player${player.id}`]?.thousandBonus || 0}
+                      {playerBonuses?.thousandBonus || 0}
                     </Th>
                   </tr>
                   <tr>
                     <Th variant={RowVariants.Bonus} playerColor={player.color}>Reszta</Th>
                     <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
-                      {sum?.[`player${player.id}`]?.restBonuses || 0}
+                      {playerBonuses?.restBonuses || 0}
                     </Th>
                   </tr>
                 </tbody>
