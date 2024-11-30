@@ -249,7 +249,7 @@ export const config: Config = {
     }
   },
   bonuses: {
-    school: {
+    schoolGeneral: {
       name: 'Bonus za szkołę',
       value: 50
     },

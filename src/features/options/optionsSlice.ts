@@ -41,6 +41,7 @@ const options = createSlice({
         ...state,
         ...initialStateDefault
       }));
+      localStorage.removeItem('previousNumberOfColumns');
 
       return {
         ...state,
