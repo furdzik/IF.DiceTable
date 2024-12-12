@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/furdzik/IF.DiceTable/compare/v1.3.1...v1.4.0) (2024-11-30)
+
+
+### Features
+
+* **bonuses:** add school bonus ([97b48aa](https://github.com/furdzik/IF.DiceTable/commit/97b48aaed9329a8502012fd452c9219f49f0c682))
+
 ## [1.3.1](https://github.com/furdzik/IF.DiceTable/compare/v1.3.0...v1.3.1) (2024-07-14)
 
 
