@@ -1,12 +1,12 @@
 import _maxBy from 'lodash/maxBy';
 import _orderBy from 'lodash/orderBy';
 
-import { Options, StatsValues, SumPlayers } from 'interfaces';
+import { Options, Stats, StatsValues, SumPlayers } from 'interfaces';
 import { NUMBER_OF_ROWS } from 'constant';
 
-const chooseSum = (all: number, allSumWithoutSchool: number, currentRound: number, columns: number) => (currentRound) < NUMBER_OF_ROWS * columns ? allSumWithoutSchool : all;
+const chooseSum = (all: number, allSumWithoutSchool: number, currentRound: number, columns: number) => currentRound < NUMBER_OF_ROWS * columns ? allSumWithoutSchool : all;
 
-export const getStats = (options: Options, sum: SumPlayers) => {
+export const getStats = (options: Options, sum: SumPlayers): Stats => {
   const sums: StatsValues[] = [];
   const rounds: StatsValues[] = [];
   const WINNER_INDEX = 0;
@@ -37,7 +37,7 @@ export const getStats = (options: Options, sum: SumPlayers) => {
     .map((winner) => options.players?.filter((player) => player.id === winner.player)[0]?.name);
 
   return {
-    currentRound: currentRound?.round,
+    currentRound: currentRound?.round || 0,
     currentWinner: 1,
     difference,
     numberOfRounds: NUMBER_OF_ROWS * options.columns,

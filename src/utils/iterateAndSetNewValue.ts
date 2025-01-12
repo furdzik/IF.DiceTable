@@ -15,7 +15,7 @@ export const getCorrectValue = (key: string, value: unknown, { columns }: { colu
   }
   const newValues = [];
   for (let i = 1; i <= columns; i++) {
-    newValues.push(key === 'columnAllResults' || key === 'schoolGeneral' ? null : { ...figureScore, columnId: i });
+    newValues.push(key === 'columnBonus' || key === 'schoolGeneral' ? null : { ...figureScore, columnId: i });
   }
 
   return newValues;
@@ -103,3 +103,55 @@ export const iterateAndSumValues = (
 
   return { results, thousandBonus, restBonuses, schoolBonus, school };
 }
+
+// For bonuses
+export const iterateAndGetColumnValuesById = (
+  obj: any,
+  columnsValues: ScoreElement[][]
+) => {
+  if (!obj) {
+    return;
+  }
+
+  const newColumnsValues: ScoreElement[][] = columnsValues;
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+    if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+      iterateAndGetColumnValuesById(value, newColumnsValues);
+    } else {
+      (value).forEach((element: ScoreElement) => {
+        if (element.throw && element.value !== X_VALUE) {
+          newColumnsValues[element.columnId as number - 1].push(element);
+        }
+      });
+    }
+  });
+
+  return newColumnsValues;
+};
+
+export const iterateAndGetValuesBySection = (
+  obj: any,
+  sectionValues: ScoreElement[],
+  sectionNames: FigureId[],
+  sectionId: number
+) => {
+  if (!obj) {
+    return;
+  }
+  const newSectionValues: ScoreElement[] = sectionValues;
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+    if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+      iterateAndGetValuesBySection(value, newSectionValues, sectionNames, sectionId);
+    } else {
+      (value).forEach((element: ScoreElement) => {
+        if (sectionNames.includes(key as FigureId) && element.throw && element.value !== X_VALUE) {
+          newSectionValues.push(element);
+        }
+      });
+    }
+  });
+};

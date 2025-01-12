@@ -66,5 +66,5 @@ export const bonusesDefault: Bonuses =  {
   section4AllResults: null,
   section5AllResults: null,
   section6AllResults: null,
-  columnAllResults: []
+  columnBonus: []
 };

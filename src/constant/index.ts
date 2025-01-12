@@ -63,3 +63,7 @@ export const MAX_PLAYERS_ALLOWED = 6;
 
 export const THOUSAND_BONUS_VALUE = 1000;
 export const SCHOOL_BONUS_MIN_VALUE = 30;
+
+export const MAX_PLAYER_ROUND_GAP = 2;
+
+export const NUMBER_OF_SECTIONS_FOR_BONUS = 6;

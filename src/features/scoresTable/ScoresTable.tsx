@@ -23,14 +23,21 @@ const ScoresTable = () => {
   const bonuses = useSelector((state: RootState) => state.scoresTable.bonuses);
   const sum = useSelector((state: RootState) => state.scoresTable.sum);
   const gameStarted = useSelector((state: RootState) => state.scoresTable.gameStarted);
+  const gameEnded = useSelector((state: RootState) => state.scoresTable.gameEnded);
+
+  useEffect(() => {
+    dispatch(calculateBonus({ allScores: scores, players, sum, bonusesConfig: config.bonuses, columns }));
+  }, [dispatch, scores, players, sum, config, columns]);
 
   useEffect(() => {
     dispatch(calculateSum({ allScores: scores, config, columns }));
   }, [dispatch, scores, config, columns]);
 
   useEffect(() => {
-    dispatch(calculateBonus({ allScores: scores, players, sum, bonusesConfig: config.bonuses }));
-  }, [dispatch, scores, players, sum, config, columns]);
+    if (gameEnded) {
+      dispatch(calculateSum({ allScores: scores, config, columns }));
+    }
+  }, [dispatch, gameEnded, scores, config, columns]);
 
   return scores && bonuses && sum && (
     <ScoresTableComponent
@@ -39,6 +46,7 @@ const ScoresTable = () => {
       bonuses={bonuses}
       sum={sum}
       gameStarted={gameStarted}
+      gameEnded={gameEnded}
       options={{ columns, players, showStats }}
       saveScore={({ score, playerId, scoreType }: SaveScore) => {
         dispatch(saveScore({ score, playerId, scoreType, allScores: scores }));
