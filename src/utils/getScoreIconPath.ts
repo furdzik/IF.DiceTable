@@ -11,16 +11,11 @@ import {
   mdiDice4Outline,
   mdiDice5Outline,
   mdiDice6Outline,
-  mdiNumeric1,
-  mdiNumeric2,
-  mdiNumeric3,
-  mdiNumeric4,
-  mdiNumeric5,
-  mdiNumeric6,
   mdiRomanNumeral1,
   mdiRomanNumeral2,
   mdiRomanNumeral3
 } from '@mdi/js';
+import { ConfigElement } from '../interfaces';
 
 export const getDiceIconPath = (dice: number, isSelected: boolean) => {
   switch (dice) {
@@ -47,25 +42,25 @@ export const getDiceIconPath = (dice: number, isSelected: boolean) => {
   return '';
 };
 
-export const getNumberIconPath = (dice: number) => {
+export const getNumber = (dice: number | null | undefined , scoreType: ConfigElement) => {
   switch (dice) {
     case 1: {
-      return mdiNumeric1;
+      return Number(-2 * (scoreType?.value as number)).toString();
     }
     case 2: {
-      return mdiNumeric2;
+      return Number(-1 * (scoreType?.value as number)).toString();
     }
     case 3: {
-      return mdiNumeric3;
+      return Number(0).toString();
     }
     case 4: {
-      return mdiNumeric4;
+      return `+${Number(scoreType?.value).toString()}`;
     }
     case 5: {
-      return mdiNumeric5;
+      return `+${Number(2 * (scoreType?.value as number)).toString()}`;
     }
     case 6: {
-      return mdiNumeric6;
+      return `+${Number(3 * (scoreType?.value as number)).toString()}`;
     }
   }
 

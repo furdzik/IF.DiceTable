@@ -7,7 +7,7 @@ import { ConfigElement, Player, ScoreElement, Throw, X_VALUE } from 'interfaces'
 import { ButtonColors, ButtonsSizes, ButtonVariants, InputTypes, ResultsId } from 'constant';
 import { calculateScore } from 'utils';
 
-import { getDiceIconPath, getNumberIconPath, getThrowIconPath } from 'utils/getScoreIconPath';
+import { getDiceIconPath, getNumber, getThrowIconPath } from 'utils/getScoreIconPath';
 
 import {
   AddBox,
@@ -18,9 +18,11 @@ import {
   Score,
   Section,
   Selector,
+  NumberElement,
   StyledButton,
   StyledInput,
-  Wrapper
+  Wrapper,
+  WarningWrapper
 } from './AddScore.styles';
 
 const ICON_SIZE = 1.4;
@@ -33,10 +35,11 @@ export interface AddScoreProps {
   singleScore: ScoreElement | null;
   scoreType: ConfigElement;
   player: Player;
-  columnId: number;
+  columnId: number | null;
   position?: Position;
   className?: string;
   onClick?: (value: ScoreElement | null, scoreType: ConfigElement, playerId: number) => void;
+  roundsNotEvenWarning?: boolean;
 }
 
 const AddScore = ({
@@ -46,7 +49,8 @@ const AddScore = ({
   columnId,
   position = {  onTop: false, onLeft: false },
   className = '',
-  onClick = () => {}
+  onClick = () => {},
+  roundsNotEvenWarning = false
 }: AddScoreProps) => {
   const { clickAwayRef } = useClickAway<HTMLDivElement>(() => setIsOpen(false));
   const diceAndQuantityOptions = [1, 2, 3, 4, 5, 6];
@@ -94,117 +98,127 @@ const AddScore = ({
       {
         isOpen && (
           <AddBox ref={clickAwayRef} playerColor={player.color} position={position}>
-            <Header>
-              Dodaj wynik:<br />
-              {scoreType.name} <span>(kolumna: {columnId})</span>
-            </Header>
             {
-              showValue.indexOf(scoreType.resultsId as ResultsId) > -1 && (
-                <Section id="value">
-                  <Label htmlFor="form-value">Wynik:</Label>
-                  <StyledInput
-                    id="form-value"
-                    type={InputTypes.Text}
-                    size={ButtonsSizes.Small}
-                    name="scoreTyped"
-                    value={scoreOptions?.value as string || ''}
-                    playerColor={player.color}
-                    onChange={(event) => setScoreOptions({
-                      ...scoreOptions as ScoreElement,
-                      value: Number(event.target.value)
-                    })}
-                    onKeyDown={(event) => {
-                      if (event.code === 'Enter') {
-                        setScoreOptions({
-                          ...scoreOptions as ScoreElement,
-                          value: Number(event.target.value)
-                        });
+              !roundsNotEvenWarning ? (
+                <React.Fragment>
+                  <Header>
+                    Dodaj wynik:<br />
+                    {scoreType.name} <span>(kolumna: {columnId})</span>
+                  </Header>
+                  {
+                    showValue.indexOf(scoreType.resultsId as ResultsId) > -1 && (
+                      <Section id="value">
+                        <Label htmlFor="form-value">Wynik:</Label>
+                        <StyledInput
+                          id="form-value"
+                          type={InputTypes.Text}
+                          size={ButtonsSizes.Small}
+                          name="scoreTyped"
+                          value={scoreOptions?.value as string || ''}
+                          playerColor={player.color}
+                          onChange={(event) => setScoreOptions({
+                            ...scoreOptions as ScoreElement,
+                            value: Number(event.target.value)
+                          })}
+                          onKeyDown={(event) => {
+                            if (event.code === 'Enter') {
+                              setScoreOptions({
+                                ...scoreOptions as ScoreElement,
+                                value: Number(event.target.value)
+                              });
 
-                        onSubmit();
-                      }
-                    }}
-                    autoFocus
-                  />
-                </Section>
-              )
-            }
-            {
-              showQuantity.indexOf(scoreType.resultsId as ResultsId) > -1 && (
-                <Section id="quantity">
-                  <Label>Ilość:</Label>
-                  <div>
-                    <ChoiceBox>
-                      {
-                        diceAndQuantityOptions.map((number) => (
-                          <Selector
-                            key={number}
-                            playerColor={player.color}
-                            selected={scoreOptions?.quantity === number}
-                            onClick={() => setScoreOptions({
-                              ...scoreOptions as ScoreElement,
-                              quantity: number
-                            })}
-                          >
-                            <Icon path={getNumberIconPath(number)} size={ICON_SIZE} />
-                          </Selector>
-                        ))
-                      }
-                    </ChoiceBox>
-                  </div>
-                </Section>
-              )
-            }
-            {
-              showDice.indexOf(scoreType.resultsId as ResultsId) > -1 && (
-                <Section id="dice">
-                  <Label>Kość:</Label>
-                  <ChoiceBox>
-                    {
-                      diceAndQuantityOptions.map((dice) => (
-                        <Selector
-                          key={dice}
-                          playerColor={player.color}
-                          noBorder
-                          selected={scoreOptions?.dice === dice}
-                          onClick={() => setScoreOptions({
-                            ...scoreOptions as ScoreElement,
-                            dice
-                          })}
-                        >
-                          <Icon
-                            path={getDiceIconPath(dice, scoreOptions?.dice === dice)}
-                            size={ICON_SIZE}
-                            color={scoreOptions?.dice === dice ? player.color : '#5c5c5c'}
-                          />
-                        </Selector>
-                      ))
-                    }
-                  </ChoiceBox>
-                </Section>
-              )
-            }
-            {
-              showThrow.indexOf(scoreType.resultsId as ResultsId) > -1 && (
-                <Section id="throw">
-                  <Label>Rzut:</Label>
-                  <ChoiceBox>
-                    {
-                      throwOptions.map((throwNumber) => (
-                        <Selector
-                          key={throwNumber}
-                          playerColor={player.color}
-                          selected={scoreOptions?.throw === throwNumber}
-                          onClick={() => setScoreOptions({
-                            ...scoreOptions as ScoreElement,
-                            throw: throwNumber
-                          })}
-                        >
-                          <Icon path={getThrowIconPath(throwNumber)} size={ICON_SIZE} />
-                        </Selector>
-                      ))
-                    }
-                  </ChoiceBox>
-                </Section>
+                              onSubmit();
+                            }
+                          }}
+                          autoFocus
+                        />
+                      </Section>
+                    )
+                  }
+                  {
+                    showQuantity.indexOf(scoreType.resultsId as ResultsId) > -1 && (
+                      <Section id="quantity">
+                        <Label>Ilość:</Label>
+                        <div>
+                          <ChoiceBox>
+                            {
+                              diceAndQuantityOptions.map((number) => (
+                                <Selector
+                                  key={number}
+                                  playerColor={player.color}
+                                  selected={scoreOptions?.quantity === number}
+                                  onClick={() => setScoreOptions({
+                                    ...scoreOptions as ScoreElement,
+                                    quantity: number
+                                  })}
+                                >
+                                  <NumberElement>{getNumber(number, scoreType)}</NumberElement>
+                                </Selector>
+                              ))
+                            }
+                          </ChoiceBox>
+                        </div>
+                      </Section>
+                    )
+                  }
+                  {
+                    showDice.indexOf(scoreType.resultsId as ResultsId) > -1 && (
+                      <Section id="dice">
+                        <Label>Kość:</Label>
+                        <ChoiceBox>
+                          {
+                            diceAndQuantityOptions.map((dice) => (
+                              <Selector
+                                key={dice}
+                                playerColor={player.color}
+                                noBorder
+                                selected={scoreOptions?.dice === dice}
+                                onClick={() => setScoreOptions({
+                                  ...scoreOptions as ScoreElement,
+                                  dice
+                                })}
+                              >
+                                <Icon
+                                  path={getDiceIconPath(dice, scoreOptions?.dice === dice)}
+                                  size={ICON_SIZE}
+                                  color={scoreOptions?.dice === dice ? player.color : '#5c5c5c'}
+                                />
+                              </Selector>
+                            ))
+                          }
+                        </ChoiceBox>
+                      </Section>
+                    )
+                  }
+                  {
+                    showThrow.indexOf(scoreType.resultsId as ResultsId) > -1 && (
+                      <Section id="throw">
+                        <Label>Rzut:</Label>
+                        <ChoiceBox>
+                          {
+                            throwOptions.map((throwNumber) => (
+                              <Selector
+                                key={throwNumber}
+                                playerColor={player.color}
+                                selected={scoreOptions?.throw === throwNumber}
+                                onClick={() => setScoreOptions({
+                                  ...scoreOptions as ScoreElement,
+                                  throw: throwNumber
+                                })}
+                              >
+                                <Icon path={getThrowIconPath(throwNumber)} size={ICON_SIZE} />
+                              </Selector>
+                            ))
+                          }
+                        </ChoiceBox>
+                      </Section>
+                    )
+                  }
+                </React.Fragment>
+              ) : (
+                <WarningWrapper>
+                  Nierówna liczba rund,<br />dodaj ten wynik w kolumnie innego gracza
+                </WarningWrapper>
               )
             }
             <ButtonWrapper playerColor={player.color}>

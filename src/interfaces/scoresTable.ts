@@ -19,6 +19,8 @@ export interface ConfigElement {
   initialValue?: number;
   value: number | ElementValue;
   resultsId?: ResultsId;
+  rows?: number;
+  sectionNames?: FigureId[];
 }
 export interface ScoreElement {
   columnId: number | null;
@@ -53,8 +55,11 @@ export interface Figures {
 export interface BonusesConfig {
   [kay: string]: ConfigElement;
 }
+
+export type BonusTypes = number | number[] | null;
+
 export interface Bonuses {
-  [kay: string]: number | number[] | null;
+  [kay: string]: BonusTypes;
 }
 
 export interface Config {
@@ -83,6 +88,7 @@ export interface SumPlayer {
   thousandBonus: number;
   restBonuses: number;
   schoolBonus: number | number[];
+  columnBonus: number[];
   school: number[];
   schoolAll?: number;
   sumWithoutBonuses?: number;
@@ -100,6 +106,7 @@ export interface ScoresTableState {
   bonuses: BonusesPlayers | null;
   sum: SumPlayers | null;
   gameStarted: boolean;
+  gameEnded: boolean;
   bonusThousandGranted: boolean;
 }
 
@@ -107,6 +114,14 @@ export interface SaveScore {
   score: ScoreElement | null;
   playerId: number;
   scoreType: ConfigElement;
+}
+
+export interface Stats {
+  currentRound: number;
+  currentWinner: number;
+  difference: string[];
+  numberOfRounds: number;
+  winners: string[]
 }
 
 export interface StatsValues {

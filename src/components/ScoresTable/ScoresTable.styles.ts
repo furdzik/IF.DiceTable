@@ -12,6 +12,7 @@ export interface RowProps {
   normalBorder?: boolean | undefined;
   separator?: boolean | undefined;
   children?: unknown;
+  isWarning?: boolean | undefined;
 }
 
 export interface PlayersProps {
@@ -156,6 +157,12 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
     border-bottom: .2rem solid #5e5e5e;
     margin-top: -.1rem;
   `};
+  ${props.isWarning && css`
+    && {
+      background: #ff6868;
+      border: .2rem solid #ff0000;
+    }
+  `}
 `;
 
 const Th = styled.th<RowProps & PlayersProps>`
@@ -166,7 +173,7 @@ const Td = styled.td<RowProps & PlayersProps>`
   ${Row};
 `;
 
-const StatsWrapper = styled.section`
+const StatsSection = styled.section`
   background: #e2e2e2;
   border: .2rem solid #969696;
   padding: 1rem;
@@ -189,7 +196,7 @@ const StatsTitle = styled.h4`
   color: #494747;
 `;
 
-const Stats = styled.div`
+const StatsWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -215,9 +222,9 @@ export {
   Table,
   Th,
   Td,
-  StatsWrapper,
+  StatsSection,
   StatsTitle,
-  Stats,
+  StatsWrapper,
   StatsLabel,
   PlayerName
 };

@@ -231,6 +231,7 @@ export const config: Config = {
         id: FigureId.SuperBig,
         name: 'Krowa',
         value: {
+          32: 32,
           33: 43,
           34: 54,
           35: 65,
@@ -267,28 +268,56 @@ export const config: Config = {
     },
     section1AllResults: {
       name: 'Wszystkie wyniki',
-      value: 300
+      value: 300,
+      rows: 6,
+      sectionNames: [
+        FigureId.TwoOfKind, FigureId.TwoOfTwoOfKind, FigureId.ThreeOfKind, FigureId.FourOfKind,
+        FigureId.Vice, FigureId.General
+      ]
+    },
+    section2AllResults: {
+      name: 'Wszystkie wyniki',
+      value: 0,
+      rows: 2,
+      sectionNames: [
+        FigureId.Vice, FigureId.General
+      ]
     },
     section3AllResults: {
       name: 'Wszystkie wyniki',
-      value: 150
+      value: 150,
+      rows: 3,
+      sectionNames: [
+        FigureId.SmallTriangle, FigureId.BigTriangle, FigureId.Goat
+      ]
     },
     section4AllResults: {
       name: 'Wszystkie wyniki',
-      value: 150
+      value: 150,
+      rows: 3,
+      sectionNames: [
+        FigureId.SmallStraight, FigureId.BigStraight, FigureId.Runner
+      ]
     },
     section5AllResults: {
       name: 'Wszystkie wyniki',
-      value: 150
+      value: 100,
+      rows: 4,
+      sectionNames: [
+        FigureId.Evens, FigureId.Odds, FigureId.ThreeToThree, FigureId.TwoToFour
+      ]
     },
     section6AllResults: {
       name: 'Wszystkie wyniki',
-      value: 200
+      value: 200,
+      rows: 4,
+      sectionNames: [
+        FigureId.FullHouse, FigureId.ThreeOfTwoOfKind, FigureId.SuperSmall, FigureId.SuperBig
+      ]
     },
-    columnAllResults: {
+    columnBonus: {
       name: 'Ukończenie kolumny',
-      initialValue: 50,
-      value: 50 // 1: 100, 2: 150, 3: 200, 4: 250 etc.
+      value: 500
     }
   }
 };

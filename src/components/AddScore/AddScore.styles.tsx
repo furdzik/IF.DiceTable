@@ -183,6 +183,18 @@ const Selector = styled.button<IconWrapperProps & ColorPlayerProps>`
   `};
 `;
 
+const NumberElement = styled.span`
+  font-size: .9em;
+  font-weight: bold;
+`;
+
+const WarningWrapper = styled.div`
+  color: #ff0000;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+`;
+
 export {
   Wrapper,
   Section,
@@ -194,5 +206,7 @@ export {
   ButtonWrapper,
   StyledButton,
   StyledInput,
-  Selector
+  Selector,
+  NumberElement,
+  WarningWrapper
 };
