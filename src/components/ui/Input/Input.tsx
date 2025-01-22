@@ -22,6 +22,8 @@ export interface InputProps {
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
   onFocus?: () => void;
+  pattern? : string;
+  inputMode?: 'search' | 'text' | 'email' | 'tel' | 'url' | 'none' | 'numeric' | 'decimal' | undefined;
 }
 
 const Input = React.forwardRef(({
@@ -38,7 +40,9 @@ const Input = React.forwardRef(({
   onChange = () => {},
   onKeyDown = () => {},
   onBlur = () => {},
-  onFocus = () => {}
+  onFocus = () => {},
+  pattern,
+  inputMode
 }: InputProps, ref) => (
   <InputWrapper className={className}>
     <StyledInput
@@ -57,6 +61,8 @@ const Input = React.forwardRef(({
       autoComplete="off"
       maxLength={maxLength}
       autoFocus={autoFocus}
+      pattern={pattern}
+      inputMode={inputMode}
     />
   </InputWrapper>
 ));

@@ -34,10 +34,11 @@ export interface OptionsProps {
   saveData: (data: OptionsState) => void;
   clearData: () => void;
   onModalClose: () => void;
+  gameStarted: boolean;
   className?: string;
 }
 
-const Options = ({ options, saveData, clearData, onModalClose, className = '' }: OptionsProps) => {
+const Options = ({ options, saveData, clearData, onModalClose, gameStarted, className = '' }: OptionsProps) => {
   const [columns, setColumns] = useState<number>(0);
   const [players, setPlayers] = useState<Player[]>([]);
   const [showStats, setShowStats] = useState(options.showStats);
@@ -159,6 +160,7 @@ const Options = ({ options, saveData, clearData, onModalClose, className = '' }:
         <p>Uwaga: To czynność nieodwracalna!</p>
         <InnerWrapper>
           <Button
+            disabled={!gameStarted}
             type={ButtonTypes.Button}
             color={ButtonColors.SecondaryDark}
             onClick={() => {

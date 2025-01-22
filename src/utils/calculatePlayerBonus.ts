@@ -86,7 +86,6 @@ export const calculatePlayerBonus = (
       : 0;
   });
   const sectionsBonusSum = sectionsBonus?.reduce((a, b) => a + b, 0);
-  console.log('sectionsBonus', sectionsBonus);
 
   // restBonuses
   const restBonuses = sameValueVice + sameValueGeneral + sectionsBonusSum;

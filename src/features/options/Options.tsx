@@ -19,6 +19,7 @@ const Options = (props: OptionsProps) => {
   const columns = useSelector((state: RootState) => state.options.columns);
   const players = useSelector((state: RootState) => state.options.players);
   const showStats = useSelector((state: RootState) => state.options.showStats);
+  const gameStarted = useSelector((state: RootState) => state.scoresTable.gameStarted);
 
   useEffect(() => {
     dispatch(loadOptions());
@@ -35,6 +36,7 @@ const Options = (props: OptionsProps) => {
         dispatch(clearScoreData());
       }}
       onModalClose={props.onModalClose}
+      gameStarted={gameStarted}
     />
   );
 };

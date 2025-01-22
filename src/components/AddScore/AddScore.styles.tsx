@@ -94,6 +94,7 @@ const Score = styled.button<ScoreProps & ColorPlayerProps>`
   width: 100%;
   height: 100%;
   padding: .2rem .1rem;
+  color: ${(props) => props.theme.colorMono.black};
 
   ${(props) => props.addingInProgress && css`
     background: linear-gradient(
@@ -168,6 +169,7 @@ const Selector = styled.button<IconWrapperProps & ColorPlayerProps>`
   width: 2.4rem;
   height: 2.4rem;
   padding: 0;
+  color: ${(props) => props.theme.colorMono.black};
 
   border-radius: 50%;
   ${(props) => !props.noBorder && css`
