@@ -111,7 +111,7 @@ const AddScore = ({
                         <Label htmlFor="form-value">Wynik:</Label>
                         <StyledInput
                           id="form-value"
-                          type={InputTypes.Text}
+                          type={InputTypes.Number}
                           size={ButtonsSizes.Small}
                           name="scoreTyped"
                           value={scoreOptions?.value as string || ''}
@@ -131,6 +131,8 @@ const AddScore = ({
                             }
                           }}
                           autoFocus
+                          pattern="[0-9]*"
+                          inputMode="decimal"
                         />
                       </Section>
                     )
