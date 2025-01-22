@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/furdzik/IF.DiceTable/compare/v1.4.0...v1.5.0) (2025-01-12)
+
+
+### Features
+
+* **bonuses:** add rest bonuses ([8b32e01](https://github.com/furdzik/IF.DiceTable/commit/8b32e014baa36512e5acd9e70d1e250673c1f078))
+
 ## [1.4.0](https://github.com/furdzik/IF.DiceTable/compare/v1.3.1...v1.4.0) (2024-11-30)
 
 
