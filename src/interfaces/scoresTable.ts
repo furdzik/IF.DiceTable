@@ -16,11 +16,13 @@ export interface ElementValue {
 export interface ConfigElement {
   id?: FigureId;
   name: string;
+  fullName?: string;
   initialValue?: number;
   value: number | ElementValue;
   resultsId?: ResultsId;
   rows?: number;
   sectionNames?: FigureId[];
+  minimalSum?: number;
 }
 export interface ScoreElement {
   columnId: number | null;

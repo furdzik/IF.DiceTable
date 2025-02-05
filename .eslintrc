@@ -47,14 +47,16 @@
         ],
         "@typescript-eslint/comma-dangle": ["error", "never"],
         "@typescript-eslint/naming-convention": [
-          2,
+          1,
           {
-            "selector": "default",
+            "selector": "property",
             "format": [
               "camelCase",
               "PascalCase",
               "UPPER_CASE"
             ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow",
             "filter": { "regex": "^[0-9]", "match": false }
           }
         ],

@@ -140,12 +140,14 @@ export const config: Config = {
       smallTriangle: {
         id: FigureId.SmallTriangle,
         name: 'MT',
+        fullName: 'Mały Trójkąt',
         value: 30,
         resultsId: ResultsId.ThrowCount
       },
       bigTriangle: {
         id: FigureId.BigTriangle,
         name: 'DT',
+        fullName: 'Duży Trójkąt',
         value: 40,
         resultsId: ResultsId.ThrowCount
       },
@@ -160,12 +162,14 @@ export const config: Config = {
       smallStraight: {
         id: FigureId.SmallStraight,
         name: 'MS',
+        fullName: 'Mały Straight',
         value: 15,
         resultsId: ResultsId.ThrowCount
       },
       bigStraight: {
         id: FigureId.BigStraight,
         name: 'DS',
+        fullName: 'Duży Straight',
         value: 20,
         resultsId: ResultsId.ThrowCount
       },
@@ -180,12 +184,14 @@ export const config: Config = {
       evens: {
         id: FigureId.Evens,
         name: 'Evens',
+        fullName: 'Parzyste',
         value: 0,
         resultsId: ResultsId.Result
       },
       odds: {
         id: FigureId.Odds,
         name: 'Odds',
+        fullName: 'Nieparzyste',
         value: 0,
         resultsId: ResultsId.Result
       },
@@ -252,11 +258,13 @@ export const config: Config = {
   bonuses: {
     schoolGeneral: {
       name: 'Bonus za szkołę',
-      value: 50
+      value: 50,
+      minimalSum: 30
     },
     thousandBonus: {
       name: 'Przekroczenie 1000 punktów',
-      value: 100
+      value: 100,
+      minimalSum: 1000
     },
     sameValueVice: {
       name: 'Takie same wyniki Vicek',
