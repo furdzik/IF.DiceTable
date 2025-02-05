@@ -52,8 +52,8 @@ export const NUMBER_OF_ROWS = 27;
 
 export const colorsByOrder = [
   Colors.Pink,
-  Colors.Green,
   Colors.Blue,
+  Colors.Green,
   Colors.Orange,
   Colors.Red,
   Colors.Velvet
