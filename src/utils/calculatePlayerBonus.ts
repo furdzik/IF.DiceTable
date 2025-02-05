@@ -89,7 +89,7 @@ export const calculatePlayerBonus = (
 
   // restBonuses
   const restBonuses = sameValueVice + sameValueGeneral + sectionsBonusSum;
-
+  console.log('restBonuses', userViceValues, sameValueGeneral, sectionsBonusSum);
   return {
     ...playerBonuses,
     thousandBonus,
