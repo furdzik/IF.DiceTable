@@ -282,11 +282,11 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 1</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section1).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section1).map((element: ConfigElement, index) => (
+              <tr key={`section1_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
-                  <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }} />
+                  <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
                 </td>
               </tr>
             ))
@@ -295,8 +295,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 2</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section2).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section2).map((element: ConfigElement, index) => (
+              <tr key={`section2_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -308,8 +308,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 3</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section3).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section3).map((element: ConfigElement, index) => (
+              <tr key={`section3_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -321,8 +321,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 4</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section4).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section4).map((element: ConfigElement, index) => (
+              <tr key={`section4_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -334,8 +334,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 5</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section5).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section5).map((element: ConfigElement, index) => (
+              <tr key={`section5_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -347,8 +347,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 6</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section6).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section6).map((element: ConfigElement, index) => (
+              <tr key={`section6_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -360,8 +360,8 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             <td colSpan={2}><b>Sekcja 7</b></td>
           </tr>
           {
-            Object.values(config?.figures?.section7).map((element: ConfigElement) => (
-              <tr>
+            Object.values(config?.figures?.section7).map((element: ConfigElement, index) => (
+              <tr key={`section7_${index}`}>
                 <td>{element.name} {element?.fullName ? `(${element?.fullName})` : ''}</td>
                 <td>
                   <div dangerouslySetInnerHTML={{ __html: description?.[`${element?.id}`] }}/>
@@ -446,6 +446,7 @@ const Rules = ({ config, className = '', numberOfRounds = 0, numberOfColumns = 0
             </td>
           </tr>
         </table>
+        <p>Gra się kończy, gdy wszyscy gracze rozegrają {numberOfRounds} rund.</p>
       </Section>
     </div>
   );
