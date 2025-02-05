@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/furdzik/IF.DiceTable/compare/v1.5.0...v1.6.0) (2025-02-05)
+
+
+### Features
+
+* **rules:** add rules ([690e53d](https://github.com/furdzik/IF.DiceTable/commit/690e53d80b1041290a003df4e1627f21ceb0857f))
+* **rules:** some fixes ([001865d](https://github.com/furdzik/IF.DiceTable/commit/001865d109783140762d7db2f08d77dcdf388941))
+
 ## [1.5.0](https://github.com/furdzik/IF.DiceTable/compare/v1.4.0...v1.5.0) (2025-01-12)
 
 
