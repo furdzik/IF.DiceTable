@@ -18,8 +18,8 @@ const Section = styled.section`
     margin: 2rem 0;
   }
   td {
-    border: .1rem solid ${(props) => props.theme.color.gray};
     padding: .5rem 1rem;
+    border: .1rem solid ${(props) => props.theme.color.gray};
     p {
       font-size: 1.4rem;
     }
@@ -28,21 +28,21 @@ const Section = styled.section`
     }
   }
   th {
-    text-align: center;
+    padding: .5rem 1rem;
     font-weight: bold;
     color: ${(props) => props.theme.mainColors.primary};
-    padding: .5rem 1rem;
+    text-align: center;
   }
   .figure-table {
-    font-size: 1.4rem;
     width: 100%;
+    font-size: 1.4rem;
     th {
       text-align: left;
     }
     td:first-of-type:not([colSpan="2"]) {
-      text-align: right;
       font-weight: bold;
       color: ${(props) => props.theme.mainColors.primary};
+      text-align: right;
     }
     th:first-of-type:not([colSpan="2"]) {
       text-align: right;
@@ -53,15 +53,15 @@ const Section = styled.section`
   }
   i {
     display: inline-block;
-    font-style: normal;
-    font-size: 3rem;
-    line-height: 1;
-    vertical-align: middle;
     margin-top: -.4rem;
+    font-size: 3rem;
+    font-style: normal;
+    line-height: 1;
     color: ${(props) => props.theme.mainColors.secondary};
+    vertical-align: middle;
     & + i {
-      margin-left: .2rem;
       margin-right: .2rem;
+      margin-left: .2rem;
     }
   }
   code {

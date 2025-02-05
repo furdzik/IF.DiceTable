@@ -79,11 +79,11 @@ const GlobalStyles = css`
     text-decoration: none;
   }
   button {
+    padding: 0;
     border: 0;
     background: none;
     font: inherit;
     text-transform: inherit;
-    padding: 0;
     &:hover, &:active, &:focus {
       outline: none;
       cursor: pointer;

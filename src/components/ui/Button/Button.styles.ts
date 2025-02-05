@@ -152,8 +152,8 @@ const ButtonWrapper = styled.button<Button>`
     &:focus,
     &:hover,
     &:active {
-      padding-left: 0;
       padding-right: 0;
+      padding-left: 0;
       border: 0;
       background: none;
       color: ${props.theme.mainColors.secondary};

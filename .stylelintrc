@@ -3,5 +3,7 @@
   "extends": [
     "stylelint-config-kamisama"
   ],
-  "rules": {}
+  "rules": {
+    "selector-no-qualifying-type": null
+  }
 }

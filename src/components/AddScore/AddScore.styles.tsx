@@ -73,11 +73,11 @@ const AddBox = styled.div<ColorPlayerProps & AddBoxProps>`
 `;
 
 const Header = styled.h3`
-  text-transform: uppercase;
-  line-height: 1.5;
-  border-bottom: .1rem solid ${(props) => props.theme.color.darkGray};
-  padding-bottom: 1rem;
   margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: .1rem solid ${(props) => props.theme.color.darkGray};
+  line-height: 1.5;
+  text-transform: uppercase;
 
   span {
     font-size: 1.2rem;
@@ -86,8 +86,8 @@ const Header = styled.h3`
 `;
 const Label = styled.label`
   width: 4rem;
-  text-transform: uppercase;
   line-height: 1.5;
+  text-transform: uppercase;
 `;
 
 const Score = styled.button<ScoreProps & ColorPlayerProps>`
@@ -118,9 +118,9 @@ const ButtonWrapper = styled.div<ColorPlayerProps>`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  background: ${(props) => hexToRgbMixin(props.playerColor as string, 0.2)};
-  padding: 1rem;
   margin: 1rem -1rem -1rem;
+  padding: 1rem;
+  background: ${(props) => hexToRgbMixin(props.playerColor as string, 0.2)};
 `;
 
 const StyledButton = styled(Button)<ColorPlayerProps>`
@@ -164,14 +164,14 @@ const StyledInput = styled(({
 
 const Selector = styled.button<IconWrapperProps & ColorPlayerProps>`
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 2.4rem;
   height: 2.4rem;
   padding: 0;
+  border-radius: 50%;
   color: ${(props) => props.theme.colorMono.black};
 
-  border-radius: 50%;
   ${(props) => !props.noBorder && css`
     border: .1rem solid ${props.theme.color.darkGray};
   `};
@@ -191,10 +191,10 @@ const NumberElement = styled.span`
 `;
 
 const WarningWrapper = styled.div`
-  color: #ff0000;
   font-weight: bold;
-  text-transform: uppercase;
+  color: #ff0000;
   text-align: center;
+  text-transform: uppercase;
 `;
 
 export {

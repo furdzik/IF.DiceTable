@@ -83,8 +83,8 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
 
   ${props.variant === RowVariants.MainTitle && css`
     &, &:first-of-type {
-      padding: 0;
       height: 3rem;
+      padding: 0;
       border: none;
       background: ${props.playerColor || props.theme.mainColors.secondary};
       font-size: ${props.theme.fontSize.big};
@@ -100,8 +100,8 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       text-transform: uppercase;
       > div {
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         gap: .5rem;
       }
       small {
@@ -126,14 +126,14 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   `};
   ${props.variant === RowVariants.Stats && css`
     &, &:first-of-type {
+      height: auto;
+      padding: .4rem 0 .2rem;
       border: .2rem solid #e2e2e2;
       background: #e2e2e2;
       font-size: 1.2rem;
       font-weight: normal;
       color: ${props.theme.colorMono.black};
       text-transform: uppercase;
-      padding: .4rem 0 .2rem;
-      height: auto;
     }
   `};
   ${props.variant === RowVariants.Bonus && css`
@@ -153,14 +153,14 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
   `};
   ${props.separator && css`
     height: 0;
+    margin-top: -.1rem;
     padding: 0;
     border-bottom: .2rem solid #5e5e5e;
-    margin-top: -.1rem;
   `};
   ${props.isWarning && css`
     && {
-      background: #ff6868;
       border: .2rem solid #ff0000;
+      background: #ff6868;
     }
   `}
 `;
@@ -174,15 +174,14 @@ const Td = styled.td<RowProps & PlayersProps>`
 `;
 
 const StatsSection = styled.section`
-  background: #e2e2e2;
-  border: .2rem solid #969696;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: .2rem solid #969696;
+  background: #e2e2e2;
+  font-size: 1.2rem;
 `;
 
 const StatsTitle = styled.h4`
@@ -192,8 +191,8 @@ const StatsTitle = styled.h4`
   margin-bottom: 0;
   font-size: ${(props) => props.theme.fontSize.small};
   font-weight: ${(props) => props.theme.fontWeight.bold};
-  text-transform: uppercase;
   color: #494747;
+  text-transform: uppercase;
 `;
 
 const StatsWrapper = styled.div`
@@ -208,8 +207,8 @@ const StatsLabel = styled.b`
 
 const PlayerName = styled.span`
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 1rem;
   svg > {
     margin-top: -.3rem;
