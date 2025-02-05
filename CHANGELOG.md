@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/furdzik/IF.DiceTable/compare/v1.6.0...v1.7.0) (2025-02-05)
+
+
+### Features
+
+* **app:** dix code and style lints ([5fac53c](https://github.com/furdzik/IF.DiceTable/commit/5fac53c69abeef535892fbf5c91ab534801950e5))
+
 ## [1.6.0](https://github.com/furdzik/IF.DiceTable/compare/v1.5.0...v1.6.0) (2025-02-05)
 
 
