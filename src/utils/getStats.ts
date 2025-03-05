@@ -10,7 +10,7 @@ export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, 
   const playedRound = rounds.filter((el) => el.round === currentRound);
   const notPlayedRound = rounds.filter((el) => el.round < currentRound);
 
-  if (notPlayedRound.length === 0) {
+  if (currentRound === 0 || notPlayedRound.length === 0) {
     return startingPlayer;
   }
 
