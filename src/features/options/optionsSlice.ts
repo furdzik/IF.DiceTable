@@ -7,6 +7,7 @@ import { colorsByOrder } from 'constant';
 const initialStateFromStorage: OptionsState = JSON.parse(localStorage.getItem('options') || '{}');
 const initialStateDefault: OptionsState = {
   columns: 3,
+  roundsPerPlayer: 1,
   players:  [
     { id: 1, name: 'Gracz 1', color: colorsByOrder[0] },
     { id: 2, name: 'Gracz 2', color: colorsByOrder[1] }

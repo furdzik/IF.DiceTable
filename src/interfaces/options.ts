@@ -10,17 +10,20 @@ export enum Colors {
 export interface Player {
   id: number;
   name: string;
+  startingPlayer?: boolean;
   color: Colors | string | undefined;
 }
 
 export interface OptionsState {
   columns: number;
+  roundsPerPlayer: number;
   players: Player[];
   showStats: boolean;
 }
 
 export interface Options {
   columns: number;
+  roundsPerPlayer: number;
   players: Player[];
   showStats: boolean;
 }

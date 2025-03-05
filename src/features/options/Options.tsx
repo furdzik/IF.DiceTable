@@ -17,9 +17,9 @@ const Options = (props: OptionsProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const columns = useSelector((state: RootState) => state.options.columns);
+  const roundsPerPlayer = useSelector((state: RootState) => state.options.roundsPerPlayer);
   const players = useSelector((state: RootState) => state.options.players);
   const showStats = useSelector((state: RootState) => state.options.showStats);
-  const gameStarted = useSelector((state: RootState) => state.scoresTable.gameStarted);
 
   useEffect(() => {
     dispatch(loadOptions());
@@ -27,7 +27,7 @@ const Options = (props: OptionsProps) => {
 
   return (
     <OptionsComponent
-      options={{ columns, players, showStats }}
+      options={{ columns, roundsPerPlayer, players, showStats }}
       saveData={(data: OptionsState) => {
         dispatch(saveData(data));
       }}
@@ -36,7 +36,6 @@ const Options = (props: OptionsProps) => {
         dispatch(clearScoreData());
       }}
       onModalClose={props.onModalClose}
-      gameStarted={gameStarted}
     />
   );
 };

@@ -11,11 +11,11 @@ import {
 } from '@mdi/js';
 
 import { Config, ConfigElement } from 'interfaces';
+import { FigureId } from 'constant';
 
 import {
   Section
 } from './Rules.styles';
-import { FigureId } from '../../constant';
 
 export type OptionsProps = {
   config: Config;
