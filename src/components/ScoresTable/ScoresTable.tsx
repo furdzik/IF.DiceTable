@@ -13,7 +13,6 @@ import {
   Score,
   ScoreElement,
   ScorePlayers,
-  Stats,
   SumPlayers
 } from 'interfaces';
 import { getStats } from 'utils';
@@ -166,7 +165,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, opt
                         >
                           <RoundWrapper>
                             {gameStarted && stats.currentPlayer === player.id && !gameEnded ? (
-                              <CurrentPlayerIcon path={mdiDice6} playerColor={player.color} />
+                              <CurrentPlayerIcon path={mdiDice6} color={player.color} />
                             ) : null}
                             {sum?.[`player${player.id}`]?.round}
                           </RoundWrapper>

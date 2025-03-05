@@ -19,7 +19,7 @@ export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, 
     const exceptLast = playedRound.slice(0, -1).map((el) => el.round);
     const last = notPlayedRound[rounds.length - 1];
 
-    return rounds.indexOf(element.round - roundsPerPlayer) !== -1 || new Set(exceptLast).size == 1 && element.round - last.round < roundsPerPlayer;
+    return (rounds.indexOf(element.round - roundsPerPlayer) !== -1) || (new Set(exceptLast).size === 1 && element.round - last.round < roundsPerPlayer);
   }
 
   const played = playedRound.filter((el) => el.round === currentRound && hasDifference(el));

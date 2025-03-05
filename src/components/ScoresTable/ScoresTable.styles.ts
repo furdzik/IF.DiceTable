@@ -248,7 +248,7 @@ const CurrentPlayerIcon = styled(Icon)<PlayersProps>`
   margin-top: -.3rem;
   width: 2rem;
   height: 2rem;
-  color: ${(props) => props.playerColor || props.theme.mainColors.secondary};
+  color: ${(props) => props.color || props.theme.mainColors.secondary};
 `;
 
 export {
