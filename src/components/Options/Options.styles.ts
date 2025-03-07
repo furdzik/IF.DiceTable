@@ -20,7 +20,7 @@ const InnerWrapper = styled.div`
 `;
 
 const Label = styled.label`
-  min-width: 10rem;
+  min-width: 14rem;
 `;
 
 const InputStyled = styled(Input)`

@@ -1,4 +1,5 @@
 import { FigureId, ResultsId } from 'constant';
+import { Player } from './options';
 
 export enum Throw {
   first = 1,
@@ -119,11 +120,13 @@ export interface SaveScore {
 }
 
 export interface Stats {
+  currentPlayer: number;
   currentRound: number;
   currentWinner: number;
   difference: string[];
   numberOfRounds: number;
   winners: string[]
+  winner: Player;
 }
 
 export interface StatsValues {

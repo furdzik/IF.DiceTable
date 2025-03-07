@@ -12,6 +12,7 @@ const ScoresTable = () => {
 
   const config = useSelector((state: RootState) => state.scoresTable.config);
   const columns = useSelector((state: RootState) => state.options.columns);
+  const roundsPerPlayer = useSelector((state: RootState) => state.options.roundsPerPlayer);
   const players = useSelector((state: RootState) => state.options.players);
   const showStats = useSelector((state: RootState) => state.options.showStats);
 
@@ -47,7 +48,7 @@ const ScoresTable = () => {
       sum={sum}
       gameStarted={gameStarted}
       gameEnded={gameEnded}
-      options={{ columns, players, showStats }}
+      options={{ columns, roundsPerPlayer, players, showStats }}
       saveScore={({ score, playerId, scoreType }: SaveScore) => {
         dispatch(saveScore({ score, playerId, scoreType, allScores: scores }));
       }}

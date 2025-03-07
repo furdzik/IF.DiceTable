@@ -53,9 +53,10 @@ export const calculatePlayerBonus = (
   const columnsValues: ScoreElement[][] = Array.from(Array(columns)).map(() => []);
   const results = iterateAndGetColumnValuesById(scores, columnsValues);
 
-  results?.forEach((column, index) => {
+  results?.forEach((column, index: number) => {
     if (column.length === NUMBER_OF_ROWS) {
-      columnBonus[index] = Number(config?.columnBonus.value);
+      const successLength = columnBonus.length + 1;
+      columnBonus[index] = Number(successLength) * Number(config?.columnBonus.value as number);
     }
   });
 

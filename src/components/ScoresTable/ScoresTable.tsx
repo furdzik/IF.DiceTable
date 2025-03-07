@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Icon from '@mdi/react';
-import { mdiChevronRightCircleOutline, mdiCrown } from '@mdi/js';
+import { mdiChevronRightCircleOutline, mdiCrown, mdiDice6 } from '@mdi/js';
 
 import {
   Bonuses,
@@ -13,11 +13,9 @@ import {
   Score,
   ScoreElement,
   ScorePlayers,
-  Stats,
   SumPlayers
 } from 'interfaces';
 import { getStats } from 'utils';
-import { MAX_PLAYER_ROUND_GAP } from 'constant';
 
 import AddScore from 'components/AddScore';
 
@@ -31,7 +29,11 @@ import {
   StatsTitle,
   StatsWrapper,
   StatsLabel,
-  PlayerName
+  StatsSectionBox,
+  WinnerBox,
+  PlayerName,
+  RoundWrapper,
+  CurrentPlayerIcon
 } from './ScoresTable.styles';
 
 export enum RowVariants {
@@ -56,21 +58,7 @@ export interface ScoresTableProps {
 
 const TITLE_LENGTH = 1;
 
-const checkIfRoundAreEven = (stats: Stats, sum: SumPlayers, players: Player[], setIsRoundsNotEvenWarning: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const playerRoundsEvenTable: boolean[] = [];
-  players.forEach((player: Player) => {
-    playerRoundsEvenTable.push((stats?.currentRound || 0) >= (sum?.[`player${player.id}`]?.round + MAX_PLAYER_ROUND_GAP));
-  });
-
-  if (playerRoundsEvenTable.includes(true)) {
-    setIsRoundsNotEvenWarning(true);
-  } else {
-    setIsRoundsNotEvenWarning(false);
-  }
-}
-
-const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveScore, className = '' }: ScoresTableProps) => {
-  const [isRoundsNotEvenWarning, setIsRoundsNotEvenWarning] = useState(false);
+const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, options, saveScore, className = '' }: ScoresTableProps) => {
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
 
@@ -80,16 +68,10 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
 
   const stats = getStats(options, sum);
 
-  useEffect(() => {
-    if (gameStarted) {
-      checkIfRoundAreEven(stats, sum, options.players, setIsRoundsNotEvenWarning);
-    }
-  }, [gameStarted, stats, sum, options]);
-
   return (
     <React.Fragment>
       {
-        gameStarted && options.showStats && (
+        !gameEnded && gameStarted && options.showStats && (
           <StatsSection>
             <StatsTitle>
               Statystyki
@@ -100,7 +82,13 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                 <StatsLabel>Runda:</StatsLabel> {stats.currentRound}/{stats.numberOfRounds}
               </div>
               <div>
-                <StatsLabel>Kolejność:</StatsLabel> {stats.winners.join(', ')}
+                <StatsLabel>Pozostało rund:</StatsLabel> {stats.numberOfRounds - stats.currentRound}
+              </div>
+              <div>
+                <StatsLabel>Ilość rund na gracza:</StatsLabel> {options.roundsPerPlayer}
+              </div>
+              <div>
+                <StatsLabel>Kolej:</StatsLabel> {options.players.filter((el) => el.id === stats.currentPlayer)[0].name}
               </div>
               <div>
                 <StatsLabel>Różnica do zwycięzcy:</StatsLabel> {stats.difference.join(', ')}
@@ -109,10 +97,28 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
           </StatsSection>
         )
       }
+      {
+        gameEnded ? (
+          <StatsSection gameSummary>
+            <StatsTitle>
+              Podsumowanie gdy
+              <Icon path={mdiChevronRightCircleOutline} size={1} />
+            </StatsTitle>
+            <StatsWrapper>
+              <WinnerBox playerColor={stats.winner.color}>
+                <StatsLabel>Zwycięzca:</StatsLabel> <Icon path={mdiCrown} size={1.2} /> {stats.winners[0]}
+              </WinnerBox>
+              <StatsSectionBox>
+                <StatsLabel>Różnica do zwycięzcy:</StatsLabel> {stats.difference.join(', ')}
+              </StatsSectionBox>
+            </StatsWrapper>
+          </StatsSection>
+        ) : null
+      }
       <Wrapper className={className}>
         {options.players?.map((player: Player) => {
-          const playerScore: Score | null = scores?.[`player${player.id}`];
-          const playerBonuses: Bonuses | null = bonuses?.[`player${player.id}`];
+          const playerScore: Score | null = scores?.[`player${player.id}`] as Score;
+          const playerBonuses: Bonuses | null = bonuses?.[`player${player.id}`] as Bonuses;
           const columns: number[] = [...Array(options.columns).keys()];
 
           return (
@@ -149,15 +155,20 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                       <tr>
                         <Td
                           variant={RowVariants.Stats}
-                          isWarning={(stats?.currentRound || 0) > (sum?.[`player${player.id}`]?.round + MAX_PLAYER_ROUND_GAP)}
+                          isWarning={(stats?.currentRound || 0) > (sum?.[`player${player.id}`]?.round + options.roundsPerPlayer)}
                         >
                           Runda
                         </Td>
                         <Td
                           variant={RowVariants.Stats}
-                          isWarning={(stats?.currentRound || 0) > (sum?.[`player${player.id}`]?.round + MAX_PLAYER_ROUND_GAP)}
+                          isWarning={(stats?.currentRound || 0) > (sum?.[`player${player.id}`]?.round + options.roundsPerPlayer)}
                         >
-                          {sum?.[`player${player.id}`]?.round}
+                          <RoundWrapper>
+                            {gameStarted && stats.currentPlayer === player.id && !gameEnded ? (
+                              <CurrentPlayerIcon path={mdiDice6} color={player.color} />
+                            ) : null}
+                            {sum?.[`player${player.id}`]?.round}
+                          </RoundWrapper>
                         </Td>
                       </tr>
                     )
@@ -188,7 +199,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                               player={player}
                               columnId={index + 1}
                               onClick={onAddScoreClick}
-                              roundsNotEvenWarning={(stats?.currentRound || 0) === (sum?.[`player${player.id}`]?.round) && isRoundsNotEvenWarning}
+                              roundsNotEvenWarning={stats.currentPlayer !== player.id}
                             />
                           </Td>
                         );
@@ -247,7 +258,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                                   columnId={index + 1}
                                   position={{ onTop: true }}
                                   onClick={onAddScoreClick}
-                                  roundsNotEvenWarning={(stats?.currentRound || 0) === (sum?.[`player${player.id}`]?.round) && isRoundsNotEvenWarning}
+                                  roundsNotEvenWarning={stats.currentPlayer !== player.id}
                                 />
                               </Td>
                             );
@@ -296,7 +307,7 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, options, saveS
                                   columnId={index + 1}
                                   position={{ onLeft: true }}
                                   onClick={onAddScoreClick}
-                                  roundsNotEvenWarning={(stats?.currentRound || 0) === (sum?.[`player${player.id}`]?.round) && isRoundsNotEvenWarning}
+                                  roundsNotEvenWarning={stats.currentPlayer !== player.id}
                                 />
                               </Td>
                             );

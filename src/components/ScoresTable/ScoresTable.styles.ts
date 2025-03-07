@@ -1,5 +1,6 @@
 import styled from '@emotion/styled/macro';
 import { css } from '@emotion/react';
+import Icon from '@mdi/react';
 
 import { hexToRgbMixin } from 'styles/mixins';
 
@@ -18,6 +19,10 @@ export interface RowProps {
 export interface PlayersProps {
   players?: number | undefined;
   playerColor?: Colors | string | undefined;
+}
+
+export interface StatsProps {
+  gameSummary?: boolean | undefined;
 }
 
 const Wrapper = styled.div`
@@ -173,7 +178,7 @@ const Td = styled.td<RowProps & PlayersProps>`
   ${Row};
 `;
 
-const StatsSection = styled.section`
+const StatsSection = styled.section<StatsProps>`
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -182,6 +187,11 @@ const StatsSection = styled.section`
   border: .2rem solid #969696;
   background: #e2e2e2;
   font-size: 1.2rem;
+
+  ${(props) => props.gameSummary && css`
+    border: .2rem solid #dfcf23;
+    background: #fce703;
+  `};
 `;
 
 const StatsTitle = styled.h4`
@@ -205,6 +215,19 @@ const StatsLabel = styled.b`
   text-transform: uppercase;
 `;
 
+const StatsSectionBox = styled.div`
+  color: #a19c69;
+`;
+
+const WinnerBox = styled.div<PlayersProps>`
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  text-transform: uppercase;
+  color: ${(props) => props.playerColor};
+  font-weight: bold;
+`;
+
 const PlayerName = styled.span`
   display: flex;
   justify-content: center;
@@ -213,6 +236,19 @@ const PlayerName = styled.span`
   svg > {
     margin-top: -.3rem;
   }
+`;
+
+const RoundWrapper = styled.div`
+  position: relative;
+`;
+
+const CurrentPlayerIcon = styled(Icon)<PlayersProps>`
+  position: absolute;
+  margin-left: -3rem;
+  margin-top: -.3rem;
+  width: 2rem;
+  height: 2rem;
+  color: ${(props) => props.color || props.theme.mainColors.secondary};
 `;
 
 export {
@@ -225,5 +261,9 @@ export {
   StatsTitle,
   StatsWrapper,
   StatsLabel,
-  PlayerName
+  StatsSectionBox,
+  WinnerBox,
+  PlayerName,
+  RoundWrapper,
+  CurrentPlayerIcon
 };
