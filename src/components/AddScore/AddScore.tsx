@@ -99,7 +99,7 @@ const AddScore = ({
         isOpen && (
           <AddBox ref={clickAwayRef} playerColor={player.color} position={position}>
             {
-              !roundsNotEvenWarning ? (
+              !roundsNotEvenWarning || (roundsNotEvenWarning && singleScore?.throw) ? (
                 <React.Fragment>
                   <Header>
                     Dodaj wynik:<br />

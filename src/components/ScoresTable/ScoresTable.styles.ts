@@ -103,6 +103,7 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
       background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
       text-transform: uppercase;
+      vertical-align: middle;
       > div {
         display: flex;
         justify-content: center;
@@ -112,6 +113,9 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       small {
         font-size: 1rem;
         font-weight: ${props.theme.fontWeight.regular};
+      }
+      b {
+        font-size: 1.2rem;
       }
     }
   `};
@@ -251,6 +255,23 @@ const CurrentPlayerIcon = styled(Icon)<PlayersProps>`
   color: ${(props) => props.color || props.theme.mainColors.secondary};
 `;
 
+const SmallBonusTable = styled.table`
+  width: 100%;
+  text-align: center;
+  font-size: .9rem;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: .5rem;
+
+  b {
+    display: block;
+    margin-top: .5rem;
+    padding: .3rem 0;
+    font-size: 1.1rem;
+    background: rgba(0, 0, 0, .1);
+  }
+`;
+
 export {
   Wrapper,
   TablesWrapper,
@@ -265,5 +286,6 @@ export {
   WinnerBox,
   PlayerName,
   RoundWrapper,
-  CurrentPlayerIcon
+  CurrentPlayerIcon,
+  SmallBonusTable
 };

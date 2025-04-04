@@ -7,7 +7,7 @@ export const theme: ITheme = {
   ...typography,
   layout: {
     background: colors.colorMono.white,
-    width: '190rem',
+    width: '180rem',
     padding: '1rem',
     modalDefaultPadding: '3rem',
     borderColor: '',

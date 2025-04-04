@@ -258,8 +258,10 @@ export const config: Config = {
   bonuses: {
     schoolGeneral: {
       name: 'Bonus za szkołę',
-      value: 50,
-      minimalSum: 30
+      initialValue: 50,
+      value: 25,
+      minimalSum: 30,
+      maxBonusValue: 475
     },
     thousandBonus: {
       name: 'Przekroczenie 1000 punktów',
@@ -268,15 +270,19 @@ export const config: Config = {
     },
     sameValueVice: {
       name: 'Takie same wyniki Vicek',
+      initialValue: 300,
       value: 50
     },
     sameValueGeneral: {
       name: 'Takie same wyniki Generał',
+      initialValue: 600,
       value: 100
     },
     section1AllResults: {
       name: 'Wszystkie wyniki',
-      value: 300,
+      valuePerColumn: true,
+      initialValue: 400,
+      value: 50,
       rows: 6,
       sectionNames: [
         FigureId.TwoOfKind, FigureId.TwoOfTwoOfKind, FigureId.ThreeOfKind, FigureId.FourOfKind,
@@ -293,7 +299,8 @@ export const config: Config = {
     },
     section3AllResults: {
       name: 'Wszystkie wyniki',
-      value: 150,
+      valuePerColumn: true,
+      value: 70,
       rows: 3,
       sectionNames: [
         FigureId.SmallTriangle, FigureId.BigTriangle, FigureId.Goat
@@ -301,7 +308,8 @@ export const config: Config = {
     },
     section4AllResults: {
       name: 'Wszystkie wyniki',
-      value: 150,
+      valuePerColumn: true,
+      value: 70,
       rows: 3,
       sectionNames: [
         FigureId.SmallStraight, FigureId.BigStraight, FigureId.Runner
@@ -309,7 +317,8 @@ export const config: Config = {
     },
     section5AllResults: {
       name: 'Wszystkie wyniki',
-      value: 100,
+      valuePerColumn: true,
+      value: 50,
       rows: 4,
       sectionNames: [
         FigureId.Evens, FigureId.Odds, FigureId.ThreeToThree, FigureId.TwoToFour
@@ -317,7 +326,8 @@ export const config: Config = {
     },
     section6AllResults: {
       name: 'Wszystkie wyniki',
-      value: 200,
+      valuePerColumn: true,
+      value: 100,
       rows: 4,
       sectionNames: [
         FigureId.FullHouse, FigureId.ThreeOfTwoOfKind, FigureId.SuperSmall, FigureId.SuperBig

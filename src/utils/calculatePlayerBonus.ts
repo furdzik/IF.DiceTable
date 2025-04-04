@@ -13,7 +13,6 @@ import {
   FigureId,
   NUMBER_OF_ROWS,
   NUMBER_OF_SECTIONS_FOR_BONUS,
-  SCHOOL_BONUS_MIN_VALUE,
   THOUSAND_BONUS_VALUE
 } from 'constant';
 import { iterateAndGetColumnValuesById, iterateAndGetValuesBySection } from './iterateAndSetNewValue';
@@ -45,7 +44,13 @@ export const calculatePlayerBonus = (
 
   // The School General
   sum?.school?.forEach((element) => {
-    schoolBonus.push((element - SCHOOL_BONUS_MIN_VALUE) * Number(config?.schoolGeneral.value));
+    const maxBonus = (element - (config?.schoolGeneral?.minimalSum || 0)) * Number(config?.schoolGeneral.initialValue);
+    const smallerBonus = (element - (config?.schoolGeneral?.minimalSum || 0)) * Number(config?.schoolGeneral.value);
+    const realBonus = smallerBonus > (config?.schoolGeneral?.maxBonusValue || 0)
+      ? config?.schoolGeneral?.maxBonusValue : smallerBonus;
+    const calculatedBonus = maxBonus > (config?.schoolGeneral?.minimalSum || 0) ? realBonus : maxBonus;
+
+    schoolBonus.push(calculatedBonus as number);
   });
 
   // The Column Bonus
@@ -62,12 +67,15 @@ export const calculatePlayerBonus = (
 
   // Same Value Vice
   const userViceValues = scores?.figures.section2.vice.map((el) => el.dice);
-  const sameValueVice = arrayAllEqual(userViceValues) ? Number(config?.sameValueVice.value) : 0;
+  const sameValueVice = arrayAllEqual(userViceValues)
+    ? Number(config?.sameValueVice.initialValue as number + (config?.sameValueVice.value as number * columns))
+    : 0;
 
   // Same Value General
   const userGeneralValues = scores?.figures.section2.general.map((el) => el.dice);
-  const sameValueGeneral = arrayAllEqual(userGeneralValues) ? Number(config?.sameValueGeneral.value) : 0;
-
+  const sameValueGeneral =  arrayAllEqual(userGeneralValues)
+    ? Number(config?.sameValueGeneral.initialValue as number + (config?.sameValueGeneral.value as number * columns))
+    : 0;
   // Sections All Results
   const sectionValues = Array.from(Array(NUMBER_OF_SECTIONS_FOR_BONUS)).map(() => []);
 
@@ -83,7 +91,9 @@ export const calculatePlayerBonus = (
   const sectionsBonus: number[] = [];
   sectionValues?.forEach((section, index) => {
     sectionsBonus[index] = section && section?.length === (Number(config?.[`section${index + 1}AllResults`]?.rows) * columns)
-      ? Number(config?.[`section${index + 1}AllResults`].value)
+      ? config?.[`section${index + 1}AllResults`]?.valuePerColumn
+        ? (config?.[`section${index + 1}AllResults`]?.initialValue || 0) + Number(config?.[`section${index + 1}AllResults`].value as number * columns)
+        : (config?.[`section${index + 1}AllResults`]?.initialValue || 0) + Number(config?.[`section${index + 1}AllResults`].value)
       : 0;
   });
   const sectionsBonusSum = sectionsBonus?.reduce((a, b) => a + b, 0);
@@ -95,7 +105,15 @@ export const calculatePlayerBonus = (
     ...playerBonuses,
     thousandBonus,
     columnBonus,
+    sectionsBonus,
     schoolGeneral: schoolBonus,
+    schoolGeneralSum: schoolBonus.reduce((a, b) => a + b, 0),
+    restBonusesDetails: {
+      vice: sameValueVice,
+      general: sameValueGeneral,
+      sections: sectionsBonusSum,
+      columns: columnBonus.reduce((a, b) => a + b, 0)
+    },
     restBonuses
   };
 }

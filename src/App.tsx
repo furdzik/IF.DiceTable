@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 
 import { Global, ThemeProvider } from '@emotion/react';
 import { Provider } from 'react-redux';
@@ -15,7 +16,9 @@ function App () {
     <ThemeProvider theme={theme}>
       <Global styles={GlobalStyles} />
       <Provider store={store}>
-        <RoutesConfig />
+        <IntlProvider locale="en">
+          <RoutesConfig />
+        </IntlProvider>
       </Provider>
     </ThemeProvider>
   );
