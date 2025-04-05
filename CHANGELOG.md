@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.0](https://github.com/furdzik/IF.DiceTable/compare/v1.7.0...v1.8.0) (2025-03-14)
+
+
+### Features
+
+* **app:** add starting player field to initial state ([9b14b37](https://github.com/furdzik/IF.DiceTable/commit/9b14b37d564265ecc4de62b1201220f8dea3b120))
+* **app:** current player ([789f1c9](https://github.com/furdzik/IF.DiceTable/commit/789f1c9932593911edbbf6dae89b72816cf8e471))
+* **app:** current player ([9c81eb3](https://github.com/furdzik/IF.DiceTable/commit/9c81eb3673ee43d20909faeca17f0a76f9effbe2))
+
 ## [1.7.0](https://github.com/furdzik/IF.DiceTable/compare/v1.6.0...v1.7.0) (2025-02-05)
 
 
