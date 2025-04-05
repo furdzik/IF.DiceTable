@@ -367,27 +367,29 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, opt
                     <Th variant={RowVariants.Bonus} playerColor={player.color}>Reszta</Th>
                     <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
                       <SmallBonusTable>
-                        <tr>
-                          <td>Wicki</td>
-                          <td>Generały</td>
-                          <td><span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>Sekcje</span></td>
-                          <td>Kolumny</td>
-                        </tr>
-                        <tr>
-                          <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.vice}</td>
-                          <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.general}</td>
-                          <td>
-                            <span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>
-                              {(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.sections}
-                            </span>
-                          </td>
-                          <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.columns}</td>
-                        </tr>
-                        <tr>
-                          <td colSpan={4}>
-                            <b>Suma Reszty: {playerBonuses?.restBonuses as number || 0}</b>
-                          </td>
-                        </tr>
+                        <tbody>
+                          <tr>
+                            <td>Wicki</td>
+                            <td>Generały</td>
+                            <td><span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>Sekcje</span></td>
+                            <td>Kolumny</td>
+                          </tr>
+                          <tr>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.vice}</td>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.general}</td>
+                            <td>
+                              <span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>
+                                {(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.sections}
+                              </span>
+                            </td>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.columns}</td>
+                          </tr>
+                          <tr>
+                            <td colSpan={4}>
+                              <b>Suma Reszty: {playerBonuses?.restBonuses as number || 0}</b>
+                            </td>
+                          </tr>
+                        </tbody>
                       </SmallBonusTable>
                     </Th>
                   </tr>
