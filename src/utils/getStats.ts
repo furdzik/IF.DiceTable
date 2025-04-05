@@ -4,24 +4,6 @@ import _orderBy from 'lodash/orderBy';
 import { Options, Stats, StatsValues, SumPlayers } from 'interfaces';
 import { NUMBER_OF_ROWS } from 'constant';
 
-// const chooseSum = (all: number, allSumWithoutSchool: number, currentRound: number, columns: number) => currentRound < NUMBER_OF_ROWS * columns ? allSumWithoutSchool : all;
-
-const hasDifference = (
-  element: StatsValues,
-  isMoreThanTwoPlayers: boolean,
-  roundsPerPlayer: number,
-  notPlayedRound: StatsValues[],
-  playedRound: StatsValues[]
-) => {
-  const notPlayedRoundRoundNumber = notPlayedRound.map((el) => el.round);
-
-  const last = notPlayedRound[notPlayedRoundRoundNumber.length - 1];
-  const exceptLast = playedRound.slice(0, -1).map((el) => el.round);
-
-  return (notPlayedRoundRoundNumber.indexOf(element.round - roundsPerPlayer) !== -1)
-    || (isMoreThanTwoPlayers && new Set(exceptLast).size === 1 && (element.round - last.round < roundsPerPlayer));
-}
-
 export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, currentRound: number, roundsPerPlayer: number, isMoreThanTwoPlayers: boolean) => {
   const playedRound = rounds.filter((el) => el.round === currentRound);
   const notPlayedRound = rounds.filter((el) => el.round < currentRound);
@@ -30,9 +12,8 @@ export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, 
     return startingPlayer;
   }
 
-  const played = playedRound.filter((el) => el.round === currentRound && hasDifference(el, isMoreThanTwoPlayers, roundsPerPlayer, notPlayedRound, playedRound));
+  const played = playedRound.filter((el) => el.round === currentRound && el.round % roundsPerPlayer === 0);
   const playedIds = played.map((el) => el.player);
-
   const notPlayed = rounds.filter((el) => playedIds.indexOf(el.player) === -1);
 
   const currentPlayer = notPlayed.filter((el) => el.round !== currentRound - roundsPerPlayer)[0];
