@@ -300,7 +300,7 @@ export const config: Config = {
     section3AllResults: {
       name: 'Wszystkie wyniki',
       valuePerColumn: true,
-      value: 70,
+      value: 90,
       rows: 3,
       sectionNames: [
         FigureId.SmallTriangle, FigureId.BigTriangle, FigureId.Goat
