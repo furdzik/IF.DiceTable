@@ -103,7 +103,6 @@ const Row = (props: EmotionTheme & RowProps & PlayersProps) => css`
       border: .2rem solid ${props.playerColor || props.theme.mainColors.secondary};
       background: ${hexToRgbMixin(props.playerColor || props.theme.mainColors.secondary, .2)};
       text-transform: uppercase;
-      vertical-align: middle;
       > div {
         display: flex;
         justify-content: center;
