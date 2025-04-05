@@ -4,7 +4,7 @@ import _orderBy from 'lodash/orderBy';
 import { Options, Stats, StatsValues, SumPlayers } from 'interfaces';
 import { NUMBER_OF_ROWS } from 'constant';
 
-export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, currentRound: number, roundsPerPlayer: number, isMoreThanTwoPlayers: boolean) => {
+export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, currentRound: number, roundsPerPlayer: number) => {
   const playedRound = rounds.filter((el) => el.round === currentRound);
   const notPlayedRound = rounds.filter((el) => el.round < currentRound);
 
@@ -34,14 +34,12 @@ export const getStats = (options: Options, sum: SumPlayers): Stats => {
   });
 
   const currentRound = _maxBy(rounds, 'round');
-  const isMoreThanTwoPlayers = options.players?.length > 2;
 
   const currentPlayer = getCurrentPlayer(
     rounds,
     startingPlayer,
     currentRound?.round || 0 as number,
-    options.roundsPerPlayer,
-    isMoreThanTwoPlayers
+    options.roundsPerPlayer
   );
 
   options.players?.forEach((player) => {
