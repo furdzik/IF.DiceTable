@@ -20,14 +20,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
   "exclude": [
     "node_modules",
     "build"
   ],
   "include": [
-    "src/*",
+    "src/**/*",
     "src/types/**/*"
   ],
   "paths": {

@@ -186,7 +186,7 @@ const scoresTable = createSlice({
           thousandBonusResult,
           bonusThousandGrantedResultsBefore.includes(true),
           columns
-        )
+        );
         newBonuses = {
           ...newBonuses,
           [`player${player?.id}`]: playerBonuses

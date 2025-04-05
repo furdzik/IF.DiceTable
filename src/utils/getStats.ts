@@ -4,8 +4,6 @@ import _orderBy from 'lodash/orderBy';
 import { Options, Stats, StatsValues, SumPlayers } from 'interfaces';
 import { NUMBER_OF_ROWS } from 'constant';
 
-const chooseSum = (all: number, allSumWithoutSchool: number, currentRound: number, columns: number) => currentRound < NUMBER_OF_ROWS * columns ? allSumWithoutSchool : all;
-
 export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, currentRound: number, roundsPerPlayer: number) => {
   const playedRound = rounds.filter((el) => el.round === currentRound);
   const notPlayedRound = rounds.filter((el) => el.round < currentRound);
@@ -14,17 +12,8 @@ export const getCurrentPlayer = (rounds: StatsValues[], startingPlayer: number, 
     return startingPlayer;
   }
 
-  const hasDifference = (element: StatsValues) => {
-    const rounds = notPlayedRound.map((el) => el.round);
-    const exceptLast = playedRound.slice(0, -1).map((el) => el.round);
-    const last = notPlayedRound[rounds.length - 1];
-
-    return (rounds.indexOf(element.round - roundsPerPlayer) !== -1) || (new Set(exceptLast).size === 1 && element.round - last.round < roundsPerPlayer);
-  }
-
-  const played = playedRound.filter((el) => el.round === currentRound && hasDifference(el));
+  const played = playedRound.filter((el) => el.round === currentRound && el.round % roundsPerPlayer === 0);
   const playedIds = played.map((el) => el.player);
-
   const notPlayed = rounds.filter((el) => playedIds.indexOf(el.player) === -1);
 
   const currentPlayer = notPlayed.filter((el) => el.round !== currentRound - roundsPerPlayer)[0];
@@ -56,12 +45,7 @@ export const getStats = (options: Options, sum: SumPlayers): Stats => {
   options.players?.forEach((player) => {
     sums.push({
       player: player.id,
-      sum: chooseSum(
-        sum?.[`player${player.id}`]?.all as number,
-        sum?.[`player${player.id}`]?.allSumWithoutSchool as number,
-        currentRound?.round || 0,
-        options.columns
-      )
+      sum: sum?.[`player${player.id}`]?.all
     });
     rounds.push({ player: player.id, round: sum?.[`player${player.id}`]?.round } as StatsValues);
   });

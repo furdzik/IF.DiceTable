@@ -24,6 +24,8 @@ export interface ConfigElement {
   rows?: number;
   sectionNames?: FigureId[];
   minimalSum?: number;
+  maxBonusValue?: number;
+  valuePerColumn?: boolean;
 }
 export interface ScoreElement {
   columnId: number | null;
@@ -59,7 +61,11 @@ export interface BonusesConfig {
   [kay: string]: ConfigElement;
 }
 
-export type BonusTypes = number | number[] | null;
+export type BonusTypes = number | number[] | null | RestBonusesDetails;
+
+export interface RestBonusesDetails {
+  [kay: string]: number | number[] | null;
+}
 
 export interface Bonuses {
   [kay: string]: BonusTypes;

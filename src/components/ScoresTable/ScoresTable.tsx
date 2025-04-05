@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '@mdi/react';
+import { useIntl } from 'react-intl';
 import { mdiChevronRightCircleOutline, mdiCrown, mdiDice6 } from '@mdi/js';
 
 import {
@@ -9,6 +10,7 @@ import {
   ConfigElement,
   Options,
   Player,
+  RestBonusesDetails,
   SaveScore,
   Score,
   ScoreElement,
@@ -33,7 +35,8 @@ import {
   WinnerBox,
   PlayerName,
   RoundWrapper,
-  CurrentPlayerIcon
+  CurrentPlayerIcon,
+  SmallBonusTable
 } from './ScoresTable.styles';
 
 export enum RowVariants {
@@ -59,6 +62,8 @@ export interface ScoresTableProps {
 const TITLE_LENGTH = 1;
 
 const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, options, saveScore, className = '' }: ScoresTableProps) => {
+  const intl = useIntl();
+
   const figuresPart1 = Object.entries(config.figures).slice(0, 3);
   const figuresPart2 = Object.entries(config.figures).slice(3);
 
@@ -141,12 +146,10 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, opt
                     <Th variant={RowVariants.Sum} playerColor={player.color}>Suma punktów</Th>
                     <Th variant={RowVariants.Sum} playerColor={player.color}>
                       <div>
-                        {
-                          (stats.currentRound || 0) < stats.numberOfRounds
-                            ? sum?.[`player${player.id}`]?.allSumWithoutSchool
-                            : sum?.[`player${player.id}`]?.all || 0
-                        }
-                        <small>(bez bonusów: {sum?.[`player${player.id}`]?.sumWithoutBonuses || 0})</small>
+                        {gameStarted ? intl.formatNumber(sum?.[`player${player.id}`]?.all, { style: 'decimal' }) : 0}
+                        <small>
+                          (bez szkoły: <b>{gameStarted ? intl.formatNumber(sum?.[`player${player.id}`]?.allSumWithoutSchool || 0, { style: 'decimal' }) : 0}</b>)
+                        </small>
                       </div>
                     </Th>
                   </tr>
@@ -355,9 +358,39 @@ const ScoresTable = ({ config, scores, bonuses, sum, gameStarted, gameEnded, opt
                     </Th>
                   </tr>
                   <tr>
+                    <Th variant={RowVariants.Bonus} playerColor={player.color}>Szkoła</Th>
+                    <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
+                      {gameStarted ? playerBonuses?.schoolGeneralSum as number || 0 : 0}
+                    </Th>
+                  </tr>
+                  <tr>
                     <Th variant={RowVariants.Bonus} playerColor={player.color}>Reszta</Th>
                     <Th variant={RowVariants.Bonus} colSpan={options.columns} playerColor={player.color}>
-                      {playerBonuses?.restBonuses as number || 0}
+                      <SmallBonusTable>
+                        <tbody>
+                          <tr>
+                            <td>Wicki</td>
+                            <td>Generały</td>
+                            <td><span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>Sekcje</span></td>
+                            <td>Kolumny</td>
+                          </tr>
+                          <tr>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.vice}</td>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.general}</td>
+                            <td>
+                              <span title={`${(playerBonuses?.sectionsBonus as number[])?.join(' | ')}`}>
+                                {(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.sections}
+                              </span>
+                            </td>
+                            <td>{(playerBonuses?.restBonusesDetails as RestBonusesDetails)?.columns}</td>
+                          </tr>
+                          <tr>
+                            <td colSpan={4}>
+                              <b>Suma Reszty: {playerBonuses?.restBonuses as number || 0}</b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </SmallBonusTable>
                     </Th>
                   </tr>
                 </tbody>

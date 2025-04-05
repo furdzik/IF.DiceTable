@@ -46,8 +46,8 @@ const ModalWrapper = styled.div<ModalProps>`
   }
 
   @media (min-width: ${breakpoints.laptop}) {
-    min-width: calc(${(props) => props.theme.layout.width} - (2 * ${(props) => props.theme.layout.padding}));
-    max-width: calc(${(props) => props.theme.layout.width} - (2 * ${(props) => props.theme.layout.padding}));
+    min-width: calc(${breakpoints.laptop} - (2 * ${(props) => props.theme.layout.padding}));
+    max-width: calc(${breakpoints.laptop} - (2 * ${(props) => props.theme.layout.padding}));
   }
 `;
 
