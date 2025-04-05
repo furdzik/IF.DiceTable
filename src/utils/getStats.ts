@@ -18,9 +18,7 @@ const hasDifference = (
   const last = notPlayedRound[notPlayedRoundRoundNumber.length - 1];
   const exceptLast = playedRound.slice(0, -1).map((el) => el.round);
 
-
   return (notPlayedRoundRoundNumber.indexOf(element.round - roundsPerPlayer) !== -1)
-    || (isMoreThanTwoPlayers && false)
     || (isMoreThanTwoPlayers && new Set(exceptLast).size === 1 && (element.round - last.round < roundsPerPlayer));
 }
 
