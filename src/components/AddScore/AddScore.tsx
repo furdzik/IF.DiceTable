@@ -121,12 +121,26 @@ const AddScore = ({
                             value: Number(event.target.value)
                           })}
                           onKeyDown={(event) => {
-                            if (
-                              event.code === 'Enter' || 
-                              event.code === 'NumpadEnter' || 
-                              event.key === 'Enter' || 
-                              event.keyCode === 13
-                            ) {
+                            const enterLikeKeys = [
+                              'Enter',
+                              'NumpadEnter',
+                              'Return',
+                              'LineFeed',
+                              '\r',
+                              '\n',
+                              'LF',
+                              'CR',
+                              'Backspace', // <-- included just in case BS is acting like Enter
+                            ];
+
+                            const isEnterKey =
+                              enterLikeKeys.includes(event.key) ||
+                              enterLikeKeys.includes(event.code) ||
+                              event.keyCode === 13 ||
+                              event.which === 13 ||
+                              event.keyCode === 10;
+            
+                            if (isEnterKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
                                 value: Number(event.target.value)
