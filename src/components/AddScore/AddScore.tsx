@@ -121,7 +121,7 @@ const AddScore = ({
                             value: Number(event.target.value)
                           })}
                           onKeyDown={(event) => {
-                            if (event.code === 'Enter') {
+                            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
                                 value: Number(event.target.value)
