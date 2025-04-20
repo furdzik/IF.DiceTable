@@ -130,7 +130,7 @@ const AddScore = ({
                               '\n',
                               'LF',
                               'CR',
-                              'Backspace', // <-- included just in case BS is acting like Enter
+                              'Backspace' // <-- included just in case BS is acting like Enter
                             ];
 
                             const isEnterKey =
