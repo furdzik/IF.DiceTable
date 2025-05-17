@@ -121,6 +121,7 @@ const AddScore = ({
                             value: Number(event.target.value)
                           })}
                           onKeyDown={(event) => {
+                            console.log(event);
                             const enterLikeKeys = [
                               'Enter',
                               'NumpadEnter',
@@ -139,7 +140,7 @@ const AddScore = ({
                               event.keyCode === 13 ||
                               event.which === 13 ||
                               event.keyCode === 10;
-            
+
                             if (isEnterKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
