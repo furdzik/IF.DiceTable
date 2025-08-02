@@ -15,14 +15,14 @@ import {
   ChoiceBox,
   Header,
   Label,
+  NumberElement,
   Score,
   Section,
   Selector,
-  NumberElement,
   StyledButton,
   StyledInput,
-  Wrapper,
-  WarningWrapper
+  WarningWrapper,
+  Wrapper
 } from './AddScore.styles';
 
 const ICON_SIZE = 1.4;
@@ -62,6 +62,7 @@ const AddScore = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [calculatedScore, setCalculatedScore] = useState(calculateScore(singleScore, scoreType));
+  const [ignoreWarning, setIgnoreWarning] = useState(false);
 
   const [scoreOptions, setScoreOptions] =  useState<ScoreElement | null>(singleScore);
 
@@ -79,6 +80,32 @@ const AddScore = ({
     setIsOpen(false);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'Backspace') {
+      const newScoreOptions = {
+        ...scoreOptions as ScoreElement,
+        quantity: null,
+        dice: null,
+        throw: Throw.third,
+        value: X_VALUE
+      };
+      setScoreOptions(newScoreOptions);
+      onClick(newScoreOptions, scoreType, player.id);
+      setIsOpen(false);
+    }
+
+    const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+    const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
+    // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
+
+    if (isPlusKey || isMultiplyKey) {
+      setScoreOptions({
+        ...scoreOptions as ScoreElement,
+        throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+      });
+    }
+  };
+
   return (
     <Wrapper className={className}>
       <Score
@@ -92,6 +119,7 @@ const AddScore = ({
           });
           setIsOpen(!isOpen);
         }}
+        onKeyDown={(event) => handleKeyDown(event)}
       >
         {calculatedScore}
       </Score>
@@ -99,7 +127,7 @@ const AddScore = ({
         isOpen && (
           <AddBox ref={clickAwayRef} playerColor={player.color} position={position}>
             {
-              !roundsNotEvenWarning || (roundsNotEvenWarning && singleScore?.throw) ? (
+              !roundsNotEvenWarning || (roundsNotEvenWarning && singleScore?.throw) || (roundsNotEvenWarning && ignoreWarning) ? (
                 <React.Fragment>
                   <Header>
                     Dodaj wynik:<br />
@@ -118,10 +146,9 @@ const AddScore = ({
                           playerColor={player.color}
                           onChange={(event) => setScoreOptions({
                             ...scoreOptions as ScoreElement,
-                            value: Number(event.target.value)
+                            value: Number(event.target.value) || null
                           })}
                           onKeyDown={(event) => {
-                            console.log(event);
                             const enterLikeKeys = [
                               'Enter',
                               'NumpadEnter',
@@ -130,8 +157,7 @@ const AddScore = ({
                               '\r',
                               '\n',
                               'LF',
-                              'CR',
-                              'Backspace' // <-- included just in case BS is acting like Enter
+                              'CR'
                             ];
 
                             const isEnterKey =
@@ -141,6 +167,10 @@ const AddScore = ({
                               event.which === 13 ||
                               event.keyCode === 10;
 
+                            const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+                            const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
+                            // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
+
                             if (isEnterKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
@@ -148,6 +178,12 @@ const AddScore = ({
                               });
 
                               onSubmit();
+                            }
+                            if (isPlusKey || isMultiplyKey) {
+                              setScoreOptions({
+                                ...scoreOptions as ScoreElement,
+                                throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+                              });
                             }
                           }}
                           autoFocus
@@ -173,6 +209,18 @@ const AddScore = ({
                                     ...scoreOptions as ScoreElement,
                                     quantity: number
                                   })}
+                                  onKeyDown={(event) => {
+                                    const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+                                    const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
+                                    // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
+
+                                    if (isPlusKey || isMultiplyKey) {
+                                      setScoreOptions({
+                                        ...scoreOptions as ScoreElement,
+                                        throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+                                      });
+                                    }
+                                  }}
                                 >
                                   <NumberElement>{getNumber(number, scoreType)}</NumberElement>
                                 </Selector>
@@ -199,6 +247,18 @@ const AddScore = ({
                                   ...scoreOptions as ScoreElement,
                                   dice
                                 })}
+                                onKeyDown={(event) => {
+                                  const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+                                  const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
+                                  // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
+
+                                  if (isPlusKey || isMultiplyKey) {
+                                    setScoreOptions({
+                                      ...scoreOptions as ScoreElement,
+                                      throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+                                    });
+                                  }
+                                }}
                               >
                                 <Icon
                                   path={getDiceIconPath(dice, scoreOptions?.dice === dice)}
@@ -239,7 +299,15 @@ const AddScore = ({
                 </React.Fragment>
               ) : (
                 <WarningWrapper>
-                  Nierówna liczba rund,<br />dodaj ten wynik w kolumnie innego gracza
+                  <p>Nierówna liczba rund,<br />dodaj ten wynik w kolumnie innego gracza</p>
+                  <StyledButton
+                    size={ButtonsSizes.Small}
+                    variant={ButtonVariants.Link}
+                    playerColor={player.color}
+                    onClick={() => setIgnoreWarning(true)}
+                  >
+                    Zignoruj
+                  </StyledButton>
                 </WarningWrapper>
               )
             }
