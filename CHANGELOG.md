@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.9.0](https://github.com/furdzik/IF.DiceTable/compare/v1.8.0...v1.9.0) (2025-08-08)
+
+
+### Features
+
+* **app:** add console.log for keyboard debug ([fbd727d](https://github.com/furdzik/IF.DiceTable/commit/fbd727dbc6c0901fe82918f9684cc3c46f57e24f))
+* **app:** add keydown events to add score ([a2122a5](https://github.com/furdzik/IF.DiceTable/commit/a2122a5414573847f809632470fdfa3b95aa956d))
+* **app:** add keydown events to add score ([0eddd68](https://github.com/furdzik/IF.DiceTable/commit/0eddd680599ed0323951c98c25c9c43841cf74f7))
+* **app:** add keydown events to add score ([0b9abbd](https://github.com/furdzik/IF.DiceTable/commit/0b9abbd44138884df2a84b1844dc602dfea3c239))
+* **app:** current player ([2cdbf61](https://github.com/furdzik/IF.DiceTable/commit/2cdbf617ac0967cbf86d1054f43acd34cf9b799a))
+* **app:** current player ([6d6bfea](https://github.com/furdzik/IF.DiceTable/commit/6d6bfeaa5850c8de2c8ec16b6e6c715212cb8335))
+* **app:** current player fix ([516754d](https://github.com/furdzik/IF.DiceTable/commit/516754ddacc455b4a291e96507335a6b62937a58))
+* **app:** current player fix ([0a3293e](https://github.com/furdzik/IF.DiceTable/commit/0a3293e4dc582900a7e1a1c2a7eb6029b3af95b0))
+* **app:** new rules for school ([88cf34b](https://github.com/furdzik/IF.DiceTable/commit/88cf34b9e7c1a007d37a9acce06ba4636c660d07))
+
 ## [1.8.0](https://github.com/furdzik/IF.DiceTable/compare/v1.7.0...v1.8.0) (2025-03-14)
 
 
