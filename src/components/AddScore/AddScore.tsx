@@ -170,7 +170,7 @@ const AddScore = ({
                             const isDivideKey = event.code === 'Slash' || event.code === 'NumPadDivide' || event.key === '/' || event.keyCode === 111;
                             const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
 
-                            if (isDivideKey) {
+                            if (isEnterKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
                                 value: Number(event.target.value)
