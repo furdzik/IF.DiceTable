@@ -94,14 +94,14 @@ const AddScore = ({
       setIsOpen(false);
     }
 
-    const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+    const isDivideKey = event.code === 'Slash' || event.code === 'NumPadDivide' || event.key === '/' || event.keyCode === 111;
     const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
     // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
 
-    if (isPlusKey || isMultiplyKey) {
+    if (isDivideKey || isMultiplyKey) {
       setScoreOptions({
         ...scoreOptions as ScoreElement,
-        throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+        throw: isDivideKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
       });
     }
   };
@@ -167,11 +167,10 @@ const AddScore = ({
                               event.which === 13 ||
                               event.keyCode === 10;
 
-                            const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+                            const isDivideKey = event.code === 'Slash' || event.code === 'NumPadDivide' || event.key === '/' || event.keyCode === 111;
                             const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
-                            // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
 
-                            if (isEnterKey) {
+                            if (isDivideKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
                                 value: Number(event.target.value)
@@ -179,10 +178,10 @@ const AddScore = ({
 
                               onSubmit();
                             }
-                            if (isPlusKey || isMultiplyKey) {
+                            if (isDivideKey || isMultiplyKey) {
                               setScoreOptions({
                                 ...scoreOptions as ScoreElement,
-                                throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+                                throw: isDivideKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
                               });
                             }
                           }}
@@ -248,14 +247,13 @@ const AddScore = ({
                                   dice
                                 })}
                                 onKeyDown={(event) => {
-                                  const isPlusKey = event.code === 'NumpadAdd' || event.code === 'Equal' || event.key === '+' || event.keyCode === 107;
+                                  const isDivideKey = event.code === 'Slash' || event.code === 'NumPadDivide' || event.key === '/' || event.keyCode === 111;
                                   const isMultiplyKey = event.code === 'NumpadMultiply' || event.key === '*' || event.keyCode === 106;
-                                  // const isMinusKey = event.code === 'NumpadSubtract' || event.code === 'Minus' || event.key === '-' || event.keyCode === 109;
 
-                                  if (isPlusKey || isMultiplyKey) {
+                                  if (isDivideKey || isMultiplyKey) {
                                     setScoreOptions({
                                       ...scoreOptions as ScoreElement,
-                                      throw: isPlusKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
+                                      throw: isDivideKey ? 1 : isMultiplyKey ? 2 : scoreOptions?.throw || 3
                                     });
                                   }
                                 }}
